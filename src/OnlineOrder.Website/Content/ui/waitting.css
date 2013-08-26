@@ -1,0 +1,30 @@
+/* waitting css */
+.waitting{
+	display: block;
+	width:180px;
+	height:80px;
+	background:#fff;
+	color:#333;
+	line-height:80px;
+	z-index:1001;
+	font-size:14px;
+	text-indent:90px;
+	-webkit-box-shadow:3px 4px 4px #777777;
+	-moz-box-shadow:3px 4px 4px #777777;
+	box-shadow:3px 4px 4px #777777;
+	-webkit-border-radius:7px 7px 5px 5px;
+	-moz-border-radius:7px 7px 5px 5px;
+	border-radius:7px 7px 5px 5px;
+	/*margin-top:-30px;*/
+}
+.waitting b{
+	position:absolute;
+	display: block;
+	width:32px;
+	height:32px;
+	background:url(/Images/waitting/waitting.gif) 0 0 no-repeat;
+	left:55px;
+	top:24px;
+	font-size:0;
+}
+

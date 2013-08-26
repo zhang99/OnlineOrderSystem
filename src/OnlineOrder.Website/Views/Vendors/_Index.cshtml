@@ -1,0 +1,16 @@
+﻿
+@using OnlineOrder.Mvc
+@using OnlineOrder.Mvc.Grid
+@using OnlineOrder.Mvc.Pagination
+@model IPagination<Vendor>
+
+@Html.Grid(Model).Sort(ViewBag.Sort as GridSortOptions).Columns(c =>{
+    c.For(x => Html.CheckBox("vendors", new { value = x.Id.ToString() }), "Id").Header(x => Html.CheckBox("vendors")).Sortable(false).Align(Alignment.Center).Width(30).Queryable(false);
+          c.For(x => "").IsRowNumberColumn(true).Align(Alignment.Center).Width(40).Queryable(false);
+          c.For(x => Html.SiLink(x.Code, "javascript:;", null), "Code").Named("编码");
+          c.For(x => x.Name).Named("名称").Width(200);
+          c.For(x => x.Discount).Width(200);
+          c.For(x => x.Memo).Width(400);
+ }).AutoScroll(true)
+
+@Html.Pager(Model)  

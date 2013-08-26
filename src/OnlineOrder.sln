@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineOrder.Website", "OnlineOrder.Website\OnlineOrder.Website.csproj", "{E137E0A5-9108-4A2B-8AF0-160D63844770}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineOrder.Mvc", "OnlineOrder.Mvc\OnlineOrder.Mvc.csproj", "{EB2D6FFE-1D55-42E3-8F1C-7EB2B1EEECEF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E137E0A5-9108-4A2B-8AF0-160D63844770}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E137E0A5-9108-4A2B-8AF0-160D63844770}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E137E0A5-9108-4A2B-8AF0-160D63844770}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E137E0A5-9108-4A2B-8AF0-160D63844770}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB2D6FFE-1D55-42E3-8F1C-7EB2B1EEECEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB2D6FFE-1D55-42E3-8F1C-7EB2B1EEECEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB2D6FFE-1D55-42E3-8F1C-7EB2B1EEECEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB2D6FFE-1D55-42E3-8F1C-7EB2B1EEECEF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

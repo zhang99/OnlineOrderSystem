@@ -1,0 +1,15 @@
+﻿@using OnlineOrder.Mvc
+@using OnlineOrder.Mvc.Grid
+@using OnlineOrder.Mvc.Pagination
+@using OnlineOrder.Website.Models
+@model IPagination<QueryViewModel>
+
+<!-- 列表或者表格在此处添加 -->
+@Html.Grid(Model).Sort(ViewBag.Sort as GridSortOptions).Columns(c =>{
+    //c.For(x => "").IsRowNumberColumn(true).Align(Alignment.Center).Queryable(false).Width(80);
+    c.For(x => x.Id).Hide(true).Queryable(false);
+    c.For(x => x.Code).Named("编码").Width(120);
+    c.For(x => x.Name).Named("名称").Width(200).Align(Alignment.Center);             
+ })
+
+@Html.Pager(Model)  

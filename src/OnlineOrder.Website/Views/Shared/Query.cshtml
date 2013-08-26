@@ -1,0 +1,70 @@
+﻿<h3>@ViewBag.Title</h3>
+@{
+    string controllerName = ViewBag.ControllerName;
+    string actionName = ViewBag.ActionName;    
+}
+<div class="search-box">
+	<span>过滤： </span><input type="text" class="search-text"/><a class="si-btn query">查询</a><a class="si-btn create">新增</a>
+</div>
+<div class="si-grid" controller="@controllerName" action="@actionName"> 	 
+	@Html.Partial("_Query") 
+</div>    
+<div class="si-bottom-bar">
+    <a class="si-btn confirm">确定</a><a class="si-btn cancel">取消</a>
+</div> 
+
+<script type="text/javascript">
+    $(function () {
+        var $grid = $('.si-grid[controller="@controllerName"]'),
+            grid = $grid.grid({ tlbar: '.search-box' }),
+            searchField = $(".field[controller={0}]".format("@controllerName"));
+        $("tbody tr", $grid).live("dblclick", function () {
+            var value = grid.getData();
+            for (var arg in value) {
+                $("input", searchField).each(function () {
+                    if (new RegExp(arg).test(this.id)) {
+                        this.value = value[arg];
+                    }
+                })
+            }           
+            $grid.parents('.si-wind').remove();
+            $('#si-mask').css("z-index", parseInt($('#si-mask').css("z-index")) - 1);
+            if ($('.si-wind:visible').length == 0) {
+                $('#si-mask').remove();
+            }
+            $(".search-text", searchField).trigger('change');
+            $(".search-text", searchField).focus();
+        })
+        log("@ViewBag.Query")
+
+        // 初次弹出查询窗口，把主页面的查询条件写进来
+        $('.search-text', '.search-box').val("@ViewBag.Query");
+
+        $('.query', '.search-box').click(function () {
+            grid.doAction("query", { target: $('.si-grid[controller="@controllerName"]'), global: false});
+        })
+
+        $('.create', '.search-box').click(function () {
+            $.ajax({
+                type: 'get',
+                url: '/@controllerName/Create',
+                global: false,
+                success: function (data) {
+                    if (typeof (data) == Object) {
+                        $.message(data.message);
+                    } else {
+                        $.window({ fillText: data })
+                    }
+                }
+            })
+        })
+
+        $('.si-bottom-bar .cancel').on('click', function () {
+            $.window("close", $grid);
+        })
+        $('.si-bottom-bar .confirm').on('click', function () {
+            $(".search-text", searchField).trigger('change');
+            grid.confirm( $(".search-text", searchField) );
+        })
+    }) 
+</script> 

@@ -1,0 +1,341 @@
+/* 
+工具栏样式	
+*/
+
+.si-tbar {
+	border-bottom: 1px solid #ccc;
+	border-top:1px solid #ccc;
+	position: relative;
+}
+.si-tbar > ul {
+	overflow: hidden;
+	padding: 8px 0;
+}
+.si-tbar > ul li {
+	float: left;
+	margin-left: 8px;
+}
+.si-tbar > ul li > a {
+	color: #333;
+	vertical-align: middle;		
+}
+.si-tbar >ul li .create , .si-tbar >ul li .modify , .si-tbar >ul li .delete ,.si-tbar >ul li .refresh{		
+	position: relative;	
+	padding-left:18px;
+}
+
+.si-tbar >ul li .create b , .si-tbar >ul li .modify b , .si-tbar >ul li .delete b{
+	position: absolute;
+	width:13px;
+	height:12px;
+	background:url(/Images/toolbar/tlbar.png) no-repeat;
+	display: block;
+	top:6px;
+	left:4px;	
+}
+.si-tbar >ul li .refresh b{
+	position: absolute;
+	width:13px;
+	height:12px;
+	background:url(/Images/toolbar/page-icons.png) -66px -1px no-repeat;
+	display: block;
+	top:6px;
+	left:4px;	
+}
+.si-tbar >ul li .create b{
+	background-position:1px -3px;	
+	
+}
+.si-tbar >ul li .modify b{
+	background-position:2px -44px;	
+}
+.si-tbar >ul li .delete b{
+	background-position:0px -23px;	
+}
+
+/* search box */
+/*.si-tbar .search {padding:15px 0;}
+*/
+
+.si-tbar .search input[type="text"] {
+	height:22px;
+	line-height:22px;
+	border: 1px solid #B5B5B5;
+	text-indent: 3px;
+	margin-right: 5px;
+	vertical-align: bottom;
+	width: 200px;
+}
+/* search box for advance*/
+.si-tbar .adv {
+	line-height:24px \9;
+	float:left;
+	margin-top: 3px;
+}
+.si-tbar .adv, .si-tbar .adved {
+	padding-right: 8px;
+	cursor:pointer;
+	margin-left:15px;
+	position: relative;
+	font-weight:bold;
+}
+.si-tbar .adved b {
+	position: absolute;
+	left: -14px;
+	top:-7px;
+	height:37px;
+	border: 1px solid #ccc;
+	border-bottom-color:#fff;
+	width:85px;
+	z-index: 14;
+}
+.si-tbar .adv:hover{
+	text-decoration:underline;
+}
+.si-tbar .adv i{
+	border-color: #333 #fff #fff;
+    border-style: solid;
+    border-width: 4px;
+    display: block;
+    height: 0;
+    position: absolute;
+    right: -3px;
+    top: 8px;
+    top: 10px\0;
+    width: 0;
+}
+.si-tbar .adved i{
+	border-color: #fff #fff #333;
+	border-width:5px\0;
+	top: 4px;
+}
+.adv-search {
+	padding: 10px 0;
+	border-top: 1px solid #ccc;
+	margin-top:-1px;
+}
+.center .si-tbar{
+	border-top:1px solid #ccc;
+}
+.tab-box-item .si-tbar{
+	border-bottom: none;
+}
+.center .si-tbar ul{
+	text-align: center;
+}
+.center .si-tbar ul li,.align-right .si-tbar ul li{
+	float:none;
+	display:inline;
+}
+.align-right .si-tbar ul{
+	text-align: right;
+}
+.si-tbar .barcodes{
+	padding-left:15px;
+	line-height: 24px;
+}
+.si-tbar .barcodes label:after{
+	content:":";
+	font-size:16px;
+}
+.si-tbar .barcodes input[type="text"]{
+	height:22px;
+	line-height:22px;
+	border: 1px solid #B5B5B5;
+	text-indent: 3px;
+	margin-right: 5px;
+	vertical-align: bottom;
+	width: 160px;
+	margin-left:2px;
+}
+
+/*公共按钮样式
+  使用按钮只需为该元素加入class="s-btn"即可，一般按钮可使用3种元素定义，span a button 。
+  
+*/
+
+/*-------------- james 2013/6/26*/
+.si-btn {
+/*	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	padding:0 9px;
+	border-radius: 3px;
+	height:23px;	
+	border: 1px solid #b5b5b5;
+	border-bottom-color: #7f7f7f;
+	cursor: pointer;
+	font-size: 12px;	
+	line-height:23px;
+	display: inline-block;
+	overflow: visible;
+	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+	-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);	
+	color: #333;
+	font-family: Arial, Helvetica, sans-serif;
+	background-image: -moz-linear-gradient(top, #ffffff, #dedede); 
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffffff), color-stop(1, #dedede)); 	
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dedede', GradientType='0') ;
+*/
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	height: 23px;
+	line-height: 23px;
+	overflow: visible;
+	cursor: pointer;
+	display:inline-block;
+	text-decoration:none;
+	font-size:1.1em;
+	font-weight:bold;
+	padding: 1px 15px;
+	border: 1px solid rgba(0,0,0,0.2);
+	box-shadow:0 1px 1px rgba(255,255,255,0.5) inset;
+	background:none repeat scroll 0 0 rgba(0, 0, 0, 0.05);
+	border: 1px solid #C8C8C8\0;
+	background: #f3f3f3\0;
+}
+:root .si-btn {
+	line-height:25px\9;
+}
+/*.si-btn:hover {
+	border-color: #999;
+	text-decoration: none;
+	background: none;
+	color: #333;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ffffff', GradientType='0') ;
+}*/
+
+.si-btn:hover{
+	box-shadow:0 1px 1px rgba(255,255,255,0.1) inset,0 0 1px rgba(0,0,0,0.2);
+	opacity:0.9;
+}
+.si-btn:active{
+	box-shadow:0px 0px 1px 0px rgba(0,0,0,0.1) inset;
+	opacity: 0.7;
+}
+
+
+.si-btn.disabled{
+	color : buttonshadow;
+	cursor: default;
+}
+/*.si-btn.disabled:hover{
+	border-color:#b5b5b5 #b5b5b5 #7f7f7f #b5b5b5;
+	color:buttonshadow;
+	text-decoration: none;
+	background-image: -moz-linear-gradient(top, #ffffff, #dedede); 
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffffff), color-stop(1, #dedede));
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dedede', GradientType='0') ;
+}
+*/
+button.si-btn{
+	padding:0 6px 2px;
+	height:25px;
+	line-height:21px;	
+	padding:0 8px 2px\0;
+	height:25px\0;
+	line-height:23px\0;	
+	*position:relative;
+	*top:4px;
+	*padding: 0 9px 2px;
+	*margin-left:5px;
+}
+:root button.si-btn{
+	padding:0 8px\9;
+	line-height:25px\9;	
+	height:25px\9;
+} 
+@media screen and (-webkit-min-device-pixel-ratio:0){ button.si-btn{
+	line-height:23px;
+	padding:0 9px 2px ;
+}}
+
+/*edit grid 工具栏按钮*/
+.si-sidebar {
+	/*position: absolute;
+	line-height:26px;
+	bottom:5px;
+	left:15px;*/
+/******* wangpf 20130721 *********/
+	margin-left: 5px;
+    margin-top: -25px;
+    position: absolute;
+    right: 0;
+/******* wangpf 20130721 *********/    
+}
+.si-sidebar  li{
+	float:left;
+	margin-right:10px;
+}
+.si-sidebar  li a{
+	cursor:pointer;
+}
+.si-sidebar .add,.si-sidebar .delete,.si-sidebar .import,.si-sidebar .export{
+	width:11px;
+	height:11px;
+	display: inline-block;
+}
+.si-sidebar .add{
+	background:url(/Images/toolbar/sidebar.png) -9px -54px no-repeat;
+}
+.si-sidebar .delete{
+	background:url(/Images/toolbar/sidebar.png) -9px -37px no-repeat;
+}
+/*.si-sidebar .import{
+	background:url(/Images/toolbar/sidebar.png) -9px -2px no-repeat;
+}
+.si-sidebar .export{
+	background:url(/Images/toolbar/sidebar.png) -9px -20px no-repeat;
+}*/
+
+/*设置工具栏*/
+.setting-bar{
+	line-height: 24px;
+	padding-left:12px;
+} 
+.setting-bar .page-size{
+	height:22px;
+	line-height:22px;
+	padding:0;
+	border: 1px solid #B5B5B5;
+	text-indent: 3px;
+	margin-right: 5px;
+	
+}
+.si-bottom-bar{
+	text-align: right;
+	line-height: 24px;
+	margin-right:10px;
+}
+.si-bottom-bar .si-btn{
+	margin-left:10px;
+}
+
+.solid{
+border-style:solid;
+border-width:1px;
+border-radius:4px;
+box-shadow:0 1px 1px rgba(255,255,255,0.5) inset;
+}
+.solid:hover{
+box-shadow:0 1px 1px rgba(255,255,255,0.5) inset,0 0 2px rgba(0,0,0,0.2);
+opacity:0.9;
+}
+.solid:active{
+box-shadow:0px 0px 6px 0px rgba(0,0,0,0.4) inset;
+opacity:1;
+color:rgba(255,255,255,0.5);
+}
+
+.si-tbar .adv-search{
+	background: #fff;
+	width:100%;
+}
+.si-tbar .adv-search .si-form{
+	/*overflow: hidden;*/
+}
+
+.si-wind  .si-bottom-bar.select-bottom{
+	bottom:5px;
+}

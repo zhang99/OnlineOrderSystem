@@ -1,0 +1,61 @@
+/*分页样式*/
+.si-page {	
+	line-height: 26px;	
+	/*margin-bottom:10px;*/
+	padding:10px 20px 10px 0;
+}
+.main .si-page{
+	border-top:1px solid #ccc;
+}
+.si-page .page-first , .si-page .page-prev  , .si-page .page-next , .si-page .page-last {
+	background:url(/Images/page/page-icons.png) no-repeat;
+	height:9px;
+	padding: 4px 4px 4px 8px;
+	margin-right:3px;	
+	float:right;
+	cursor:pointer;
+}
+.si-page .page-first {
+	background-position: -3px 4px;
+}
+.si-page .page-prev {
+	background-position: -20px 4px;
+}
+.si-page .page-next {
+	background-position: -31px 4px;
+}
+.si-page .page-last {
+	background-position: -50px 4px;
+}
+.si-page a.page-disabled{
+	cursor:default;
+	filter:alpha(opacity=50);
+	opacity:0.5;	
+}
+.si-page > span {
+	float:right;
+	line-height:20px;
+	margin-top:1px;
+}
+.si-page .status input[type="text"]{
+	border:1px solid #95B8E7;
+	padding:2px;
+	margin:0 2px;
+	width:2em;
+	height:auto;
+	font-size:12px;
+}
+.si-page .total{
+	margin-right:5px;
+}
+.si-page .total em{
+	margin: 0 3px;
+}
+.si-page .status label{
+	position:relative;
+	top:-1px;
+
+}
+.si-wind .select-main .si-page{
+	padding:5px 10px 5px  0;
+}

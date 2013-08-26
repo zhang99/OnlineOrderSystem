@@ -1,0 +1,339 @@
+/* 布局css */
+/*
+	author :wul;
+	time: 2013-4-19;
+	文件描述：主要用户页面的布局
+	注意：此文件涉及整站布局，确定之后，不得随意更改。
+
+*/
+
+/*header*/
+body > .wrapper {
+	height: auto;
+	min-height: 100%;
+	_height: 100%; /*ie 6 不识别min-height；*/
+	position: relative;
+	width: 100%;
+}
+#header {
+	width: 100%;
+	background: #7AC0DA;
+	margin-bottom:10px;
+}
+/*sub-menu*/
+.sub-menu {
+	height: 30px;
+	line-height: 30px;
+}
+.sub-menu > ul {
+	float: right;
+	color: #fff;
+}
+.sub-menu > ul li {
+	float: left;
+	position: relative;	
+	display: inline;
+	padding-left:5px;
+}
+.sub-menu > ul li.top {
+	border:1px solid #7AC0DA;
+}
+.sub-menu > ul .top b {
+	width: 0;
+	height: 0;
+	display: block;
+	position: absolute;
+	border-width: 4px 4px;
+	border-style: solid;
+	border-color: #efefef #7AC0DA #7AC0DA #7AC0DA;
+	right: 8px;
+	top: 14px;	
+}
+
+.sub-menu > ul li > a {
+	color: #fff;
+	padding: 0 20px 0 5px;	
+}
+
+.sub-menu > ul li a strong {
+	color: #c60000;
+	margin-left: 3px;
+}
+.sub-menu > ul .top:hover div{
+	display: block;
+
+}
+.sub-menu > ul .top:hover a{
+	color:#333;
+	text-decoration: none;
+}
+.sub-menu > ul .top:hover {
+	height: 26px;
+	background: #fff;
+	-webkit-border-radius:2px 2px 0 0;
+	-moz-border-radius:2px 2px 0 0;
+	border-radius:2px 2px 0 0;
+	color: #000;
+	top: 4px;
+	line-height: 26px;
+	behavior: url(js/PIE.htc);
+	border: 1px solid #dedede;
+}
+.sub-menu > ul .top:hover b {
+	border-color: #fff #fff #888 #fff;
+	top: 7px;	
+}
+
+.sub-menu > ul .top > div {
+	width: 105px;
+	border: 1px solid #dedede;
+	border-top: none;
+	display:none;
+	-webkit-border-radius:0 0 5px 5px;
+	-moz-border-radius:0 0 5px 5px;
+	border-radius: 0 0 5px 5px;
+	-webkit-box-shadow:2px 3px 2px -2px #999;
+	-moz-box-shadow:2px 3px 2px -2px #999;
+	box-shadow:2px 3px 2px -2px #999;
+	top:26px;
+	left: -1px;
+	position: absolute;
+	background: #fff;
+	z-index: 80;
+}
+.sub-menu > ul li > div a {
+	display: block;
+	line-height: 30px;
+	text-indent: 14px;
+	border-bottom: 1px solid #dedede;
+	color: #000;
+}
+.sub-menu > ul li > div a.last{
+	border-bottom: none;
+}
+.sub-menu > ul li > div a:hover {
+	background: #e4f1f7;
+	text-decoration: none;
+}
+.sub-menu > ul .quit span {
+	margin: 0 5px;
+	display: inline;
+}
+.sub-menu > ul .quit a{
+	float: none;
+	padding: 0 5px;
+	margin-right: 10px;
+}
+.sub-menu > ul .quit a:hover {
+	color: #c60000;
+	text-decoration: underline;
+}
+/*logo*/
+.logo {
+	
+}
+.logo h1 {
+	float: left;
+	margin: 15px 20px 0 10px;
+	display: inline;
+}
+.logo p {
+	font-size: 30px;
+	margin: 0 0 5px 20px;
+	color: #fff;
+	float: left;
+}
+.logo a{
+	color: #fff;
+}
+.logo a:hover{
+	color: #eee;
+}
+/*main-menu*/
+.main-menu {
+	height: 41px;
+	background: #484951;	
+}
+.main-menu li {
+	float: left;	
+	margin-left: 10px;	
+	line-height:30px;
+}
+.main-menu li > a {
+	line-height: 41px;
+	color: #fff;
+	font-weight: bold;
+	padding: 0 10px;
+	font-size: 1.15em;
+}
+.main-menu li > a {
+	 text-decoration: none;
+}
+
+.main-menu li:hover dl{
+	display: block;
+	padding-bottom: 10px;
+}
+.main-menu li:hover, .main-menu li.current{	
+	background: #fff;
+	color: #333;
+	height: 36px;
+	line-height: 36px;
+	top: 5px;
+	left: 0;
+	position: relative;
+	-webkit-border-radius:2px 2px 0 0;
+	-moz-border-radius:2px 2px 0 0;
+	border-radius: 2px 2px 0 0;
+}
+.main-menu li:hover > a,.main-menu li.current > a{
+	line-height:36px;
+	color:#000;
+	border-bottom: none;
+	background:none;
+}
+.main-menu li dl {
+	display:none;
+	clear: both;
+	position: absolute;
+	top: 31px;
+	left: -1px;
+	width: 200px;
+	margin-top: 5px;
+	border: 1px solid #888;
+	border-top: none;
+	background: #fff;
+	-webkit-border-radius:0 0 5px 5px;
+	-moz-border-radius:0 0 5px 5px;
+	border-radius: 0 0 5px 5px;
+	-webkit-box-shadow:2px 3px 2px -2px #999;
+	-moz-box-shadow:2px 3px 2px -2px #999;
+	box-shadow:2px 3px 2px -2px #999;
+	z-index:80;
+}
+.main-menu li dl .first {
+	border-top: none;
+}
+.main-menu li dl dt {
+	padding-left: 12px;
+	padding-top: 8px;
+	line-height: 20px;
+	border-top: 1px solid #dedede;
+}
+.main-menu li dl dd {
+	padding: 0 10px;
+	line-height: 28px;
+	clear : both;
+	overflow: hidden;
+}
+.main-menu li dl dt strong{
+	font-weight:bold;
+}
+.main-menu li dl dd a {
+	float: left;
+	margin-left: 7px;
+	*margin-left:4px;
+}
+.main-menu li dl dd a:hover{
+	color:#5EA7C1;
+	text-decoration:none;
+}
+/*content*/
+
+#content {			
+	padding-bottom: 56px;	
+	width: 100%;
+
+}  /*content的padding-bottom必须与footer的height+border-width，margin-top的负值相等。*/
+
+.main-wrp{
+	width:100%;
+	position: relative;
+}
+#content .left, #content .right {	
+	width: 200px;
+	border: 1px solid #ccc;	
+	min-height: 300px; /*添加一个最小的高度，为了展示效果*/	
+	margin:0 10px;
+	_margin-left:5px;
+}
+#content .left {
+	float:left;
+	/*margin-left: 10px;*/
+	
+}
+#content .right {
+	float:right;	
+	/*margin-right: 10px;*/
+}
+#content .main {	
+	overflow:hidden;
+	border: 1px solid #ccc;
+	margin:0 10px 0 10px;	
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+	-moz-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+	/*min-height: 300px; *//*添加一个最小的高度，为了展示效果*/			
+}
+/*footer*/
+
+#footer {
+	width: 100%;
+	text-align: center;
+	height: 40px;
+	margin-top: -41px;
+	line-height: 40px;
+	position: relative;
+	background: #F6F6F6;
+	/*border-top: 1px solid #ccc;*/
+    border-top: 1px solid #7AC0DA;
+}
+#footer p {
+	line-height: 40px;
+	text-align: center;
+	color: #3E483C;
+}
+
+/*main 区域*/
+.main h2 {
+	height: 30px;
+	line-height: 30px;
+	font-size: 14px;
+	font-weight: bold;
+	padding-left: 5px;
+    border-left: 8px solid #D74D2F;
+}
+.container .title-name{		
+	font-size:12px;
+	font-weight:bold;
+	line-height:26px;
+	padding-left:20px;
+}
+.border-top{
+	border-top:1px solid #ccc;
+}
+.border-bottom{
+	border-bottom:1px solid #ccc;
+}
+
+/*选择产品两栏布局*/
+.select-left{
+	width:150px;
+	float:left;
+	margin-right: 10px;
+	border:1px solid #ccc;
+	margin-bottom: 10px;
+}
+.select-left .si-tree{
+	padding-bottom:5px;
+}
+.select-main{
+	float:left;
+
+}
+.select-main .container .grid-inner{
+	border-left:1px solid #ccc;
+}
+.select-main .container .si-grid{
+	border-bottom: none;
+}

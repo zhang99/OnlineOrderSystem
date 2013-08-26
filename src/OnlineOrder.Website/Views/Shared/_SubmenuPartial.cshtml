@@ -1,0 +1,21 @@
+﻿@using OnlineOrder.Mvc
+<ul class="clearfix">                           
+@*@{
+        var jsonMenus = @"[
+                            {'Text':'创建商品','Controller':'Products','Action': 'Create'},
+                            {'Text':'新建采购订单','Controller':'PurchaseOrders'},
+                            {'Text':'新建采购收货单','Controller':'PurchaseOrders'},
+                            {'Text':'创建用户','Url':'http://qq.com'}]";
+                                                      
+        @Html.SiDropDownMenu("快捷操作", jsonMenus, false) 
+}*@
+
+    <li class="top">
+        <a href="javascript:void(0);">我的消息<strong>(32)</strong><b></b></a>
+        <div>
+            <a href="javascript:void(0);">订单审核<strong>(12)</strong></a>
+            <a href="javascript:void(0);" class="last">通知信息<strong>(20)</strong></a>                        
+        </div>
+    </li>
+    <li class="quit">欢迎您,<span>Admin</span><a href="javascrip:void;">安全退出</a></li>
+</ul> 

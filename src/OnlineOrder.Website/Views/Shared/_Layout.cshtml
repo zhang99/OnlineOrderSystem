@@ -1,0 +1,47 @@
+﻿@using OnlineOrder.Mvc
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - Siss MVC Application</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+        @Styles.Render("~/Content/layout","~/Content/ui")        
+        @*Scripts.Render("~/bundles/modernizr")*@
+        @Scripts.Render("~/bundles/jquery")     
+    </head>
+    <body>
+        <div class="wrapper">  
+            <div id="header">
+                <div class="clearfix sub-menu">
+                     @Html.Partial("_SubmenuPartial")
+                </div>
+
+                <div class="logo clearfix">
+                    <p>@Html.ActionLink("SISS MVC Architecture Demo", "Index", "Home")</p>            
+                </div>
+
+                <div class="main-menu">
+                    @Html.Partial("_MainmenuPartial")
+                </div>
+            </div>
+              
+            <div id="content" class="clearfix">
+                @RenderSection("left", required: false)     <!--left panel if need-->
+                @RenderSection("right", required: false)    <!--right panel if need-->
+                <div class="main">
+                    <h2>@ViewBag.Title</h2>
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            @Html.Partial("_FooterPartial")
+        </div>
+        @Scripts.Render("~/bundles/layout")       
+        @JScripts.Include(String.Format("~/Scripts/modules/{0}/{1}.js", Html.ControllerName(), Html.ActionName()))
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

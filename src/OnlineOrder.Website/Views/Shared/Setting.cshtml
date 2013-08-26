@@ -1,0 +1,156 @@
+﻿@using System.Collections
+@using OnlineOrder.Mvc
+
+<div class="setting-bar">
+	每页显示行数：<input type="text" class="page-size"/>
+</div>
+<div class="edit-grid-wrp">
+	<div class="si-edit-grid">
+		<table>
+			<thead>
+				<tr>
+					<th style = "width:40px;" field="">显示</th>
+					<th field=""><div style = "width:80px;">默认文本值</div></th>
+					<th field="" style = "width:100px;">自定义文本值</th>
+					<th  style = "width:60px;">宽度</th>
+					<th style = "width:60px;"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr field = "rowNum">
+					<td></td>
+					<td><div>行号</div></td>
+					<td>行号</td>
+					<td>40</td>
+					<td><button class="si-btn up">↑</button><button class="si-btn down">↓</button></td>
+				</tr>
+				<tr field = "Code">
+					<td><input type="checkbox" /></td>
+					<td>编码</td>
+					<td><input type="text" /></td>
+					<td><input type="text" /></td>
+					<td><button class="si-btn">↑</button><button class="si-btn">↓</button></td>
+				</tr>
+				<tr field = "SubNo">
+					<td><input type="checkbox" /></td>
+					<td><div>自编码</div></td>
+					<td><input type="text" /></td>
+					<td><input type="text" /></td>
+					<td><button class="si-btn">↑</button><button class="si-btn">↓</button></td>
+				</tr>
+				<tr field = "Name">
+					<td><input type="checkbox" /></td>
+					<td>名称</td>
+					<td><input type="text" /></td>
+					<td><input type="text" /></td>
+					<td><button class="si-btn">↑</button><button class="si-btn">↓</button></td>
+				</tr>
+				<tr field = "UnitId">
+					<td><input type="checkbox" /></td>
+					<td>单位</td>
+					<td><input type="text" /></td>
+					<td><input type="text" /></td>
+					<td><button class="si-btn">↑</button><button class="si-btn">↓</button></td>
+				</tr>
+				<tr field = "CategoryId">
+					<td><input type="checkbox" /></td>
+					<td>类别</td>
+					<td><input type="text" /></td>
+					<td><input type="text" /></td>
+					<td><button class="si-btn">↑</button><button class="si-btn">↓</button></td>
+				</tr>
+				<tr field = "BrandId">
+					<td><input type="checkbox" /></td>
+					<td>品牌</td>
+					<td><input type="text" /></td>
+					<td><input type="text" /></td>
+					<td><button class="si-btn">↑</button><button class="si-btn">↓</button></td>
+				</tr>
+				<tr field = "VendorId">
+					<td><input type="checkbox" /></td>
+					<td>供应商</td>
+					<td><input type="text" /></td>
+					<td><input type="text" /></td>
+					<td><button class="si-btn">↑</button><button class="si-btn">↓</button></td>
+				</tr>
+				<tr field = "InPrice">
+					<td><input type="checkbox" /></td>
+					<td>进货价</td>
+					<td><input type="text" /></td>
+					<td><input type="text" /></td>
+					<td><button class="si-btn">↑</button><button class="si-btn">↓</button></td>
+				</tr>
+				<tr field = "SalePrice">
+					<td><input type="checkbox" /></td>
+					<td>零售价</td>
+					<td><input type="text" /></td>
+					<td><input type="text" /></td>
+					<td><button class="si-btn">↑</button><button class="si-btn">↓</button></td>
+				</tr>
+				<tr field = "BasePrice">
+					<td><input type="checkbox" /></td>
+					<td>批发价</td>
+					<td><input type="text" /></td>
+					<td><input type="text" /></td>
+					<td><button class="si-btn">↑</button><button class="si-btn">↓</button></td>
+				</tr>
+				<tr field = "PurchaseSpec">
+					<td><input type="checkbox" /></td>
+					<td>进货规格</td>
+					<td><input type="text" /></td>
+					<td><input type="text" /></td>
+					<td><button class="si-btn">↑</button><button class="si-btn">↓</button></td>
+				</tr>
+				<tr field = "Status">
+					<td><input type="checkbox" /></td>
+					<td>状态</td>
+					<td><input type="text" /></td>
+					<td><input type="text" /></td>
+					<td><button class="si-btn">↑</button><button class="si-btn">↓</button></td>
+				</tr>
+				<tr field = "Memo">
+					<td><input type="checkbox" /></td>
+					<td>备注</td>
+					<td><input type="text" /></td>
+					<td><input type="text" /></td>
+					<td><button class="si-btn">↑</button><button class="si-btn">↓</button></td>
+				</tr>
+				<tr field = "OperId">
+					<td><input type="checkbox" /></td>
+					<td>创建人</td>
+					<td><input type="text" /></td>
+					<td><input type="text" /></td>
+					<td><button class="si-btn">↑</button><button class="si-btn">↓</button></td>
+				</tr>
+				<tr field = "OperDate">
+					<td><input type="checkbox" /></td>
+					<td>创建时间</td>
+					<td><input type="text" /></td>
+					<td><input type="text" /></td>
+					<td><button class="si-btn">↑</button><button class="si-btn">↓</button></td>
+				</tr>
+				<tr field = "ModifyId">
+					<td><input type="checkbox" /></td>
+					<td>修改者</td>
+					<td><input type="text" /></td>
+					<td><input type="text" /></td>
+					<td><button class="si-btn">↑</button><button class="si-btn">↓</button></td>
+				</tr>
+				<tr field = "ModifyDate">
+					<td><input type="checkbox" /></td>
+					<td>修改时间</td>
+					<td><input type="text" /></td>
+					<td><input type="text" /></td>
+					<td><button class="si-btn">↑</button><button class="si-btn">↓</button></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="align-right">
+@Html.Toolbar(new List<ToolbarItem>() { 
+    new ToolbarItem("还原默认", new Hashtable(){{"class","default"}}),
+    new ToolbarItem("确定", new Hashtable(){{"class","confirm"}}),
+    new ToolbarItem("取消", new Hashtable(){{"class","cancel"}}),
+},false)
+</div>

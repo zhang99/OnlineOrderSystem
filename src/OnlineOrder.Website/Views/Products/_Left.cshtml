@@ -1,0 +1,20 @@
+﻿@using System.Collections
+@using OnlineOrder.Mvc
+@model SelectProductsViewModel
+
+<style type="text/css">
+    .select-left{overflow:auto; }
+</style>
+<li id="">
+    <button class="opened" unajaxable ="true"></button>
+    <a class="current">所有类别</a>
+    <ul style="display:block">
+        @foreach(var item in Model.CategoriesTree){
+        <li  id="@item.Id">
+            <button class="@(item.Children.Count()>0? "open" : "unopen")"></button>
+            <a>[@item.Code]@item.Name</a>
+        </li>        
+        }
+    </ul>
+</li>
+ 

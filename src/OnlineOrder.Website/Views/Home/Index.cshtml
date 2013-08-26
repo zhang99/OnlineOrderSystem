@@ -1,0 +1,143 @@
+﻿<style type="text/css">
+    .demo-link li {
+        margin: 10px 15px;
+    }
+
+    .right {
+        padding: 0 20px;
+    }
+
+    .left {
+        padding: 20px 0;
+    }
+
+    .common-list-steps.no-bullets li {
+        padding: 10px 15px;
+        border-color: #fff;
+        border-style: solid;
+        border-width: 1px 0;
+    }
+
+    .common-list-steps h3 {
+        font-weight: bold;
+        margin-bottom: 0;
+    }
+
+    .common-list-steps.no-bullets li:hover {
+        background: none repeat scroll 0 0 #E7F4FF;
+        border-color: #C9DDFA;
+    }
+
+
+    .common-sidebar-module {
+        margin: 20px 0;
+    }
+
+        .common-sidebar-module h3 {
+            border-bottom: 1px dotted #999999;
+            font-size: 1.25em;
+            font-weight: bold;
+            margin: 0 0 10px;
+            padding: 0 0 10px;
+        }
+
+        .common-sidebar-module p {
+            margin-bottom: 18px;
+        }
+
+
+    .common-post {
+        margin: 0 0 17px;
+        min-height: 95px;
+        padding: 0 0 17px;
+        width: 100%;
+    }
+
+    .common-post-book {
+        border: 0 none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .common-sidebar-module .common-post {
+        margin: 0 0 17px;
+        min-height: 0;
+        padding: 0;
+    }
+
+    .common-post:after {
+        clear: both;
+        content: ".";
+        display: block;
+        height: 0;
+        visibility: hidden;
+    }
+
+
+    h4 {
+        color: #343434;
+        font-weight: normal;
+        margin: 0;
+    }
+
+
+    .common-post h4, .common-post p {
+        margin: 0;
+    }
+
+
+    .common-post img {
+        display: block;
+        float: left;
+        margin: 0;
+        padding: 4px 0 0;
+    }
+
+    .common-post img {
+        margin: 0 15px 0 0;
+    }
+</style>
+
+@section left {
+    <div class="left">
+        <ol class="common-list-steps no-bullets">
+            @for (var i = 1; i < 3; i++)
+            { 
+                @Html.Partial("_Rgt")
+            }
+        </ol>
+    </div>
+}
+
+
+@section right {
+    <div class="right">
+        <div class="common-sidebar-module">
+            <h3>常用商品</h3>
+            <p>仅作为参考，具体可以根据需求来设置修改。仅作为参考，具体可以根据需求来设置修改。</p>
+            @for (var i = 1; i < 4; i++)
+            { 
+                @Html.Partial("_Lft")
+            }
+
+        </div>
+    </div>
+}
+
+
+<!-- <h3>@ViewBag.Message</h3> -->
+<ul class='demo-link'>
+    <li>@Html.ActionLink("查看商品", "Index", "Products")</li>
+    <li>@Html.ActionLink("创建商品", "Create", "Products")</li>
+    <li>@Html.ActionLink("查看类别", "Index", "Categories")</li>
+
+    <li>@Html.ActionLink("查看品牌", "Index", "Brands")</li>
+    
+
+    <li>@Html.ActionLink("查看供应商", "Index", "Vendors")</li>
+    
+</ul>
+
+
+
+

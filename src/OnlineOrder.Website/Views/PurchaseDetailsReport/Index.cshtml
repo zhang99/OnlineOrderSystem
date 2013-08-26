@@ -1,0 +1,44 @@
+﻿@using System.Collections
+@using OnlineOrder.Mvc
+
+@Html.Toolbar(new List<ToolbarItem>() { 
+    new ToolbarItem("设置", new Hashtable(){{"class",""}}),
+    new ToolbarItem("打印", new Hashtable(){{"class",""}}),
+}, false, Html.SiAdvancedQuery(
+            Html.SiDateboxArea("PurchaseOrder.OperDate", new { @operator = "Equals" }),
+            Html.SiUControl("PurchaseOrder.Branch", "分店/仓库", new { controller = "Branchs", @operator = "Contains" }),
+            Html.SiUControl("Product.Code", "货号", new { controller = "Products",@operator="Contains" }),
+            Html.SiUControl("Product.Brand", "品牌", new { controller = "Brands", @operator = "Contains" }),
+            Html.SiUControl("PurchaseOrder.Vendor", "供应商", new { controller = "Vendors", @operator = "Contains" }),
+            Html.SiUControl("Product.Category", "类别", new { controller = "Categories",@operator="Contains" }),
+            Html.SiTextBox("PurchaseOrder.Code", "单据编号", new { @operator = "Contains" }),
+            Html.SiRadioButton("TransNo", "单据类型", new Dictionary<string, object>{ 
+                                                    {"采购收货单","PI"},
+                                                    {"采购退货单","PO"},
+                                                    {"全部",""},
+                                                },new {@operator="Equals"}),
+            Html.SiButton("confirm,cancel", new { @class = "button-line" })
+))
+
+<div class="container">
+	<div class="si-grid" controller="@Html.ControllerName()" action="@Html.ActionName()"> 
+        @Html.Partial("_Index") 
+    </div> 
+</div>
+<script type="text/javascript">
+    $(function () {
+        var $form = $('.si-form'),
+            form = $form.form(),
+            grid = $('.si-grid').grid(),
+            filter = $form.filter();
+        $('.si-btn.cancel', $form).on('click', function () {
+            filter.cancel();
+        })
+
+        $('.si-btn.confirm', $form).on('click', function () {
+            if (filter.validate()) {
+                grid.doAction('refresh', { data: { advancedQuery: JSON.stringify(filter.confirm())} })
+            }
+        })
+    });
+</script>

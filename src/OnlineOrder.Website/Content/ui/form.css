@@ -1,0 +1,549 @@
+/** 
+* form.css
+* @fileOverview 表单样式
+* @author wangpf 
+* @email wangpf@siss.com.cn
+* @version 0.1 
+* @date 2013-05-24 
+* Copyright (c) 2013-2013 wangpf 
+*/ 
+
+.si-form {
+    /*background: none repeat scroll 0 0 #FAFAFA;*/
+    position: relative;
+}
+.si-form  .field {
+    position: relative;
+    float: left;
+    width: 47%;
+    min-height: 33px;
+    line-height: 18px;
+    padding: 3px 0 0;
+    vertical-align: top;
+}
+.si-form  .field  label:first-child {
+    display: inline-block;
+    float: left;
+    height: 24px;
+    line-height: 22px;
+    overflow: hidden;
+    position: relative;
+    margin-right:1%;
+    text-align: right;
+    white-space: nowrap;
+    width: 30%;
+}
+.si-form  .field  label:first-child:after {
+    content: ":";
+    font-size: 16px;
+    left: 1px;
+    position: relative;
+}
+.si-form  .field  .field-inner {
+    display: inline-block;
+    position: relative;
+    border: 1px solid #A8A8A8;
+    line-height: 23px;
+    min-height: 23px;
+    padding: 0 1px;
+    width: 66%;
+}
+/* field merged */
+.si-form  .field.merged{
+    width:94%;
+}
+.si-form  .field.merged  label{
+    width:15%;
+    margin-right:0.5%;
+}
+.si-form  .field.merged  .field-inner {
+    width:83%;
+}
+.si-form  .field  .field-inner  input[type="text"],.si-form  .field  .field-inner  input[type="datebox"] {
+    position: relative;
+    border: 0 none;
+    padding: 1px 0;
+    padding: 1px\0;
+    width: 100%;
+    width: 99%\0;
+    box-shadow: 0 0 0 0;
+    height: 20px;
+    line-height: 20px;
+    top: -1px;
+    position: relative;
+    vertical-align: middle;
+}
+/* for ie7 */
+*+html .si-form  .field  .field-inner  input {
+    top: 0;
+    height: 21px;
+    line-height: 21px;
+}
+.si-form  .field  .field-inner  textarea {
+    border: 0 none;
+    resize: none;
+    width: 100%;
+    height: 44px;
+    padding: 0;
+}
+.si-form  .field  .field-inner  input:hover,
+.si-form  .field  .field-inner  textarea:hover {
+    background-color: #EAF2FF;
+}
+.si-form  .field  .field-inner  input:focus,
+.si-form  .field  .field-inner  textarea:focus {
+    background-color: #F7F6C3;
+}
+.si-form  .field  .field-inner  input[disabled],
+.si-form  .field  .field-inner  textarea[disabled],
+.si-form  .field  .field-inner  input[readonly],
+.si-form  .field  .field-inner  textarea[readonly]{
+    background-color: #FBFBFB;
+}
+.si-form  .field  .field-inner:hover  input[disabled],
+.si-form  .field  .field-inner:hover  textarea[disabled],
+.si-form  .field  .field-inner:hover  input[readonly],
+.si-form  .field  .field-inner:hover  textarea[readonly]{
+    cursor: not-allowed;
+}
+.si-form  .field  .field-inner  input[data-val-number]{
+    text-align: right;
+}
+/*
+* 页签
+*/
+/****** tab-nav ******/
+.si-form  .form-tab-nav {
+    background: none no-repeat scroll 0 bottom #FFFFFF;
+    border-right: 1px solid #A8A8A8;
+    display: table-cell;
+    padding: 30px 0;
+    vertical-align: top;
+    width: 103px;
+}
+.si-form  .form-tab-nav  li:first-child {
+    border-top: 1px solid #CCCCCC;
+}
+.si-form  .form-tab-nav  li {
+    font-size: 1.1em;
+    font-weight: bold;
+    border-bottom: 1px solid #CCCCCC;
+    padding-left: 20px;
+    background: #f3f3f3;
+}
+.si-form  .form-tab-nav  li.current
+{
+    box-shadow:0 1px 1px rgba(255,255,255,0.1) inset,0 0 1px rgba(0,0,0,0.2);
+    background: #fff;
+}
+.si-form  .form-tab-nav  li:hover{
+    cursor: pointer;
+}
+.si-form  .form-tab-nav  li span {
+    display: block;
+    height: 38px;
+    line-height: 38px;
+    overflow: hidden;
+}
+.si-form  .form-tab-nav li:hover span{
+    color: #888;
+}
+.si-form  .form-tab-nav li.current span {
+    background-color: #FFFFFF;
+    position: relative;
+    z-index: 2;
+    width: 103%;
+}
+/****** tab-box ******/
+.si-form  .form-tab-box {
+    background-color: #FFFFFF;
+    display: table-cell;
+    margin-left: 103px;
+    overflow: hidden;
+    padding: 10px 0;
+    width: auto;
+}
+.si-form  .form-tab-box  .tab-box-item {
+    overflow: hidden;
+    position: relative;
+    display: table;
+    padding: 0 25px 0 25px;
+}
+/* 基本信息box */
+.si-form  .general-box {
+    display: table-cell;
+    width: auto;
+}
+/* 图片上传box */
+.si-form  .upload-box {
+    display: table-cell;
+    width: 22%;
+    vertical-align: top;
+}
+.si-form  .upload-box  .upload {
+    display: block;
+    clear: both;
+    width: 100%;
+}
+.si-form  .upload-box  .upload-img {
+    border: 1px solid #A8A8A8;
+    clear: both;
+    display: block;
+    height: 184px;
+    margin: 0 0 0 31%;
+    width: 67%;
+}
+.si-form  .upload-box  .upload-img  img,
+.si-form  .upload-box  .upload-img  .upload-img-header {
+    /*cursor: pointer;*/
+    display: block;
+    height: 184px;
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    /*top: 1px;*/
+    /*width: 150px;*/
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=image); 
+}
+.si-form  .upload-box  .upload input[type="file"]{
+    position: absolute; 
+    width: 15%; 
+    right: 0px; 
+    top: 0px;
+    height: 25px;
+    cursor: pointer; 
+    z-index: 2; 
+    opacity: 0;
+    filter: alpha(opacity:0); 
+}
+
+/* 修正页签中的 toolbar 的样式 */
+.si-form  .form-tab-box  .tab-box-item .si-tbar {
+    display: block;
+    border-top: medium none;
+}
+.si-form  .form-tab-box  .tab-box-item .si-tbar .field {
+    display: inline-block;
+    height: 26px;
+    margin-right: -5px;
+    min-height: 26px;
+    /*width: 25% !important;*/
+}
+.si-form .si-tbar .field{
+    width: 100%;
+}
+/* for ie7 */
+*+html .si-form .si-tbar .field{
+    width: 25%;
+}
+*+html .si-form .si-tbar .field label{
+    width: auto;
+    padding: 0 10px;
+}
+.si-form  .form-tab-box  .tab-box-item .si-tbar ul {
+    display: inline-block;
+    padding: 2px 0;
+}
+/* 修正页签中的 grid 的样式 */
+.si-form  .form-tab-box  .tab-box-item .si-grid {
+    padding: 0 1%;
+}
+.si-form  .form-tab-box  .tab-box-item .si-grid .grid-inner table {
+    border-left: 1px solid #CCCCCC;
+    border-bottom: 1px solid #CCCCCC;
+    margin-bottom: 5px;
+    width: auto;
+}
+
+/*
+* form控件
+*/
+.si-form  .field  .field-inner  input.search-text,
+.si-form  .field  .field-inner  input.combo-text,
+.si-form  .field  .field-inner  input.upload-text {
+    width: 90%;
+}
+.si-form  .field  .field-inner  .search,
+.si-form  .field  .field-inner  .combo-arrow {
+    border-color: #A8A8A8;
+    border-style: solid;
+    border-width: 0 0 0 1px;
+    border-radius: 0;
+    position: absolute;
+    padding: 0;
+    right: 0;
+    top: 0;
+    width: 10%;
+    height: 24px;
+    cursor: pointer;
+}
+.si-form  .field.upload  .field-inner  .search{
+    width:15%;
+}
+.si-form  .field.upload  .field-inner  .upload-text {
+    width: 85%;
+}
+/***** 可搜索控件 ******/
+.si-form  .search {
+    background: url("/Images/form/search-btn.gif") no-repeat scroll center center transparent;
+}
+/***** 下拉菜单 ******/
+.si-form  .combobox {
+    /*z-index: 9;  for ie7 */
+}
+.si-form  .combobox  .field-inner {
+    /*padding: 1px;*/
+    overflow: visible;
+}
+.si-form  .combobox  .field-inner  .combo-arrow {
+    background: url("/Images/form/combo_arrow.gif") no-repeat scroll center center transparent;
+}
+.si-form  .combobox  .field-inner  .panel{
+    display: none;
+    position: absolute;
+   /* margin-top: 1px;
+    margin-left: -2px;*/
+    top: 25px;
+    left: -1px;
+    padding-right: 2px;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    z-index: 10;
+}
+.si-form  .combobox  .panel  .combo-panel{
+    background: none repeat scroll 0 0 #FEFEFE;
+    border-color: #A8A8A8!important;
+    border-style: solid;
+    border-width: 0 1px 1px;
+    overflow-x: hidden;
+    width:100%
+}
+.si-form  .combobox  .panel  .combo-panel  .combobox-item {
+    padding: 3px 0 3px 3px;
+}
+.si-form  .combobox  .panel  .combo-panel  .combobox-item-hover {
+    background: none repeat scroll 0 0 #FAFAFA;
+}
+.si-form  .combobox  .panel  .combo-panel  .combobox-item-selected {
+    background: none repeat scroll 0 0 #FBEC88;
+}
+/***** 自动完成控件(autoComplete) ******/
+.si-form  .field  .field-inner  .auto-complete {
+    border:1px solid #A8A8A8;
+    background: none repeat scroll 0 0 #FFFFFF;
+    margin-left: 0px;
+    max-height: 180px;
+    display: none;
+    overflow-y: auto;
+    position: absolute;
+    left: -1px;
+    top: 24px;
+    z-index: 10;
+    overflow-x: hidden;
+}
+.si-form  .field  .field-inner  .auto-complete  .si-grid {
+    background: none repeat scroll 0 0 #FEFEFE;
+    padding: 0;
+}
+.si-form  .field  .field-inner  .auto-complete  .si-grid  table {
+    min-width: 200px;
+    width: auto;
+    border-right: none;
+}
+.si-form  .field  .field-inner  .auto-complete  .si-grid  tr  th {
+    border-top: none;
+} 
+.si-form  .field  .field-inner  .auto-complete  .si-grid  tr:last-child td{
+    border-bottom: none;
+}
+
+/*
+* form校验
+*/
+.si-form  .field  .validatebox-invalid {
+    background-color: #FFF3F3;
+    border: 1px solid #E80C4D;
+}
+.si-form  .field  .validatebox-tip {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    width: 180px!important;
+    height: auto;
+    word-break: break-all;
+    font-size: 0.9em;
+    z-index: 990;
+}
+.si-form  .field  .validatebox-tip .tip-content {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CC9933;
+    border-radius: 3px;
+    display: inline-block;
+    left: 10px;
+    line-height: 13px;
+    padding: 3px 7px 5px;
+    position: absolute;
+    top: 0;
+    z-index: 991;
+}
+.si-form  .field  .validatebox-tip  .tip-pointer {
+    background: url("/Images/form/arrow-left.png") no-repeat scroll center center transparent;
+    display: inline-block;
+    height: 15px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 12px;
+    z-index: 992;
+}
+
+/*
+* 单据 
+*/
+.si-sheet .general-box {
+    padding-bottom: 5px;
+    padding-right: 55px;
+    /*width: 500px;*/
+}
+.si-sheet .si-sidebar {
+    width: 50px;
+}
+.si-sheet .field {
+    /*width: 50%;*/
+    width: 25%;
+    min-height: 0;
+    padding-top: 5px;
+}
+.si-sheet .field.sheet-capital {
+    overflow: hidden;
+    width: 100%;
+}
+.si-sheet .field.sheet-capital label {
+    width: 7.5%;
+    position: absolute;
+    font-weight: bold;
+}
+.si-sheet .field.sheet-capital .field-inner {
+    border-width: 0 0 1px;
+    margin-left: 7.7%;
+    width: 41.7%;
+}
+.si-sheet .field.sheet-capital .field-inner input {
+    color: #333;
+    font-weight: bold;
+    /*padding-left: 5px;*/
+}
+.si-sheet .approve-seal {
+    border: 2px solid red;
+    color: red;
+    font-family: '隶书';
+    font-size: 30px;
+    left: 60px;
+    padding: 2px 10px;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 100px;
+    word-break: break-all;
+    z-index: 1;
+}
+.si-sheet .approve-box {
+    display: table-cell;
+    padding-top: 28px;
+    padding-right: 50px;
+    vertical-align: top;
+    width: 550px;
+}
+.si-sheet .approve-box .field-inner {
+    border-width: 0 0 1px;
+}
+.si-sheet .approve-box .field-inner input[approved]:after{
+    content: "已审核";
+    color: red;
+    font-weight: bold;
+}
+
+/*日期范围*/
+.si-form  .field.datebox-area {
+    width : 100%;
+}
+.si-form  .field.datebox-area label:first-child{
+    margin-right: 0.35%;
+    width: 7.8%;
+}
+.si-form  .field.datebox-area input{
+    height: 16px;
+}
+.si-form  .field.datebox-area .field-inner{
+    width: 10.3%;
+}
+.si-form  .field.datebox-area> span{
+    width: 1.5%;
+    text-align: center;
+    display: inline-block;
+    margin-left:-3px;
+}
+.si-form  .field.button-line{
+    width:94%;
+    margin-left: 2%;
+    padding-top:8px;
+    border-top:1px solid #ccc;
+}
+.si-form  .field.button-line label{
+    width:11.5%;
+    margin-right:1%;
+}
+.si-form  .field.button-line label:after{
+    content: '';
+}
+.si-form  .field.button-line button:first-child{
+    margin-right:15px;
+}
+
+
+/******** wangpf 20130729 ********/
+.si-sheet .field.datebox-area {
+    width: 100%;
+}
+.si-sheet .field.datebox-area label{
+    width: 75px;
+    margin-right: 3px;
+}
+
+.si-form .field .option-group{
+    position: absolute;
+    width:11%;
+    left:0;
+    border:none;
+    height:16px;
+    top:3px;
+    margin-right:11%;
+}
+.si-form .field.datebox-area .hide{
+    display: none;
+}
+
+.si-form  .field.defined-area .field-inner{
+    width: 15%;
+}
+.si-form  .field.defined-area> span{
+    width: 2%;
+    text-align: center;
+    display: inline-block;
+}
+.si-form  .field.defined-area .field-inner{
+    width:31%;
+}
+.si-form  .field.radio-button .field-inner{
+    border:none;
+}
+
+/*高级查询*/
+.adv-search .field{
+    width: 34%;
+}
+.adv-search .si-form .field label{
+    width: 23%;
+}

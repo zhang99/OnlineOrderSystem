@@ -1,0 +1,155 @@
+#si-mask {
+	width:100%;
+	height:100%;
+	position:absolute;
+	left:0;
+	top:0;
+	z-index:100;
+	background:#000;
+	filter:alpha(opacity:10);
+	opacity:0.1;
+	display: block;
+}
+.si-wind {
+	background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    position: absolute;
+    width: 500px;
+    /*height: auto;*/
+    /*top: 50%;*/
+    left: 50%;
+    margin-left: -250px;
+    z-index: 100;
+    overflow: hidden;
+	-webkit-box-shadow:3px 4px 4px #777777;
+	-moz-box-shadow:3px 4px 4px #777777;
+	box-shadow:3px 4px 4px #777777;
+	-webkit-border-radius:7px 7px 5px 5px;
+	-moz-border-radius:7px 7px 5px 5px;
+	border-radius:7px 7px 5px 5px;
+}
+.si-wind.wind-list {
+	height: 450px;
+	width: 500px;
+	margin-left: -250px;
+	margin-top:30px;
+}
+.si-wind.wind-tree-list {
+	height: 460px;
+	width: 700px;
+	margin-left: -350px;
+}
+.si-wind.wind-list.wind-tree-list{
+	height: 460px;
+	width: 700px;
+	margin-left: -350px;
+	margin-top:20px;
+}
+.si-wind .wind-title {
+	background:url(../../Images/window/msgTop.gif) repeat-x;
+	height:26px;
+	border-bottom:1px solid #ccc;
+	/*box-shadow:0px 2px 2px #999999;*/
+}
+.si-wind .wind-title h3 {
+	font-size:14px;
+	color:#333;
+	font-weight:bold;
+	text-indent:15px;
+	line-height:26px;
+	height:26px;
+}
+*+html .si-wind .wind-title h3 {
+	background:url(../../Images/window/msgTop.gif) repeat-x;
+	position: absolute;
+	width: 100%;
+}
+.si-wind .wind-title span {
+	display:block;
+	position:absolute;
+	right:5px;
+	top:5px;
+	width:15px;
+	height:15px;
+	background:url(../../Images/window/closebg.jpg) no-repeat;
+	cursor:pointer;
+}
+.si-wind .wind-main {
+	padding: 5px 10px;
+}
+.si-wind .wind-main.onload{
+	background:url(../../Images/waitting/waitting.gif) center no-repeat;	
+    width: 32px;
+	height: 32px;
+    margin: 220px auto;
+}
+.si-wind .search-box {
+	display: block;
+	clear: both;
+	padding-bottom: 5px;
+}
+.si-wind .search-box input {
+    border: 1px solid #A8A8A8;
+    vertical-align: middle;
+    line-height: 22px;
+    height: 22px;
+    margin: -3px 0 0;
+}
+.si-wind .search-box span, .si-wind .search-box input, .si-wind .search-box a{
+    margin-left: 5px;
+}
+.si-wind .si-form .field {
+	float: none;
+	width: 100%;
+}
+.si-wind .si-form .field label{
+	width: 30%;
+}
+.si-wind .si-form .field div{
+	width: 45%;
+}
+.si-wind .si-grid table{
+    /*width: auto;*/
+    width: 100%;
+}
+.si-wind .si-tbar{
+	border-bottom: none;
+}
+*+html .si-wind .si-grid table {
+	width: 400px;
+}
+*+html .si-wind .center {
+	position: relative;
+}
+*+html .si-wind .si-grid .si-page {
+	width: 380px;
+}
+.si-wind .select-left{
+	width: 25%;
+}
+.si-wind .select-main{
+	width: 72%;
+}
+.si-wind.wind-list.wind-tree-list .wind-main .si-grid .grid-inner{
+	overflow-y : hidden;
+	overflow-x : auto;
+}
+
+.si-wind.wind-list .si-bottom-bar{
+	position: absolute;
+	bottom: 9px;
+	right: 0;
+	border-top: 1px solid #ccc;
+	width:97%;
+	padding-top:8px;
+}
+.si-wind .si-grid .grid-inner{
+	/*height:300px;
+	overflow-y:auto; */
+}
+.si-wind .align-right{
+	margin-top:5px;
+}
+.si-wind .si-grid .table-head, .si-wind .si-grid .table-body{
+	width:100%
+}

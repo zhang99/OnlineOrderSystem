@@ -1,0 +1,59 @@
+/* common css */
+/*
+    在此放全局的font、color、a
+*/
+html {
+    height: 100%;
+}
+body {
+    background-color: #fff;
+    color: #333;
+/*    font-size: 12px;
+    font-family: Yahei, Verdana, Helvetica, Sans-Serif;*/
+    font: 12px/1.5 tahoma,arial,宋体;
+    height: 100%;
+}
+a {
+    color: #333;
+    outline: none;
+    text-decoration: none;
+}
+a:link, a:visited {
+    color: #267CB2;
+}
+a:hover {
+    text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal;
+}
+input, textarea, label, select {
+    vertical-align: middle;
+    font-size: 12px;
+}
+th, td {
+    text-align: left;
+    vertical-align: middle;
+}
+/* float and clear float */
+.f-left {
+    float: left;
+}
+.f-right {
+    float: right;
+}
+.clearfix:after {
+    clear: both;
+    height: 0;
+    content: '.';
+    visibility: hidden;
+    display: block;
+}
+.clearfix {
+    zoom: 1
+} /*for ie 6 7 hasLayout*/
+.clear {
+    clear: both;
+}

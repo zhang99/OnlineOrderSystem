@@ -1,0 +1,206 @@
+/*talbe 区域*/
+.si-grid tr th
+{
+    font-weight: normal;
+    line-height: 28px;
+    text-align: center;
+    border: 1px solid #ccc;
+    background: linear-gradient(to bottom, #F9F9F9 0px, #EFEFEF 100%) repeat-x scroll 0 0 transparent;
+    height: 28px;
+    background:#f3f3f3\0;
+    border-bottom:none;
+}
+.si-grid table{
+	border-right:1px solid #ccc;
+}
+.form-tab-box .si-grid table{
+	border-top:1px solid #ccc;
+}
+.si-grid tr td {
+	border:1px solid #ccc;	
+	height: 26px;
+	padding: 0 5px;
+	text-align: center;	
+	height:26px;
+}
+.main .si-grid tr td:first-child, .main .si-grid tr th:first-child{	
+	border-left:none;
+}
+.main .si-grid tr:first-child th{
+	border-top:none;
+}
+.main .si-grid tr:last-child td{
+	border-bottom:none;
+}
+.si-grid tr td:last-child ,.si-grid tr th:last-child{
+	border-right:none
+}
+.si-grid tr td,.si-grid tr th {	
+	white-space: nowrap;	
+	overflow: hidden;
+}
+.si-grid tr th > div span{
+	font-size:12px;
+	padding:0;
+}
+.si-grid tr .grid-sort-asc div span,.si-grid tr .grid-sort-desc div span{
+	background:url(/Images/grid/datagrid_icons.png) no-repeat;
+	padding-right:13px;
+}
+.si-grid tr .grid-sort-asc div span{
+	background-position:0 center;
+}
+.si-grid tr .grid-sort-desc div span{
+	background-position:-16px center;
+}
+.si-grid tr:hover{
+	background-color:#EAF2FF;
+}
+.si-grid tr.selected{
+	background-color:#f7f6c3;
+}
+.si-grid tr .hide,
+.si-edit-grid tr .hide{
+	display: none;
+}
+.si-grid tr td a{
+	color:#267CB2;
+	text-decoration:none;
+}
+.si-grid tr td a:hover{
+	text-decoration:underline;
+}
+.si-grid .grid-inner,
+.si-edit-grid .grid-inner {
+	overflow-x :auto;
+	overflow-y:hidden;
+}
+
+.si-grid .grid-inner
+{
+    margin: 0 auto;  /*ie9下防抖动*/
+}
+
+
+
+/*编辑 grid*/
+.si-edit-grid{
+	border-top:1px solid #ccc;
+}
+.si-edit-grid tr th{
+	font-weight: normal;
+	line-height: 28px;
+	text-align: center;	
+	border:1px solid #ccc;
+	border-top:none;
+	background: linear-gradient(to bottom, #F9F9F9 0px, #EFEFEF 100%) repeat-x scroll 0 0 transparent;
+	background:#f3f3f3\0;
+	border-bottom:none;
+}
+.si-edit-grid tr th.linenum{
+	/*padding:0 2px;*/
+}
+.si-edit-grid tr td {
+	background-color: #FBFBFB;
+	border:1px solid #ccc;	
+	line-height: 22px;
+	text-align: right;
+}
+/******************* 20130725 ***************/
+.si-edit-grid tfoot tr td {
+	background: linear-gradient(to bottom, #F9F9F9 0px, #EFEFEF 100%) repeat-x scroll 0 0 transparent;
+}
+/******************* 20130725 ***************/
+.si-edit-grid tr td  input{
+	text-align:right;
+	line-height: 21px;
+	height:21px;
+	width: 99%;
+	padding:0;
+	padding-right: 1px\0;
+	/*margin-bottom: 1px;*/
+	vertical-align: middle;
+	border:none;
+}
+.si-edit-grid tr td  input[disabled]{
+	background-color: #FBFBFB;
+}
+.si-edit-grid tr td:first-child,.si-edit-grid tr th:first-child{	
+	border-left:none;
+}
+.si-edit-grid tr:last-child td{
+	border-bottom:none;
+}
+.si-edit-grid tr td div , .si-edit-grid tr th div{	
+	white-space: nowrap;	
+	text-overflow:ellipsis;
+	overflow: hidden;
+}
+.si-edit-grid tr:hover td:first-child{
+	background: #E0F2FF;
+}
+.si-edit-grid tr td .focus{
+	background: #F7F6C3;
+}
+.si-grid tr td.text-align-left , .si-edit-grid tr td.text-align-left,
+.si-grid tr td.text-align-left input , .si-edit-grid tr td.text-align-left input{
+	text-align: left;
+	text-indent: 1px;
+}
+.si-grid tr td.text-align-center , .si-edit-grid tr td.text-align-center,
+.si-grid tr td.text-align-center input , .si-edit-grid tr td.text-align-center input{
+	text-align: center;
+}
+.si-grid tr td.text-align-right , .si-edit-grid tr td.text-align-right,
+.si-grid tr td.text-align-right input , .si-edit-grid tr td.text-align-right input{
+	text-align: right;
+}
+.edit-grid-wrp{
+	border-top:1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	border-left:1px solid #ccc;
+	margin:5px;
+}
+/* wangpf 20130722 start */
+.si-edit-grid tr.current td{
+	background-color: #EAF2FF;
+}
+.si-edit-grid tr td .search-text{
+	width: 80%;
+	float: left;
+    margin-top: 1px;
+}
+.si-edit-grid tr td a.search{
+	border-color: #CCCCCC;
+    border-radius: 0 0 0 0;
+    border-style: solid;
+    border-width: 0 0 0 1px;
+    cursor: pointer;
+    height: 23px;
+    padding: 0;
+    float: left;
+    width: 18%;
+}
+/* wangpf 20130722 end */
+.si-wind .select-main .si-grid{
+	overflow-y:hidden;
+	overflow-x:auto;
+}
+
+.si-edit-grid tr th{
+	overflow: hidden;
+	white-space: nowrap;
+}
+.si-grid tr td, .si-edit-grid tr td{
+	padding: 0;
+	word-break: keep-all; 
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.si-grid .table-body, .si-grid .table-head, .si-grid .table-foot, .si-edit-grid .table-body, .si-edit-grid .table-head, .si-edit-grid .table-foot{
+	table-layout: fixed;
+	display:table;
+
+}

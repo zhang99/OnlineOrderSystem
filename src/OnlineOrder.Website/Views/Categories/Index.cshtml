@@ -1,0 +1,34 @@
+﻿@using System.Collections
+@using OnlineOrder.Mvc
+@{
+    string controllerName = Html.ControllerName();
+    string actionName = Html.ActionName();
+}
+<style>
+    .left{overflow:auto; }
+</style>
+@section left{
+<div class="left">
+    <div class="si-tree-wrp">
+        <ul id="tree" class="si-tree" controller="@controllerName" relationship = "@controllerName">
+            @Html.Partial("_Left") 
+        </ul>
+    </div>
+</div>
+}
+
+@Html.Toolbar(new List<ToolbarItem>() { 	
+    new ToolbarItem("新增", new Hashtable(){{"class","create"}}),
+    new ToolbarItem("修改", new Hashtable(){{"class","modify"}}),
+    new ToolbarItem("删除", new Hashtable(){{"class","delete"}}),
+    new ToolbarItem("刷新", new Hashtable(){{"class","refresh"}}),
+    //new ToolbarItem("设置", new Hashtable(){{"class","setting"}}),
+    //new ToolbarItem("打印", new Hashtable(){{"class","print"}}),
+})
+
+<div class="container">
+    <div class="si-grid" controller="@controllerName" action="@actionName"> 
+        @Html.Partial(string.Format("_{0}",actionName)) 
+    </div> 
+</div>
+

@@ -1,0 +1,22 @@
+﻿@using OnlineOrder.Mvc
+@using OnlineOrder.Mvc.Grid
+@using OnlineOrder.Mvc.Pagination
+@model IPagination<PurchaseOrderDetail>
+
+@Html.Grid(Model).Sort(ViewBag.Sort as GridSortOptions).Columns(c =>{
+    c.For(x => "").IsRowNumberColumn(true).Align(Alignment.Center).Width(30).Queryable(false);
+    c.For(x => x.PurchaseOrder.Code, "PurchaseOrder.Code").Named("单号").Width(120).Sortable(false);
+    c.For(x => x.PurchaseOrder.Branch.Name, "PurchaseOrder.Branch.Name").Named("仓库").Sortable(false);
+    c.For(x => x.PurchaseOrder.Vendor.Name, "PurchaseOrder.Vendor.Name").Named("供应商").Sortable(false);
+    c.For(x => x.Product.Category.Name, "PurchaseOrder.Categories.Name").Named("类别").Sortable(false);
+    c.For(x => x.Product.Code, "Product.Code").Named("货号").Sortable(false);
+    c.For(x => x.Product.Name, "Product.Name").Named("品名").Sortable(false);
+    c.For(x => x.Product.SubNo, "Product.SubNo").Named("自编码").Sortable(false);
+    c.For(x => x.Product.Brand.Name, "Product.Brand.Name").Named("品牌").Sortable(false);
+    c.For(x => x.Qty).Named("采购数量").Align(Alignment.Right);
+    c.For(x => x.ValidPrice).Named("采购单价").Align(Alignment.Right);
+    c.For(x => x.Amt).Named("采购金额").IsSum(true).Align(Alignment.Right);
+    c.For(x => x.PurchaseOrder.OperDate, "PurchaseOrder.OperDate").Named("操作日期");
+}).ShowFooter(true)
+
+@Html.Pager(Model)

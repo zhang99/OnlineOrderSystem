@@ -1,0 +1,42 @@
+﻿@using System.Collections
+@using OnlineOrder
+@using OnlineOrder.Mvc
+@using OnlineOrder.Mvc.Grid
+@using OnlineOrder.Mvc.Pagination
+@model Product
+           
+@* TODO: 从设计的完整性考虑，建议把form tab nav也通过Helper方法封装起来 james *@
+<div class="form-tab-nav">
+     <ul>
+         <li targ="a" class="current"><span>基本信息</span></li>
+         <li targ="b" id="barcodesLi" @(ViewBag.ActionName == "Create" ?  "style=display:none" : "")><span>附加码</span></li>         
+     </ul>
+</div>
+<div class="form-tab-box">
+    <div tab="a" class="tab-box-item">
+        <div class="general-box">           
+            @Html.SiHiddenFor(m => m.Id)                    
+            @Html.SiTextBoxFor(m => m.Code)
+            @Html.SiTextBoxFor(m => m.Name)     
+            @Html.SiTextBoxFor(m => m.SubNo)    
+            @Html.SiDropDownListFor(m => m.Unit)                             
+            @Html.SiUControlFor(m => m.Brand)
+            @Html.SiDropDownListFor(m => m.Status)  
+            @Html.SiUControlFor(m => m.Category)
+            @Html.SiUControlFor(m => m.Vendor)
+            @Html.SiTextBoxFor(m => m.InPrice)
+            @Html.SiTextBoxFor(m => m.SalePrice)
+            @Html.SiTextBoxFor(m => m.BasePrice)
+            @Html.SiTextBoxFor(m => m.PurchaseSpec)                  
+            @Html.SiIdNameTextBoxFor(m => m.Oper, new { disabled = "disabled" })
+            @Html.SiTextBoxFor(m => m.OperDate, new { disabled="disabled"})
+            @Html.SiIdNameTextBoxFor(m => m.Modify,new { disabled="disabled"})
+            @Html.SiTextBoxFor(m => m.ModifyDate, new { disabled="disabled"})
+            @Html.SiTextAreaFor(m => m.Memo)
+        </div>
+        @Html.SiUpload("PicFileName")               
+    </div>
+    <div tab="b" class="tab-box-item" style="display:none" >
+         @Html.Partial("_ProductBarcodes")   
+    </div>      
+</div> 

@@ -1,0 +1,136 @@
+/* 消息提示框样式 */
+.si-message-box {
+	width: 300px;
+	border: 1px solid #ccc;
+	position: absolute;
+	z-index: 1000;
+	background: #fff;
+	-webkit-box-shadow:#9c9c9c 0 2px 7px 1px;
+	-moz-box-shadow:#9c9c9c 0 2px 7px 1px;
+	box-shadow: #9c9c9c 0 2px 7px 1px;
+}
+.si-message-box .message-main b.warning, .si-message-box .message-main b.error,  .si-message-box .message-main b.info, .si-message-box .message-title b, 
+.si-message-box .message-main b.confirm ,.si-message-box .message-main b.succeed,
+.si-message-box .message-main b.confirms, .si-message-box .message-main b.normal{
+	background-image: url(/Images/message/message-sprite.png);
+	background-repeat: no-repeat;
+}
+.si-message-box .message-title {
+	height: 26px;
+	background-position: 0 -105px;
+	border-bottom: 1px solid #ccc;
+	background:url(/Images/message/msgTop.gif) repeat-x;	
+}
+.si-message-box .message-title h3 {
+	font-size:14px;
+	color:#333;
+	font-weight:bold;
+	text-indent:15px;
+	line-height:26px;
+	height:26px;
+}
+.si-message-box .message-title b {
+	width: 15px;
+	height: 15px;
+	background-position: 0 0;
+	display: inline-block;
+	float: right;
+	margin: 5px 8px 0 0;
+	cursor: pointer;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+.si-message-box .message-main {
+	padding: 10px 20px 15px;
+	text-align: center;
+	clear: both;
+}
+.si-message-box .message-main p {
+	text-align: center;
+	color: #333;
+	font-size: 14px;
+	padding: 15px 0;
+	font-weight: bold;
+	vertical-align: middle;
+	line-height: 20px;
+}
+.si-message-box .message-main a {
+	color: #333333;
+	/*-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	padding:0 9px;	
+	height:23px;	
+	border: 1px solid #b5b5b5;
+	border-bottom-color: #7f7f7f;
+	cursor: pointer;
+	font-size: 12px;	
+	line-height:23px;
+	display: inline-block;
+	overflow: visible;
+	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+	-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);	
+	color: #333;
+	font-family: Arial, Helvetica, sans-serif;
+	background-image: -moz-linear-gradient(top, #ffffff, #dedede);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffffff), color-stop(1, #dedede)); 
+	background: #f3f3f3\0;*/
+}
+.si-message-box .message-main a:hover{
+	border-color: #999;
+	text-decoration: none;
+	background: none;
+	color: #333;
+	background: #f3f3f3\0;
+}
+.si-message-box .message-main a.current{
+	border-color: #666666;
+	text-decoration: none;
+}
+.si-message-box .message-main a.mr-15 {
+	margin-right: 15px;
+}
+.si-message-box .message-main p b{
+	position: relative;
+	top:2px;
+	width: 16px;
+	height: 14px;
+	*height:16px;
+	display: inline-block;
+	margin-right: 5px;
+}
+.si-message-box .message-main p span{
+	word-wrap:break-word; 
+}
+.si-message-box .message-main p .msgInfo {
+*display:inline-block;
+}
+.mask {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	background: #000;
+	opacity: 0.2;
+	filter: alpha(opacity=20);
+	z-index: 999;	
+}
+/*共五个类型，默认类型为info*/
+.si-message-box .message-main b.warning , .si-message-box .message-main b.confirms {
+	background-position: 0px -16px;
+}
+.si-message-box .message-main b.error {
+	background-position: 0px -64px;
+}
+.si-message-box .message-main b.succeed {
+	background-position: 0px -48px;
+}
+.si-message-box .message-main b.info, .si-message-box .message-main b.normal {
+	background-position: 0px -32px;
+}
+.si-message-box .message-main b.confirm{
+	background-position: 0px -108px;
+}

@@ -1,0 +1,74 @@
+﻿@using OnlineOrder.Mvc
+
+@{
+    ViewBag.Title = "商品选择";
+    string controllerName = Html.ControllerName();
+    string actionName = Html.ActionName();
+    var isCheckHide = Convert.ToBoolean(Request.Params["isCheckHide"]);
+}
+
+<div class="select-left">
+    <div class="si-tree-wrp">
+        <ul id="tree" class="si-tree" controller="Categories"  relationship = "@controllerName">
+            @Html.Partial("_Left") 
+        </ul>
+    </div>
+</div>
+
+<div class="select-main">
+<div class="search-box">
+    <span>过滤： </span><input type="text" class="search-text"><a class="si-btn query">查询</a>
+</div>
+<div class="si-grid" controller="@controllerName" action="@actionName"> 
+    @Html.Partial(string.Format("_{0}", actionName)) 
+</div>    
+</div>
+<div class="si-bottom-bar select-bottom">
+    <a class="si-btn confirm">确定</a><a class="si-btn cancel">取消</a>
+</div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        var grid = $('.si-wind .si-grid').grid({ tlbar: '.search-box', listForEdit: true, isCheckHide: "@isCheckHide" }),
+            tree = $('#tree').tree({ listForEdit: true, isCheckHide: "@isCheckHide" }),
+            editGrid = $('.si-edit-grid').editGrid(),
+            $grid = $('.si-grid[controller="@controllerName"]')
+            searchField = $(".field[controller={0}]".format("@controllerName"));
+        $('.search-box .query').on('click', function () {
+            grid.doAction('refresh');
+        })
+        $('.si-bottom-bar .cancel').on('click', function () {
+            $.window("close", grid);
+        })
+        $('.si-bottom-bar .confirm').on('click', function () {
+            if($('.si-edit-grid').length > 0 ){
+                editGrid.confirm()
+            }else{
+                $(".search-text", searchField).trigger('change');
+                grid.confirm( $(".search-text", searchField) );
+            }
+        })
+        $("tbody tr", $grid).live("dblclick", function () {
+            if($('.si-edit-grid').length == 0){
+                var value = grid.getData();
+                for (var arg in value) {
+                    $("input", searchField).each(function () {
+                        if (new RegExp(arg).test(this.id)) {
+                            this.value = value[arg];
+                        }
+                    })
+                }           
+                $grid.parents('.si-wind').remove();
+                $('#si-mask').css("z-index", parseInt($('#si-mask').css("z-index")) - 1);
+                if ($('.si-wind:visible').length == 0) {
+                    $('#si-mask').remove();
+                }
+                $(".search-text", searchField).trigger('change');
+                $(".search-text", searchField).focus();
+            }
+        })
+        // 初次弹出查询窗口，把主页面的查询条件写进来
+        log("@ViewBag.Query")
+        $('.search-text', '.search-box').val("@ViewBag.Query");
+    });
+</script> 

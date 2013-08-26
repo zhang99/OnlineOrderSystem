@@ -1,0 +1,91 @@
+﻿@using System.Collections
+@using OnlineOrder.Mvc
+
+<h3>@ViewBag.Title</h3>
+
+@Html.Partial("_Create") 
+
+<div class="align-right">
+  @Html.Toolbar(new List<ToolbarItem>() { 
+    new ToolbarItem("保存", new Hashtable(){{"class","save"}}),
+    new ToolbarItem("保存并新增", new Hashtable(){{"class","saveIcreate"}}),
+    new ToolbarItem("取消", new Hashtable(){{"class","cancel"}}),
+},false)
+</div>
+
+
+<script type="text/javascript">
+    $(function () {
+        var controller = '@ViewBag.ControllerName',
+            $form = $('.si-form[controller='+ controller +']'),
+            form = $form.form(),
+            tree,
+            grid = $('.si-grid:visible').grid();
+            
+        controller == 'Categories' && (tree = $('#tree').tree());
+        $('textarea', $form).parents('.field').removeClass('merged');
+        if($form.attr('action') == 'Edit'){
+            $(':text[name="Code"]', $form).attr('disabled',true);
+            $('.saveIcreate', '.si-tbar').hide();
+        }
+        $('.save', '.si-tbar').on('click', function(){
+            save();
+        });
+        $('.saveIcreate', '.si-tbar').on('click', function () {
+            save(true);
+        });
+        if(controller == 'Categories'){
+            $(':text[Name=Code]', $form).on('keyup', function () {
+                if ($(this).val().length > 2) {
+                    $(this).val($(this).val().substring(0, 2));
+                }
+            })
+        }
+        function save(bool) {
+            var saveData = {};
+            if(controller == 'Categories'){
+                var fields = form.getFormData($form),
+                    cateCode;
+                fields.Code = fields.Code.toUpperCase();
+                cateCode = fields["Parent.Code"].replace('所有类别', '') + fields.Code ;
+                saveData = $('.si-form').attr('action') == 'Edit' ? fields : $.extend({}, fields, {Code : cateCode});
+                if(! validate('ProfitRate', '毛利率')){
+                    return ;
+                }
+            }else if(controller == 'Vendors'){
+                if(! validate('Discount', '折扣')){
+                    return;
+                }
+            }
+            form.doAction('save', {
+                data : saveData,
+                success: function (data) {
+                    if (data.status == 'success') {
+                        controller == 'Categories' && ($form.attr('action') == 'Edit' ? tree.modifyNode(fields, data) : tree.createNode(data));
+                        if(bool){
+                            form.clean($form);
+                            controller == 'Categories' && ($(':text[name="Parent.Code"]', $form).attr('value', fields["Parent.Code"]));
+                        }else{
+                            $.window("close", $form);  
+                        }
+                        grid.doAction('refresh');
+                    };
+                    $.message(data.message);
+                }
+            })
+        }
+        function validate(field, name){
+            var result = true;
+            if (!/^(0\.\d*|1(\.0*)?)$/.test($(':text[Name='+ field +']', $form).val())) {
+                $form.validateErrors([{id: field, msg : name +'请输入0-1之间的数字'}])
+                $(':text[Name='+ field +']', $form).val('0.00');
+                result = false;
+            }
+            return result;
+        }
+
+        $('.cancel', '.si-tbar').click(function () {
+            $.window("close",  $form);
+        });
+    });
+</script>

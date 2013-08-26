@@ -1,0 +1,39 @@
+﻿@using OnlineOrder.Mvc
+@using OnlineOrder.Mvc.Grid
+@using OnlineOrder.Mvc.Pagination
+@model Product
+
+<div class="si-tbar">                    
+    <ul>            
+        <li class="barcodes"><label for="Barcode">商品附加码</label>@Html.TextBox("Barcode")</li>
+        <li><a class="si-btn" id="createBarcode"><b></b>增加条形码</a></li>
+        <li><a class="si-btn" id="delBarcode"><b></b>删除条形码</a></li>
+    </ul>
+</div>           
+<div class="si-grid"  id="ProductBarcodes" field="ProductBarcodes">  
+    @Html.Grid(Model==null ? null : Model.ProductBarcodes).Columns(c => {
+        c.For(x => Html.CheckBox("Barcodes", new { value = x.Id.ToString() }), "Id").Header(x => Html.CheckBox("Barcodes")).Sortable(false).Align(Alignment.Center).Width(40);
+        c.For(x => "").IsRowNumberColumn(true).Align(Alignment.Center).Width(80).Sortable(false);
+        c.For(x => x.Barcode).Named("商品条形码").Align(Alignment.Center).Width(380).Sortable(false);
+    })
+</div>  
+
+<script type="text/javascript">
+    $(function () {
+        var grid = $('.si-grid[field="ProductBarcodes"]').grid();
+        /*
+        * 商品附加码
+        */
+        $("#createBarcode").live("click", function () {
+            grid.addLine({
+                Barcode: "商品附加码"
+            });
+        });
+        $("#delBarcode").live("click", function () {
+            grid.delLine();
+        });     
+
+    });
+
+</script>
+

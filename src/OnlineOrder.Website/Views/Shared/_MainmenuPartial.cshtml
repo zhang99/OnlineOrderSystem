@@ -1,0 +1,55 @@
+﻿@using OnlineOrder.Mvc
+
+@{          
+    var jsonMenus = @"[
+            {'Text':'首页','Controller':'Home'},
+            {'Text':'基础档案','Controller':'Products',
+              'Menus':[
+
+                {'Text':'类别管理',
+                  'Menus':[
+                    {'Text':'查看类别','Controller':'Categories'},
+                  ]},
+
+                {'Text':'商品管理',
+                  'Menus':[  
+                    {'Text':'查看商品','Controller':'Products'},
+                    {'Text':'创建商品','Controller':'Products','Action': 'Create'},
+                  ]},
+
+                {'Text':'品牌管理',
+                  'Menus':[
+                    {'Text':'查看品牌','Controller':'Brands'},
+                  ]},
+
+                {'Text':'供应商管理',
+                  'Menus':[
+                    {'Text':'查看供应商','Controller':'Vendors'},
+                  ]}
+
+                
+              ]},
+            {'Text':'采购管理','Controller':'PurchaseOrders',
+              'Menus':[
+                {'Text':'订单管理',
+                 'Menus':[
+                    {'Text':'采购收货','Controller':'PurchaseOrders'},
+                    {'Text':'创建采购收单','Controller':'PurchaseOrders','Action': 'Create'}
+                    ]
+                },{
+                 'Text':'采购查询',
+                 'Menus':[
+                    {'Text':'采购明细','Controller':'PurchaseDetailsReport'}
+                   ]
+                  },
+                {'Text':'其他',
+                  'Menus':[
+                    {'Text':'SISS','Url':'http://www.siss.com.cn'}
+                  ]}
+                ]
+            }]";    
+ 
+    
+    @Html.SiMainMenu(jsonMenus, ViewContext.RouteData.Values["controller"].ToString());             
+       
+}
