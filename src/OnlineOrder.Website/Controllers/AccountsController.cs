@@ -12,6 +12,7 @@ namespace OnlineOrder.Website.Controllers
         public UsersController(User model)
             : base(model)          
         {           
+		
         }
 
     }
