@@ -12,27 +12,27 @@ using System.Collections.Generic;
 
 namespace OnlineOrder.Website.Models
 {
-    public partial class Order : SheetModelBase<Order>, IModel<Order>
+    public partial class Order : SheetModelBase<Order>, ISheetModel<Order>
     {
         public Order()
         {
             this.OrderDetails = new HashSet<OrderDetail>();
         }
     
-        public int Id { get; set; }
-        public string Code { get; set; }
+        //public int Id { get; set; }
+        //public string Code { get; set; }
         public Nullable<int> CustomerId { get; set; }
         public Nullable<int> DeliveryId { get; set; }
         public Nullable<int> PaymentId { get; set; }
         public Nullable<int> ReceiptId { get; set; }
         public Nullable<System.DateTime> PayDate { get; set; }
         public Nullable<decimal> Amount { get; set; }
-        public string ApproveFlag { get; set; }
+        //public string ApproveFlag { get; set; }
         public string Status { get; set; }
-        public Nullable<System.DateTime> ApproveDate { get; set; }
-        public Nullable<int> ApproverId { get; set; }
-        public Nullable<int> OperId { get; set; }
-        public Nullable<System.DateTime> OperDate { get; set; }
+        //public Nullable<System.DateTime> ApproveDate { get; set; }
+        //public Nullable<int> ApproverId { get; set; }
+        //public Nullable<int> OperId { get; set; }
+        //public Nullable<System.DateTime> OperDate { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
