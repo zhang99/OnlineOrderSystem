@@ -8,8 +8,11 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using OnlineOrder.Mvc;
+using Newtonsoft.Json;
 
 namespace OnlineOrder.Website.Models
 {
@@ -21,22 +24,35 @@ namespace OnlineOrder.Website.Models
             this.SendOrderDetails = new HashSet<SendOrderDetail>();
             this.ShoppingCarts = new HashSet<ShoppingCart>();
         }
-       [Display(Name = "编码")]
+        [Display(Name = "货号")]
+        [StringLength(20, MinimumLength = 4)]
+        [Required(AllowEmptyStrings = false)]
+        [Width(120)]
+        [Editable(true)]
         public string Code { get; set; }
         [Display(Name = "品名")]
         public string Name { get; set; }
+        [Display(Name = "单位")]
+        [Relation("CodeType=01")]
+        [JsonIgnore]
         public Nullable<int> UnitId { get; set; }
         public Nullable<int> CategoryId { get; set; }
         public Nullable<int> BrandId { get; set; }
         [Display(Name = "成本价")]
+        [Range(0, 999999)]
         public Nullable<decimal> CostPrice { get; set; }
         [Display(Name = "售价")]
+        [Range(0, 999999)]
         public Nullable<decimal> SalePrice { get; set; }
         [Display(Name = "库存数量")]
+        [Range(0, 999999)]
         public Nullable<decimal> StockQty { get; set; }
         [Display(Name = "描述")]
         public string Description { get; set; }
+        [Display(Name = "图片")]
+        public string PicFileName { get; set; }
         [Display(Name = "状态")]
+        [Values("[{Text:'正常', Value:'0'},{Text:'停售', Value:'1'},{Text:'淘汰', Value:'2'}]")]
         public string Status { get; set; }
         [Display(Name = "备注")]
         public string Memo { get; set; }
@@ -48,13 +64,44 @@ namespace OnlineOrder.Website.Models
         public Nullable<System.DateTime> ModifyDate { get; set; }
     
         public virtual BaseCode BaseCode { get; set; }
+        [Display(Name = "品牌")]
         public virtual Brand Brand { get; set; }
+        [Display(Name = "类别")]
         public virtual Category Category { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        [Display(Name = "创建者")]
         public virtual User Oper { get; set; }
+        [Display(Name = "最后修改者")]
         public virtual User Modify { get; set; }
         public virtual ICollection<SendOrderDetail> SendOrderDetails { get; set; }
         public virtual ICollection<ShoppingCart> ShoppingCarts { get; set; }
+
+        #region 方法
+        /// <summary>
+        /// 添加、修改前业务处理
+        /// </summary>
+        /// <param name="entity"></param>
+        public override void BeforeAddOrUpdate(Product entity)
+        {
+            IEnumerable<Product> lstItem;
+            if (entity.Id == 0)
+                lstItem = GetList(p => p.Code == entity.Code);
+            else
+                lstItem = GetList(p => p.Code == entity.Code && p.Id != entity.Id);
+
+            if (lstItem != null && lstItem.Count() > 0)
+                throw new Exception(string.Format("该商品编码[{0}]已被占用!", entity.Code));
+        }
+
+        /// <summary>
+        /// 删除前逻辑处理
+        /// </summary>
+        /// <param name="entity"></param>
+        public override void BeforeDelete(Product entity)
+        {
+           
+        }
+        #endregion
     }
     
 }

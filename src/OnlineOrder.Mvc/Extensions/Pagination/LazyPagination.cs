@@ -2,11 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-//using System.Linq.Dynamic;
-using OnlineOrder.Extensions;
+using System.Linq.Dynamic;
 using System.Linq.Expressions;
 using System.Text;
 using System.Reflection;
+using OnlineOrder.Mvc.Grid;
 
 namespace OnlineOrder.Mvc.Pagination
 {
@@ -39,11 +39,12 @@ namespace OnlineOrder.Mvc.Pagination
 		/// <param name="query">The query to page.</param>
 		/// <param name="pageNumber">The current page number.</param>
 		/// <param name="pageSize">Number of items per page.</param>
-        public LazyPagination(IQueryable<T> query, int pageNumber, int pageSize, IDictionary<string, decimal> dicSum)
+        public LazyPagination(IQueryable<T> query, int pageNumber, int pageSize, GridSortOptions sortOptions, IDictionary<string, decimal> dicSum)
 		{
 			PageNumber = pageNumber;
 			PageSize = pageSize;
 			Query = query;
+            SortOptions = sortOptions;
             DicSum = dicSum;
 
             //add by zhangh 2013/5/31 页码为-1时，返回最大页码
@@ -193,6 +194,11 @@ namespace OnlineOrder.Mvc.Pagination
         {
             get;
             set;
+        }
+
+        public GridSortOptions SortOptions { 
+            get; 
+            set; 
         }
 	}
 }

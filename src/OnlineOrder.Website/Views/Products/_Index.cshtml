@@ -2,11 +2,12 @@
 @using OnlineOrder.Mvc.Grid
 @using OnlineOrder.Mvc.Pagination
 @using OnlineOrder.Website.Models
-@model IPagination<Product>
+@model SelectProductsViewModel
 
-@Html.Grid(Model).Sort(ViewBag.Sort as GridSortOptions).Columns(c =>{
+@Html.Grid(Model.ProductsList).Sort(ViewBag.Sort as GridSortOptions).Columns(c =>{
           c.For(x => Html.CheckBox("products", new { value = x.Id.ToString() }),"Id").Header(x => Html.CheckBox("products")).Sortable(false).Align(Alignment.Center).Width(30).Queryable(false);
           c.For(x => "").IsRowNumberColumn(true).Align(Alignment.Center).Width(40).Queryable(false);
+          c.For(x => Html.Raw(string.Format("<img src='/Uploads/{0}' width='70px' height='80px'>",x.PicFileName)),"PicFileName").Align(Alignment.Center);
           c.For(x => Html.ActionLink(x.Code, "Edit", new { id = x.Id }), "Code");         
           c.For(x => x.Name).Width(200);
           c.For(x => x.UnitId).Named("单位").Sortable(false).Queryable(false);
@@ -21,4 +22,4 @@
           c.For(x => x.ModifyDate).Width(120);
  }).AutoScroll(true)
 
-@Html.Pager(Model)
+@Html.Pager(Model.ProductsList)

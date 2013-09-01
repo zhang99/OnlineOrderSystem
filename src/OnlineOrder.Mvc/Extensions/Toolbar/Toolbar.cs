@@ -13,8 +13,13 @@ namespace OnlineOrder.Mvc
     /// <summary>
     /// ToolbarItem
     /// </summary>
-    public class ToolbarItem
+    public class ToolbarItem    
     {
+        public ToolbarItem(string text):this(text,null)
+        {
+            this.Text = text;
+        }
+
         public ToolbarItem(string text, Hashtable attibutes)
         {
             this.Text = text;
@@ -87,14 +92,17 @@ namespace OnlineOrder.Mvc
                 sb.AppendFormat(@"<ul>{0}", Environment.NewLine);
                 foreach (ToolbarItem item in this._toolbarItems)
                 {
-                    sb.AppendFormat(@"<li><a ", Environment.NewLine, item.Text);                    
-                    foreach (var i in item.Attibutes.Keys)
+                    sb.AppendFormat(@"<li><a ", Environment.NewLine, item.Text);
+                    if (item.Attibutes != null)
                     {
-                        if (i.ToString().ToLower().Equals("class"))
-                            sb.AppendFormat(@" {0}=""si-btn {1}"" ", i, item.Attibutes[i]);
-                        else
-                            sb.AppendFormat(@" {0}=""{1}"" ", i, item.Attibutes[i]);
-                    }                   
+                        foreach (var i in item.Attibutes.Keys)
+                        {
+                            if (i.ToString().ToLower().Equals("class"))
+                                sb.AppendFormat(@" {0}=""si-btn {1}"" ", i, item.Attibutes[i]);
+                            else
+                                sb.AppendFormat(@" {0}=""{1}"" ", i, item.Attibutes[i]);
+                        }
+                    }
 
                     sb.AppendFormat(@"><b></b>{1}</a></li>{0}", Environment.NewLine, item.Text);
                 }
@@ -102,11 +110,11 @@ namespace OnlineOrder.Mvc
                     sb.Append(@"<li class=""search""><input type=""text"" class=""search-text""  autofocus/><button class=""si-btn query"">查询</button></li>");
 
                 if (!String.IsNullOrEmpty(this._block))
-                    sb.Append(@"<li><a class=""adv"" id=""adv-search"">高级查询<i></i><b></b></a></li>");               
+                    sb.Append(@"<li><a class=""adv adved"" id=""adv-search"">高级查询<i></i><b></b></a></li>");               
                
                 sb.AppendFormat(@"</ul>{0}", Environment.NewLine);
                  if (!String.IsNullOrEmpty(this._block))
-                     sb.AppendFormat(@"<div style=""display:none;"" class=""adv-search"" id=""adv-search-panel"">{0}</div>", this._block);     
+                     sb.AppendFormat(@"<div class=""adv-search"" id=""adv-search-panel"">{0}</div>", this._block);     
 
                 _builder.Append(sb.ToString());                           
             }                                           

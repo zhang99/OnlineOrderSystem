@@ -1,25 +1,18 @@
 ﻿@using OnlineOrder.Mvc
 @using OnlineOrder.Mvc.Grid
 @using OnlineOrder.Mvc.Pagination
+@using OnlineOrder.Website.Models
 @model SelectProductsViewModel
 
 @{
-    var isCheckHide = Convert.ToBoolean(Request.Params["isCheckHide"]);
+    var hideCheckbox = Convert.ToBoolean(Request.Params["hideCheckbox"]);
 }
-
-@Html.Grid(Model.ProductsList).Sort(ViewBag.Sort as GridSortOptions).Columns(c =>{
-    c.For(x => Html.CheckBox("products", new { value = x.Id.ToString() }), "Id").Header(x => Html.CheckBox("products")).Sortable(false).Align(Alignment.Center).Hide(isCheckHide).Width(30);
-          //c.For(x => x.Id).Hide(true);
-          c.For(x => "").IsRowNumberColumn(true).Align(Alignment.Center).Hide(!isCheckHide).Width(30);
-          c.For(x => x.Code).Width(100);
-          c.For(x => x.SubNo).Width(100);
-          c.For(x => x.Name).Width(120);
-          c.For(x => x.Unit.Name, "Unit.Name").Width(100);
-          c.For(x => x.PurchaseSpec).Width(60);
-          c.For(x => x.SalePrice).Named("零售价").Align(Alignment.Right).Width(60);
-          c.For(x => x.InPrice).Named("进货价").Align(Alignment.Right).Width(60);
-          c.For(x => x.BasePrice).Named("批发价").Align(Alignment.Right).Width(60);
- }).AutoScroll(true)
-
+@Html.Grid(Model.ProductsList).ShowCheckBox(! @hideCheckbox).ShowRowNumber(true).AutoScroll(true).Columns(c =>{
+          c.For(x => x.Id, "Product.Id").Hide(true);
+          c.For(x => x.Code, "Product.Code");
+          c.For(x => x.Name, "Product.Name");
+          c.For(x => x.UnitId, "Product.UnitId");         
+          c.For(x => x.SalePrice);           
+ })
 
 @Html.Pager(Model.ProductsList)  

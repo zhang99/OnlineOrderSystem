@@ -50,8 +50,9 @@ namespace OnlineOrder.Mvc.Grid
 				RenderEmpty();
 			}
 
-            if (GridModel.ShowFooter)
+            if (GridModel.ShowFooter && !IsDataSourceEmpty())
                 RenderFooter();
+
 
 			RenderGridEnd(!hasItems);
 		}
@@ -89,6 +90,7 @@ namespace OnlineOrder.Mvc.Grid
 		{
 			BaseRenderRowStart(rowData);
            
+            int i = 0;
 			foreach(var column in VisibleColumns())
 			{                
 				//A custom item section has been specified - render it and continue to the next iteration.
@@ -102,7 +104,19 @@ namespace OnlineOrder.Mvc.Grid
 #pragma warning restore 612,618
 
 				RenderStartCell(column, rowData);
-				RenderCellValue(column, rowData);
+                if (this.GridModel.ShowCheckBox && i == 0)
+                {
+                    RenderCheckBox(column, rowData.Item);
+                }
+                else
+                {
+                    RenderCellValue(column, rowData);
+                }
+                i++;
+
+                if (i == VisibleColumns().Count())
+                    i = 0;
+
 				RenderEndCell();
 			}
 
@@ -119,11 +133,11 @@ namespace OnlineOrder.Mvc.Grid
             {
                 var cellValue = column.GetValue(rowData.Item);
 
-                if (column.Editable && column.Selectable)
+                if (column.IsEditable && column.Selectable)
                     cellValue = string.Format("<input type=\"text\" value=\"{0}\" class=\"search-text\"><a class=\"si-btn search\"></a>", cellValue);
                 else if (column.Selectable)
                     cellValue = string.Format("<input type=\"text\" value=\"{0}\" class=\"search-text\" disabled=\"disabled\"><a class=\"si-btn search\"></a>", cellValue);
-                else if (column.Editable)
+                else if (column.IsEditable)
                     cellValue = string.Format("<input type=\"text\" value=\"{0}\" class=\"focus\">", cellValue);
 
                 if (cellValue != null)
@@ -132,6 +146,18 @@ namespace OnlineOrder.Mvc.Grid
                 }
             }
 		}
+
+        private void RenderCheckBox(GridColumn<T> column, T instance)
+        {
+            if (column == null || string.IsNullOrWhiteSpace(column.FieldName))
+                throw new Exception("FieldName²»ÄÜÎª¿Õ.");
+
+            Type type = instance.GetType();
+            var cellValue = type.GetProperty(column.FieldName).GetValue(instance, null);
+            string cellHtml = string.Format("<input type=\"checkbox\" value=\"{0}\">", cellValue);
+
+            RenderText(cellHtml);
+        }
 
         private string RenderRowNum()
         {
@@ -242,7 +268,7 @@ namespace OnlineOrder.Mvc.Grid
 
 		protected IEnumerable<GridColumn<T>> VisibleColumns()
 		{
-			return GridModel.Columns.Where(x => x.Visible);
+			return GridModel.Columns.Where(x => x.IsVisible);
 		}
 
         protected int TotalWidth

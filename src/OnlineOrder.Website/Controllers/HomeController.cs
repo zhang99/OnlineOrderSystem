@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using OnlineOrder.Mvc;
 
 namespace OnlineOrder.Website.Controllers
 {
+    [Title("首页")]
     public class HomeController : Controller
     {
         public ActionResult Index()

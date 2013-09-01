@@ -56,10 +56,10 @@ $.fn.sheetForm = function (options) {
             })
         },
         _tbarEventInit  : function(sheetForm){
-            $('.si-btn:not(".disabled, [id], .query")', '.si-tbar').live('click.tbarEvent',function () {
+            $('.si-btn:not(".disabled, [id], .query")', '.si-tbar').on('click.tbarEvent',function () {
                 _this.doAction($(this).attr("class").split(' ').pop());
             });
-            $('.si-btn.query:not(".disabled")', '.si-tbar').live('click',function () {
+            $('.si-btn.query:not(".disabled")', '.si-tbar').on('click',function () {
                 _this.sheetGrid.query();
             });
             // 用户覆盖(override)原有的 action method
@@ -103,10 +103,23 @@ $.fn.sheetForm = function (options) {
             var defaults = {
                 data : {},
                 beforeSend : function(){},
+                global : false,
                 success : function(){},
-                complete : function(){}
+                complete : function(){
+                    $(document.body).waitting(false);
+                }
             };
             defaults.data = _this.getFormData(target);
+            // 
+            var sheetDetails = defaults.data[$('.si-edit-grid',target).attr('controller')];
+            var delDetailsIds = [];
+            if($('.si-edit-grid [id^=del][id$=Ids]', target).attr('value')){
+                var arr = $('.si-edit-grid [id^=del][id$=Ids]', target).attr('value').split(',');
+                for(var i = 0, ilen = arr.length; i < ilen; i++){
+                    delDetailsIds.push({Id : arr[i]});
+                }
+            }
+            defaults.data[$('.si-edit-grid',target).attr('controller')] = delDetailsIds.concat(sheetDetails);
             defaults.beforeSend = function(){
                 // 用户自定义全局 调用前函数
                 if(_this.settings.beforeSend && !_this.settings.beforeSend()){
@@ -116,9 +129,16 @@ $.fn.sheetForm = function (options) {
                 if(option && option.beforeSend && !option.beforeSend()){
                     return false;
                 }
+                // 单据明细数据校验
+                if(sheetDetails && sheetDetails.length == 0){
+                    $.message( { msg:"明细数据不能为空，请重新输入！", type:'warning' } )
+                    return false;
+                }
+                $(document.body).waitting({bool : true, msg : '保存中...'});
             };
             defaults.success = function(data){
                 if(data.status=='success'){
+                    $(target).data('ischange', false); //清空标记
                     if($(target).attr('action').toLowerCase() == 'create'){
                         $('#Id', target).attr('value',data.data.Id);
                         $('#Code', target).attr('value',data.data.Code);
@@ -146,15 +166,14 @@ $.fn.sheetForm = function (options) {
                 // 扩展保存成功回调函数
                 option && option.success && option.success();
             };
-            var opts = $.extend({}, option, defaults );
-            
+            var opts = $.extend(true, defaults ,option );
             /*去除关联字段*/
             _this._delCorrelationFields(opts.data);
             //-------------- validation start -----------
-            if( !$(target).validate() ){
+            if(!opts.data){
                 return false;
             }
-            if(!opts.data){
+            if( !$(target).validate() ){
                 return false;
             }
 
@@ -164,7 +183,7 @@ $.fn.sheetForm = function (options) {
                 url : '/{0}/{1}'.format($(target).attr('controller'),$(target).attr('action')),
                 data : JSON.stringify(opts.data),
                 contentType : 'application/json',
-                // global : opts.global || false,
+                global : opts.global,
                 beforeSend : opts.beforeSend,
                 success : opts.success,
                 complete : opts.complete
@@ -182,8 +201,10 @@ $.fn.sheetForm = function (options) {
                 // ToDo something here
                 $.message(data.message);
                 if(data.status == 'success'){  
+                    $(target).data('ischange', false); //清空标记
                     if(new RegExp("create").test(window.location.pathname.toLowerCase())){
-                        $('input:not([readonly])', target).attr('disabled', 'disabled')
+                        $('input:not([readonly])', target).attr('disabled', 'disabled');
+                        $('.save,.approve,.query,.del,.scan,.print', '.si-tbar').addClass('disabled').click(function () { return false; })
                         $('.si-btn', target).click(function () { return false; })
                         $('.si-sidebar a', target).hide();
                         $('#Approver_Name').attr('approved',true);
@@ -210,6 +231,7 @@ $.fn.sheetForm = function (options) {
         del : function( target, option ) {
             var defaults = {};
             defaults.success = function(data){
+                $(target).data('ischange', false); //清空标记
                 $.message(data.message);
                 if(data.status == 'success'){   
                     window.location.assign( '/{0}/Create'.format($(target).attr('controller')) );

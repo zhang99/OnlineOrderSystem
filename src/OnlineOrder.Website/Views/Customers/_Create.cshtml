@@ -1,0 +1,19 @@
+﻿@using System.Collections
+@using OnlineOrder.Mvc
+@using OnlineOrder.Website.Models
+@model Customer
+
+@using (Html.SiForm())
+{
+    
+            <div class="general-box">       
+   
+                @Html.SiHiddenFor(m => m.Id)  
+                @Html.SiTextBoxFor(m => m.Code) 
+                @Html.SiTextBoxFor(m => m.Name)  
+                @Html.SiTextBoxFor(m => m.Discount) 
+                @Html.SiTextAreaFor(m => m.Memo)
+    
+             </div>                             
+       
+}

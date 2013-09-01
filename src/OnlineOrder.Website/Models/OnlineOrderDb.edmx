@@ -142,10 +142,11 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="LineNum" Type="int" />
           <Property Name="ParentId" Type="int" />
           <Property Name="ProductId" Type="int" />
           <Property Name="Qty" Type="decimal" Precision="16" Scale="4" />
-          <Property Name="Price" Type="decimal" Precision="16" Scale="4" />
+          <Property Name="SalePrice" Type="decimal" Precision="16" Scale="4" />
           <Property Name="Amount" Type="decimal" Precision="16" Scale="4" />
           <Property Name="Discount" Type="decimal" Precision="6" Scale="2" />
         </EntityType>
@@ -182,6 +183,7 @@
           <Property Name="SalePrice" Type="decimal" Precision="16" Scale="4" />
           <Property Name="StockQty" Type="decimal" Precision="16" Scale="4" />
           <Property Name="Description" Type="varchar" MaxLength="200" />
+          <Property Name="PicFileName" Type="varchar" MaxLength="50" />
           <Property Name="Status" Type="char" MaxLength="1" />
           <Property Name="Memo" Type="varchar" MaxLength="100" />
           <Property Name="OperId" Type="int" />
@@ -607,12 +609,13 @@
           <Property Name="ParentId" Type="Int32" />
           <Property Name="ProductId" Type="Int32" />
           <Property Name="Qty" Type="Decimal" Precision="16" Scale="4" />
-          <Property Name="Price" Type="Decimal" Precision="16" Scale="4" />
           <Property Name="Amount" Type="Decimal" Precision="16" Scale="4" />
           <Property Name="Discount" Type="Decimal" Precision="6" Scale="2" />
           <NavigationProperty Name="Order" Relationship="OnlineOrderModel.FK_ORDERDET_PURCHASEO_ORDERS" FromRole="OrderDetails" ToRole="Orders" />
           <NavigationProperty Name="Product" Relationship="OnlineOrderModel.FK_ORDERDET_PURCHASEO_PRODUCTS" FromRole="OrderDetails" ToRole="Products" />
           <NavigationProperty Name="User" Relationship="OnlineOrderModel.FK_PURCHASE_PURCHASEDETAIL1_USER" FromRole="OrderDetails" ToRole="Users" />
+          <Property Type="Int32" Name="LineNum" />
+          <Property Type="Decimal" Name="SalePrice" Precision="16" Scale="4" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -665,6 +668,7 @@
           <NavigationProperty Name="Modify" Relationship="OnlineOrderModel.FK_PRODUCTS_REFERENCE_USERS1" FromRole="Products" ToRole="Users" />
           <NavigationProperty Name="SendOrderDetails" Relationship="OnlineOrderModel.FK_SENDORDE_REFERENCE_PRODUCTS" FromRole="Products" ToRole="SendOrderDetails" />
           <NavigationProperty Name="ShoppingCarts" Relationship="OnlineOrderModel.FK_SHOPPING_REFERENCE_PRODUCTS" FromRole="Products" ToRole="ShoppingCart" />
+          <Property Type="String" Name="PicFileName" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Receipt">
           <Key>
@@ -984,11 +988,12 @@
             <ScalarProperty Name="Memo" ColumnName="Memo" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="OrderDetails"><EntityTypeMapping TypeName="OnlineOrderModel.OrderDetail"><MappingFragment StoreEntitySet="OrderDetails">
-            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
+                <ScalarProperty Name="LineNum" ColumnName="LineNum" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
             <ScalarProperty Name="ParentId" ColumnName="ParentId" />
             <ScalarProperty Name="ProductId" ColumnName="ProductId" />
             <ScalarProperty Name="Qty" ColumnName="Qty" />
-            <ScalarProperty Name="Price" ColumnName="Price" />
             <ScalarProperty Name="Amount" ColumnName="Amount" />
             <ScalarProperty Name="Discount" ColumnName="Discount" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
@@ -1009,7 +1014,8 @@
             <ScalarProperty Name="OperDate" ColumnName="OperDate" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Products"><EntityTypeMapping TypeName="OnlineOrderModel.Product"><MappingFragment StoreEntitySet="Products">
-            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="PicFileName" ColumnName="PicFileName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
             <ScalarProperty Name="Code" ColumnName="Code" />
             <ScalarProperty Name="Name" ColumnName="Name" />
             <ScalarProperty Name="UnitId" ColumnName="UnitId" />
@@ -1095,13 +1101,13 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="OnlineOrderDb" ZoomLevel="99">
+      <Diagram Name="OnlineOrderDb" ZoomLevel="96">
         <EntityTypeShape EntityType="OnlineOrderModel.BaseCode" Width="1.5" PointX="0.75" PointY="5" Height="2.1610522460937496" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineOrderModel.Brand" Width="1.5" PointX="0.75" PointY="13" Height="1.7790128580729174" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineOrderModel.Category" Width="1.5" PointX="0.75" PointY="15.5" Height="2.3520719401041674" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineOrderModel.Customer" Width="1.5" PointX="3.75" PointY="13.25" Height="2.3520719401041639" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineOrderModel.Logistic" Width="1.5" PointX="0.75" PointY="20.125" Height="2.5430916341145817" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineOrderModel.OrderDetail" Width="1.5" PointX="3" PointY="8.625" Height="2.9251310221354174" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineOrderModel.OrderDetail" Width="1.5" PointX="3" PointY="8.625" Height="3.1161507161458335" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineOrderModel.Order" Width="1.5" PointX="6" PointY="7.875" Height="4.4532885742187531" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineOrderModel.Product" Width="1.5" PointX="3" PointY="2.375" Height="5.59940673828125" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineOrderModel.Receipt" Width="1.5" PointX="3.75" PointY="24.375" Height="2.5430916341145817" IsExpanded="true" />
@@ -1110,16 +1116,16 @@
         <EntityTypeShape EntityType="OnlineOrderModel.ShoppingCart" Width="1.5" PointX="5.25" PointY="4.375" Height="2.3520719401041745" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineOrderModel.User" Width="1.5" PointX="0.75" PointY="8.625" Height="2.9251310221354174" IsExpanded="true" />
         <AssociationConnector Association="OnlineOrderModel.FK_PRODUCTS_REFERENCE_BASECODE" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="6.0805261230468748" />
-          <ConnectorPoint PointX="2.5416666666666665" PointY="6.0805261230468739" />
-          <ConnectorPoint PointX="2.7083333333333335" PointY="6.0805261230468748" />
-          <ConnectorPoint PointX="3" PointY="6.0805261230468748" />
+          <ConnectorPoint PointX="2.25" PointY="6.0302426180610524" />
+          <ConnectorPoint PointX="2.5416666666666665" PointY="6.0302426180610516" />
+          <ConnectorPoint PointX="2.7083333333333335" PointY="6.0302426180610524" />
+          <ConnectorPoint PointX="3" PointY="6.0302426180610524" />
         </AssociationConnector>
         <AssociationConnector Association="OnlineOrderModel.FK_PRODUCTS_PRODUCT_R_BRANDS" ManuallyRouted="false">
           <ConnectorPoint PointX="2.25" PointY="13.001152846153847" />
           <ConnectorPoint PointX="2.625" PointY="12.626152846153847" />
-          <ConnectorPoint PointX="2.625" PointY="4.1965110615234433" />
-          <ConnectorPoint PointX="3" PointY="4.1965110615234433" />
+          <ConnectorPoint PointX="2.625" PointY="4.171369309030533" />
+          <ConnectorPoint PointX="3" PointY="4.171369309030533" />
         </AssociationConnector>
         <AssociationConnector Association="OnlineOrderModel.FK_CATEGORI_CATEGORY__CATEGORI" ManuallyRouted="false">
           <ConnectorPoint PointX="1.2819230769230767" PointY="17.852071940104167" />
@@ -1129,16 +1135,14 @@
         </AssociationConnector>
         <AssociationConnector Association="OnlineOrderModel.FK_PRODUCTS_PRODUCT_R_CATEGORI" ManuallyRouted="false">
           <ConnectorPoint PointX="2.25" PointY="15.563460538461539" />
-          <ConnectorPoint PointX="2.8125" PointY="15.000960538461541" />
-          <ConnectorPoint PointX="2.8125" PointY="7.0587184306640562" />
-          <ConnectorPoint PointX="3" PointY="7.0587184306640562" />
+          <ConnectorPoint PointX="2.6875" PointY="15.125960538461541" />
+          <ConnectorPoint PointX="2.6875" PointY="7.1290865251763531" />
+          <ConnectorPoint PointX="3" PointY="7.1290865251763531" />
         </AssociationConnector>
         <AssociationConnector Association="OnlineOrderModel.FK_ORDERS_PURCHASEO_CUSTOMER" ManuallyRouted="false">
           <ConnectorPoint PointX="4.90625" PointY="13.25" />
-          <ConnectorPoint PointX="4.90625" PointY="11.970459798177085" />
-          <ConnectorPoint PointX="5.416666666666667" PointY="11.970459798177085" />
-          <ConnectorPoint PointX="5.583333333333333" PointY="11.970459798177085" />
-          <ConnectorPoint PointX="6" PointY="11.970459798177085" />
+          <ConnectorPoint PointX="4.90625" PointY="12.065969645182292" />
+          <ConnectorPoint PointX="6" PointY="12.065969645182292" />
         </AssociationConnector>
         <AssociationConnector Association="OnlineOrderModel.FK_RECEIPTS_REFERENCE_CUSTOMER" ManuallyRouted="false">
           <ConnectorPoint PointX="4.90625" PointY="15.602071940104164" />
@@ -1149,21 +1153,19 @@
           <ConnectorPoint PointX="3" PointY="21.396545817057291" />
         </AssociationConnector>
         <AssociationConnector Association="OnlineOrderModel.FK_ORDERDET_PURCHASEO_ORDERS" ManuallyRouted="false">
-          <ConnectorPoint PointX="6" PointY="10.087565511067709" />
-          <ConnectorPoint PointX="5.583333333333333" PointY="10.087565511067709" />
-          <ConnectorPoint PointX="5.416666666666667" PointY="10.087565511067709" />
-          <ConnectorPoint PointX="4.5" PointY="10.087565511067709" />
+          <ConnectorPoint PointX="6" PointY="10.183075358072916" />
+          <ConnectorPoint PointX="4.833333333333333" PointY="10.183075358072916" />
+          <ConnectorPoint PointX="4.666666666666667" PointY="10.183075358072916" />
+          <ConnectorPoint PointX="4.5" PointY="10.183075358072916" />
         </AssociationConnector>
         <AssociationConnector Association="OnlineOrderModel.FK_ORDERDET_PURCHASEO_PRODUCTS" ManuallyRouted="false">
-          <ConnectorPoint PointX="3.75" PointY="7.97440673828125" />
+          <ConnectorPoint PointX="3.75" PointY="8.1654264322916656" />
           <ConnectorPoint PointX="3.75" PointY="8.625" />
         </AssociationConnector>
         <AssociationConnector Association="OnlineOrderModel.FK_PURCHASE_PURCHASEDETAIL1_USER" ManuallyRouted="false">
           <ConnectorPoint PointX="2.25" PointY="10.087565511067709" />
           <ConnectorPoint PointX="2.5416666666666665" PointY="10.087565511067709" />
-          <ConnectorPoint PointX="2.7083333333333335" PointY="10.087565511067709" />
-          <ConnectorPoint PointX="2.7291666666666665" PointY="10.087565511067709" />
-          <ConnectorPoint PointX="2.8958333333333335" PointY="10.087565511067709" />
+          <ConnectorPoint PointX="2.7708333333333335" PointY="10.087565511067709" />
           <ConnectorPoint PointX="3" PointY="10.087565511067709" />
         </AssociationConnector>
         <AssociationConnector Association="OnlineOrderModel.FK_ORDERS_REFERENCE_RECEIPTS" ManuallyRouted="false">
@@ -1173,36 +1175,28 @@
         </AssociationConnector>
         <AssociationConnector Association="OnlineOrderModel.FK_ORDERS_REFERENCE_USERS" ManuallyRouted="false">
           <ConnectorPoint PointX="1.5" PointY="11.550131022135417" />
-          <ConnectorPoint PointX="1.5" PointY="12.18062668619792" />
-          <ConnectorPoint PointX="2.5416666666666665" PointY="12.18062668619792" />
-          <ConnectorPoint PointX="2.7083333333333335" PointY="12.18062668619792" />
-          <ConnectorPoint PointX="2.7291666666666665" PointY="12.18062668619792" />
-          <ConnectorPoint PointX="2.8958333333333335" PointY="12.18062668619792" />
-          <ConnectorPoint PointX="4.822916666666667" PointY="12.18062668619792" />
-          <ConnectorPoint PointX="4.989583333333333" PointY="12.18062668619792" />
-          <ConnectorPoint PointX="5.416666666666667" PointY="12.18062668619792" />
-          <ConnectorPoint PointX="5.583333333333333" PointY="12.18062668619792" />
-          <ConnectorPoint PointX="6" PointY="12.18062668619792" />
+          <ConnectorPoint PointX="1.5" PointY="11.903557680664061" />
+          <ConnectorPoint PointX="2.5416666666666665" PointY="11.903557680664061" />
+          <ConnectorPoint PointX="2.7708333333333335" PointY="11.903557680664061" />
+          <ConnectorPoint PointX="4.666666666666667" PointY="11.903557680664061" />
+          <ConnectorPoint PointX="4.833333333333333" PointY="11.903557680664061" />
+          <ConnectorPoint PointX="6" PointY="11.903557680664061" />
         </AssociationConnector>
         <AssociationConnector Association="OnlineOrderModel.FK_PRODUCTS_REFERENCE_USERS" ManuallyRouted="false">
           <ConnectorPoint PointX="2.25" PointY="8.6515374615384619" />
           <ConnectorPoint PointX="2.5660744349011204" PointY="8.33546302663734" />
-          <ConnectorPoint PointX="2.6839255650988791" PointY="8.2176118964395837" />
-          <ConnectorPoint PointX="2.7535744349011204" PointY="8.14796302663734" />
-          <ConnectorPoint PointX="2.8714255650988791" PointY="8.0301118964395837" />
-          <ConnectorPoint PointX="2.9375" PointY="7.9640374615384619" />
-          <ConnectorPoint PointX="2.9375" PointY="8.0622903536658654" />
-          <ConnectorPoint PointX="3.0253836153846159" PointY="7.97440673828125" />
+          <ConnectorPoint PointX="2.7464255650988791" PointY="8.1551118964395837" />
+          <ConnectorPoint PointX="2.84375" PointY="8.0577874615384619" />
+          <ConnectorPoint PointX="2.84375" PointY="8.3482138938301276" />
+          <ConnectorPoint PointX="3.026537461538461" PointY="8.1654264322916656" />
         </AssociationConnector>
         <AssociationConnector Association="OnlineOrderModel.FK_PRODUCTS_REFERENCE_USERS1" ManuallyRouted="false">
           <ConnectorPoint PointX="2.25" PointY="8.633075923076925" />
-          <ConnectorPoint PointX="2.40625" PointY="8.25" />
-          <ConnectorPoint PointX="2.40625" PointY="8.54392596905048" />
-          <ConnectorPoint PointX="2.5660744349011204" PointY="8.3841015341493588" />
-          <ConnectorPoint PointX="2.6839255650988791" PointY="8.2662504039516023" />
-          <ConnectorPoint PointX="2.7535744349011204" PointY="8.1966015341493588" />
-          <ConnectorPoint PointX="2.8714255650988791" PointY="8.0787504039516023" />
-          <ConnectorPoint PointX="3" PointY="7.9501759690504805" />
+          <ConnectorPoint PointX="2.5660744349011204" PointY="8.3170014881758032" />
+          <ConnectorPoint PointX="2.7464255650988791" PointY="8.1366503579780467" />
+          <ConnectorPoint PointX="2.78125" PointY="8.101825923076925" />
+          <ConnectorPoint PointX="2.78125" PointY="8.3599456630608966" />
+          <ConnectorPoint PointX="3" PointY="8.1411956630608966" />
         </AssociationConnector>
         <AssociationConnector Association="OnlineOrderModel.FK_SENDORDE_REFERENCE_PRODUCTS" ManuallyRouted="false">
           <ConnectorPoint PointX="4.5" PointY="2.9295556640625" />
@@ -1222,8 +1216,8 @@
           <ConnectorPoint PointX="4.822916666666667" PointY="15.852071940104164" />
           <ConnectorPoint PointX="4.989583333333333" PointY="15.852071940104164" />
           <ConnectorPoint PointX="5.5" PointY="15.852071940104164" />
-          <ConnectorPoint PointX="5.5" PointY="8.22440673828125" />
-          <ConnectorPoint PointX="4.75" PointY="8.22440673828125" />
+          <ConnectorPoint PointX="5.5" PointY="11.991150716145832" />
+          <ConnectorPoint PointX="4.75" PointY="11.991150716145832" />
           <ConnectorPoint PointX="4.75" PointY="1.8085258320312492" />
           <ConnectorPoint PointX="5.25" PointY="1.8085258320312492" />
         </AssociationConnector>

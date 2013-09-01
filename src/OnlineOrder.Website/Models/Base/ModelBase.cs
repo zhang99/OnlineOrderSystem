@@ -41,7 +41,8 @@ namespace OnlineOrder.Website.Models
         /// </summary>
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public virtual int Id { get; set; }      
+        [Sortable(false), Align(Alignment.Center), Width(30), Queryable(false)]
+        public virtual int Id { get; set; }
         
         /// <summary>
         /// DatabaseFactory
@@ -252,6 +253,9 @@ namespace OnlineOrder.Website.Models
         /// <returns></returns>
         public virtual IEnumerable<T> GetList(Expression<Func<T, bool>> where)
         {
+            if (where == null)
+                return GetList();
+
             return dbset.Where(where).ToList();
         }
 
@@ -265,11 +269,23 @@ namespace OnlineOrder.Website.Models
         {
             if (where != null)
                 return dbset.Where(where).OrderBy(pagingModel.SortOptions.Column, pagingModel.SortOptions.Direction)
-                    .AsPagination<T>(pagingModel.PageIndex, pagingModel.PageSize);
+                    .AsPagination<T>(pagingModel.PageIndex, pagingModel.PageSize, pagingModel.SortOptions);
             else
                 return dbset.OrderBy(pagingModel.SortOptions.Column, pagingModel.SortOptions.Direction)
-                        .AsPagination<T>(pagingModel.PageIndex, pagingModel.PageSize);
+                        .AsPagination<T>(pagingModel.PageIndex, pagingModel.PageSize, pagingModel.SortOptions);
         }
+
+        /// <summary>
+        /// SQL查询
+        /// </summary>
+        /// <param name="elementType"></param>
+        /// <param name="sql"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        //public DbRawSqlQuery SqlQuery(Type elementType, string sql, params object[] parameters)
+        //{
+        //    return db.Database.SqlQuery(elementType, sql, parameters);
+        //}
         #endregion
 
         #region 提交

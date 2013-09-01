@@ -41,7 +41,12 @@ namespace OnlineOrder.Website.Controllers
             ViewBag.Sort = pagingModel.SortOptions;
 
             if (Request.IsAjaxRequest())
+            {
+                if (Request.HttpMethod == "GET")
                 return PartialView("_Index", list);
+                else
+                    return Json(new SuccessActionResult("Ok", list));
+            }
 
             return View("Index", list);
         }
@@ -78,10 +83,10 @@ namespace OnlineOrder.Website.Controllers
                 //TODO: 直接使用IPagination<T>无法转换 
                 var data = Mapper.Map<IEnumerable<T>, IEnumerable<QueryViewModel>>(list)
                     .OrderBy(pagingModel.SortOptions.Column, pagingModel.SortOptions.Direction)
-                    .AsPagination(pagingModel.PageIndex, pagingModel.PageSize);
+                    .AsPagination(pagingModel.PageIndex, pagingModel.PageSize, pagingModel.SortOptions);
 
                 lstData = data;
-            }            
+            }
             else
             {
                 IPagination<T> list = model.GetPagedList(pagingModel, expression);

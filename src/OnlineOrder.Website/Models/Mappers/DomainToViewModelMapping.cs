@@ -18,7 +18,7 @@ namespace OnlineOrder.Website.Models
             Mapper.CreateMap<Brand, QueryViewModel>();       
             Mapper.CreateMap<Category, QueryViewModel>();        
             Mapper.CreateMap<User, QueryViewModel>();
-
+            Mapper.CreateMap<Customer, QueryViewModel>();
         }
     }
 }

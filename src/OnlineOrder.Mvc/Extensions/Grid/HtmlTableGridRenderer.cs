@@ -34,7 +34,7 @@ namespace OnlineOrder.Mvc.Grid
 		{
 			var attributes = new Dictionary<string, object>(column.HeaderAttributes);
 
-			if(IsSortingEnabled && column.Sortable)
+			if(IsSortingEnabled && column.IsSortable)
 			{
 				//bool isSortedByThisColumn = (GridModel.SortOptions.Column == GenerateSortColumnName(column));
                 bool isSortedByThisColumn = (GridModel.SortOptions.Column == column.FieldName);
@@ -53,13 +53,13 @@ namespace OnlineOrder.Mvc.Grid
 			}
 
             //add by zhangh 2013/05/31 ÅÅÐòÁÐÉèÖÃ
-            if (column.Sortable)
+            if (column.IsSortable)
                 attributes["sortable"] = "true";
 
-            if (column.Queryable)
+            if (column.IsQueryable)
                 attributes["queryable"] = "true";
 
-            if (column.Editable)
+            if (column.IsEditable)
                 attributes["editable"] = "true";
 
             if (column.Selectable)
@@ -68,11 +68,11 @@ namespace OnlineOrder.Mvc.Grid
             if(column.Reliable)
                 attributes["reliable"] = "true";
 
-            if(column.IsSum)
+            if(column.IsSumColumn)
                 attributes["issum"] = "true";
 
-            if(!string.IsNullOrEmpty(column.EqualTo))
-                attributes["equalto"] = column.EqualTo;
+            if(!string.IsNullOrEmpty(column.ColumnEqualTo))
+                attributes["equalto"] = column.ColumnEqualTo;
 
             attributes["field"] = column.FieldName;
 
@@ -94,7 +94,7 @@ namespace OnlineOrder.Mvc.Grid
             attributes["field"] = column.FieldName;
             attributes["width"] = column.ColWidth;
 
-            if (column.IsSum)
+            if (column.IsSumColumn)
                 attributes["issum"] = "true";
 
             string attrs = BuildHtmlAttributes(attributes);
@@ -221,7 +221,7 @@ namespace OnlineOrder.Mvc.Grid
             if (!column.IsHide)
                 attributes.Add("width", column.ColWidth);
 
-            if (column.Editable)
+            if (column.IsEditable)
                 attributes.Add("editable", "true");
 
             if (column.Selectable)
@@ -230,11 +230,11 @@ namespace OnlineOrder.Mvc.Grid
             if (column.Reliable)
                 attributes.Add("reliable", "true");
 
-            if (column.IsSum)
+            if (column.IsSumColumn)
                 attributes.Add("issum", "true");
 
-            if (!string.IsNullOrEmpty(column.EqualTo))
-                attributes.Add("equalto", column.EqualTo);
+            if (!string.IsNullOrEmpty(column.ColumnEqualTo))
+                attributes.Add("equalto", column.ColumnEqualTo);
 
             string attrs = BuildHtmlAttributes(attributes);
 			if (attrs.Length > 0)

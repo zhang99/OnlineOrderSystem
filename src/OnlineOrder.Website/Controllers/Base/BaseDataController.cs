@@ -304,10 +304,10 @@ namespace OnlineOrder.Website.Controllers
             {
                 AddModelState("OperId", CurrUserInfo.Id);
                 AddModelState("Oper.Name", CurrUserInfo.Name);
-                AddModelState("OperDate", System.DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss"));
+                AddModelState("OperDate", System.DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
                 AddModelState("ModifyId", CurrUserInfo.Id);
                 AddModelState("Modify.Name", CurrUserInfo.Name);
-                AddModelState("ModifyDate", System.DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss"));
+                AddModelState("ModifyDate", System.DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"));
             }
         }
         #endregion

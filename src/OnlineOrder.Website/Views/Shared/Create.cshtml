@@ -48,11 +48,8 @@
                     cateCode;
                 fields.Code = fields.Code.toUpperCase();
                 cateCode = fields["Parent.Code"].replace('所有类别', '') + fields.Code ;
-                saveData = $('.si-form').attr('action') == 'Edit' ? fields : $.extend({}, fields, {Code : cateCode});
-                if(! validate('ProfitRate', '毛利率')){
-                    return ;
-                }
-            }else if(controller == 'Vendors'){
+                saveData = $('.si-form').attr('action') == 'Edit' ? fields : $.extend({}, fields, {Code : cateCode});               
+            }else if(controller == 'Customers'){
                 if(! validate('Discount', '折扣')){
                     return;
                 }

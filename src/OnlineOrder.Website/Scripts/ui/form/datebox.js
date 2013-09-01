@@ -46,7 +46,7 @@ $.fn.datebox = function(options){
 			$(target).hide();
 		}
 
-		$(target).on(_this.options.showEvent, showEventHandler)
+		$(target).off(_this.options.showEvent).on(_this.options.showEvent, showEventHandler)
 
 		if($.data(document.body, "datebox")){
 			return;
@@ -126,8 +126,10 @@ $.fn.datebox = function(options){
 		
 		show(comboPanel);
 		
-		$(document.body).on('click',function(){
-			$('.panel.datebox').hide();
+		$(document.body).off('click.datebox').on('click.datebox',function(){
+			if($('.panel.datebox').length > 0){
+				$('.panel.datebox').hide();
+			}
 		})
 
 		$.data(document.body, "datebox", true);
@@ -426,14 +428,12 @@ $.fn.datebox = function(options){
 			alignHeight = $(this).parents(".combo").outerHeight();
 			identify = $(this).parents(".combo").children(".combo-text").attr("data-vef");
 		}
-		// log(this, $(_this).attr('data-vef'))
 		$(".panel.datebox").attr("data-vef", identify);
 		$(".panel.datebox").css({
 			"top": offsetTop + alignHeight ,
 			"left": offsetLeft 
 		});
-		
-		$(".panel.datebox").show();
+		$(".panel.datebox").toggle();
 		event.stopPropagation(); //阻止冒泡		
 
 		if(_this.options.showEvent == "focus"){
@@ -454,7 +454,7 @@ $.fn.datebox = function(options){
 		$('.calendar-bottom .t-minute', '.panel.datebox').val(date.getMinutes());
 		$('.calendar-bottom .t-second', '.panel.datebox').val(date.getSeconds());
 
-		$(this).off(_this.options.showEvent);
+		// $(this).off(_this.options.showEvent);
 	}
 	function getTime(target){
 		var result = '';

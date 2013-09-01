@@ -19,8 +19,6 @@ namespace OnlineOrder.Website.Models
         {
             this.OrderDetails = new HashSet<OrderDetail>();
         }
-        [Display(Name = "编码")]
-        public string Code { get; set; }
         public Nullable<int> CustomerId { get; set; }
         public Nullable<int> DeliveryId { get; set; }
         public Nullable<int> PaymentId { get; set; }
@@ -28,18 +26,10 @@ namespace OnlineOrder.Website.Models
         [Display(Name = "付款日期")]
         public Nullable<System.DateTime> PayDate { get; set; }
         [Display(Name = "金额")]
-        public Nullable<decimal> Amount { get; set; }
-        [Display(Name = "审核标志")]
-        public string ApproveFlag { get; set; }
+        public Nullable<decimal> Amount { get; set; }       
         [Display(Name = "状态")]
-        public string Status { get; set; }
-        [Display(Name = "审核日期")]
-        public Nullable<System.DateTime> ApproveDate { get; set; }
-        public Nullable<int> ApproverId { get; set; }
-        public Nullable<int> OperId { get; set; }
-        [Display(Name = "制单日期")]
-        public Nullable<System.DateTime> OperDate { get; set; }
-    
+        public string Status { get; set; }       
+        [Display(Name = "客户")]
         public virtual Customer Customer { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         public virtual Receipt Receipt { get; set; }

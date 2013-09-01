@@ -1,0 +1,68 @@
+﻿@model OnlineOrder.Website.Models.LoginViewModel
+
+@{
+    Layout = null;
+    ViewBag.Title = "登录";
+}
+
+<style type="text/css"> 
+    body 
+    { 
+      font-size: .85em;
+    }
+     
+    li
+    {
+        list-style-type: none;
+    }
+    fieldset
+    {
+        background-color:#7AC0DA;  
+        margin:10 0 0 0;
+        padding:0;
+        
+    }    
+    h1,p
+    {
+        text-align:center;
+    }
+    .center
+    {
+        margin:20% 40%;            
+        width:300px;        
+    }
+</style>
+
+<section id="loginForm">
+@using (Html.BeginForm("Login","Login",new { ReturnUrl = ViewBag.ReturnUrl })) {
+    
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="center">
+    <h1>在线订单管理系统</h1>
+    <fieldset>
+        <legend>登录</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.UserName)
+                @Html.TextBoxFor(m => m.UserName)
+                @Html.ValidationMessageFor(m => m.UserName)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Password)
+                @Html.PasswordFor(m => m.Password)
+                @Html.ValidationMessageFor(m => m.Password)
+            </li>
+            <li>
+                @Html.CheckBoxFor(m => m.RememberMe)
+                @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
+            </li>
+        </ol>
+        <p><input type="submit" value="登录" /> @Html.ActionLink("注册", "Register")</p>
+    </fieldset>
+    </div>
+}
+</section>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

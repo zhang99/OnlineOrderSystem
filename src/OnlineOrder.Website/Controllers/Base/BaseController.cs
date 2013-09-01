@@ -46,7 +46,7 @@ namespace OnlineOrder.Website.Controllers
         public User CurrUserInfo
         {
             get {
-                _currUser = new User { Id = 209, Code = "2755", Name = "张华", Password = "ND46R2V8" };
+                _currUser = new User { Id = 1, Code = "2755", Name = "张华", Password = "ND46R2V8" };
                 return _currUser;
             }
             set {
@@ -145,12 +145,10 @@ namespace OnlineOrder.Website.Controllers
         {
             if (!Request.IsAuthenticated)
             {
-                filterContext.Result = RedirectToAction("Index", "Login");
-                return;
+                filterContext.Result = RedirectToAction("Index","Home");
             }
             else
             {
-
                 ViewBag.ControllerName = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
                 ViewBag.ActionName = filterContext.ActionDescriptor.ActionName;
 

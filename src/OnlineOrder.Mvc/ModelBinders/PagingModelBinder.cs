@@ -20,9 +20,9 @@ namespace OnlineOrder.Mvc
             var pageIndex = controllerContext.HttpContext.Request.Params["pageIndex"] == null 
                 ? pagingModel.PageIndex.ToString() 
                 : controllerContext.HttpContext.Request.Params["pageIndex"].ToString();
-            var pageSize = controllerContext.Controller.ViewBag.PageSize == null
+            var pageSize = controllerContext.HttpContext.Request.Params["pageSize"] == null
                 ? pagingModel.PageSize.ToString()
-                : controllerContext.Controller.ViewBag.PageSize.ToString();
+                : controllerContext.HttpContext.Request.Params["pageSize"].ToString();
             //var sortBy = controllerContext.HttpContext.Request.Params["sortBy"];
             //var sortDir = controllerContext.HttpContext.Request.Params["sortDir"];
             var query = controllerContext.HttpContext.Request.Params["query"];

@@ -11,18 +11,17 @@ namespace OnlineOrder.Website.Models
     /// <typeparam name="T"></typeparam>
     public interface ISheetModel<T> : IModel<T> where T : IEntity
     {
-        /// <summary>
-        /// 产生单号
-        /// </summary>
-        /// <param name="transNo"></param>
-        /// <returns></returns>
-        string GenerateSheetNo(string transNo);
+        string Code { get; set; }
+        string TransNo { get; set; }
+        string ApproveFlag { get; set; }
+        Nullable<DateTime> ApproveDate { get; set; }
+        Nullable<int> ApproverId { get; set; }
+        User Approver { get; set; }
+        Nullable<int> OperId { get; set; }
+        User Oper { get; set; }
+        Nullable<DateTime> OperDate { get; set; }
 
-        /// <summary>
-        /// 审核单据
-        /// </summary>
-        /// <param name="Id"></param>
-        /// <returns></returns>
-        void Approve(T entity);
+        string GenerateSheetNo(string transNo);
+        T Approve(int id, int userId);
     }
 }

@@ -69,12 +69,12 @@ $.validator.prototype = {
         function delegate(event) {
             var validator = $.data(this[0].form, "validator"),
                 eventType = "on" + event.type.replace(/^validate/, "");
-            validator.settings[eventType] && validator.settings[eventType].call(validator, this[0], event);
+            validator && validator.settings[eventType] && validator.settings[eventType].call(validator, this[0], event);
         }
         $(this.currentForm)
                .validateDelegate("[type='text'], [type='password'], [type='file'], select, textarea, " +
                     "[type='number'], [type='search'] ,[type='tel'], [type='url'], " +
-                    "[type='email'], [type='datetime'], [type='date'], [type='month'], " +
+                    "[type='email'], [type='datetime'], [type='date'], [type='datebox'], [type='month'], " +
                     "[type='week'], [type='time'], [type='datetime-local'], " +
                     "[type='range'], [type='color'] ",
                     "focusin focusout keyup change", delegate)
@@ -316,7 +316,24 @@ $.validator.prototype = {
             element: element
         });
         this.errorMap[this.idOrName(element)] = message;
-    }
+    },
+    newDate: function(str) { 
+        str = str.split(/\s/); 
+        if(!str){
+            return null;
+        }
+        var day = str[0].split(/\/|-/),time;
+        if(!str[1]){
+            time = [0,0,0];
+        }else{
+            time = str[1].split(":");
+        }
+        var date = new Date(); 
+        date.setUTCFullYear(day[0], day[1] - 1, day[2]); 
+        date.setUTCHours(time[0]-8, time[1], time[2]);  //北京时间，所以要-8
+        return date; 
+    } 
+
 }
 
 $.validator.methods = {
@@ -347,7 +364,7 @@ $.validator.methods = {
         return /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(matches);
     },
     date : function (matches) {
-        return  !matches || !/Invalid|NaN/.test(new Date(matches.replace(/-/g,',')));
+        return  !matches || !/Invalid|NaN/.test(this.newDate(matches));
     },
     dateISO : function (matches) {
         return  !matches || /^\d{4}[\/-]\d{1,2}[\/-]\d{1,2}$/.test(matches);
@@ -415,7 +432,10 @@ $.validator.defaults = {
         // this.element(element);
     },
     onchange: function(element, event) {
-        this.element(element);
+        var _this = this;
+        window.setTimeout(function(){
+            _this.element(element);
+        },250)
     },
     onkeypress: function(element, event) {
     },

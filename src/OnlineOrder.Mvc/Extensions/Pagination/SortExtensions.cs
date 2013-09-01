@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace OnlineOrder.Mvc.Pagination
 {
@@ -29,24 +30,46 @@ namespace OnlineOrder.Mvc.Pagination
 		/// <param name="direction">The direction</param>
 		public static IQueryable<T> OrderBy<T>(this IQueryable<T> datasource, string propertyName, SortDirection direction)
 		{
-			//http://msdn.microsoft.com/en-us/library/bb882637.aspx
+            //http://msdn.microsoft.com/en-us/library/bb882637.aspx
 
-			if(string.IsNullOrEmpty(propertyName))
-			{
-				return datasource;
-			}
+            #region 关联表字段排序报错 Fix by zhangh 2013/08/13
+            //if (string.IsNullOrEmpty(propertyName))
+            //    return datasource;
 
-			var type = typeof(T);
-			var property = type.GetProperty(propertyName);
+            //Type type = typeof(T);
+            //PropertyInfo property = type.GetProperty(propertyName);
 
-			if(property == null)
-			{
-				throw new InvalidOperationException(string.Format("Could not find a property called '{0}' on type {1}", propertyName, type));
-			}
+            //if (property == null)
+            //{
+            //    throw new InvalidOperationException(string.Format("Could not find a property called '{0}' on type {1}", propertyName, type));
+            //}
 
-			var parameter = Expression.Parameter(type, "p");
-			var propertyAccess = Expression.MakeMemberAccess(parameter, property);
-			var orderByExp = Expression.Lambda(propertyAccess, parameter);
+            //ParameterExpression parameter = Expression.Parameter(type, "p");
+            //Expression propertyAccess = Expression.Property(parameter, property);
+            //var orderByExp = Expression.Lambda(propertyAccess, parameter);
+            #endregion
+
+            if (string.IsNullOrEmpty(propertyName))
+                return datasource;
+
+            string[] props = propertyName.Split('.');
+            Type type = typeof(T);
+            ParameterExpression parameter = Expression.Parameter(type, "p");
+            Expression propertyAccess = parameter;
+            PropertyInfo property = null;
+            foreach (string prop in props)
+            {
+                property = type.GetProperty(prop);
+                if (property == null)
+                    continue;
+                propertyAccess = Expression.Property(propertyAccess, property);
+                type = property.PropertyType;
+            }
+            type = typeof(T);
+            var orderByExp = Expression.Lambda(
+                propertyAccess,
+                parameter
+                );
 
 			const string orderBy = "OrderBy";
 			const string orderByDesc = "OrderByDescending";
@@ -56,8 +79,8 @@ namespace OnlineOrder.Mvc.Pagination
 			var orderByCall = Expression.Call(typeof(Queryable), 
 				methodToInvoke, 
 				new[] { type, property.PropertyType }, 
-				datasource.Expression, 
-				Expression.Quote(orderByExp));
+				datasource.Expression,
+                Expression.Quote(orderByExp));
 
 			return datasource.Provider.CreateQuery<T>(orderByCall);
 		}

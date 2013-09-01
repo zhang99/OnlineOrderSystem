@@ -150,7 +150,7 @@ namespace OnlineOrder.Mvc
         public static MvcHtmlString SiSheetBegin(this HtmlHelper htmlHelper)
         {
             StringBuilder builder = new StringBuilder();
-            builder.AppendFormat("<div class='container'><form action='{0}' method='{1}' controller='{2}' class='{3}'>", 
+            builder.AppendFormat("<form action='{0}' method='{1}' controller='{2}' class='{3}'>", 
                 htmlHelper.ActionName(), 
                 "POST", 
                 htmlHelper.ControllerName(), 
@@ -167,7 +167,7 @@ namespace OnlineOrder.Mvc
         public static MvcHtmlString SiSheetEnd(this HtmlHelper htmlHelper)
         {
             StringBuilder builder = new StringBuilder();
-            builder.Append("</form></div>");
+            builder.Append("</form>");
 
             return MvcHtmlString.Create(builder.ToString());
         }
@@ -399,6 +399,18 @@ namespace OnlineOrder.Mvc
             return htmlHelper.HiddenFor(expression);
         }
         #endregion
+
+        /// <summary>
+        /// SiCheckBox
+        /// </summary>
+        /// <param name="htmlHelper"></param>
+        /// <param name="name"></param>
+        /// <param name="htmlAttributes"></param>
+        /// <returns></returns>
+        public static MvcHtmlString SiCheckBox(this HtmlHelper htmlHelper, string name, object htmlAttributes)
+        {
+            return htmlHelper.CheckBox(name, htmlAttributes);
+        }
 
         #region SiTextBox
         /// <summary>
@@ -858,11 +870,15 @@ namespace OnlineOrder.Mvc
         /// <returns></returns>
         public static MvcHtmlString SiUControl(this HtmlHelper htmlHelper, string fieldName, string labelText, object htmlAttributes)
         {
+            var attrs = new RouteValueDictionary(htmlAttributes);
+            if (!attrs.ContainsKey("operator"))
+                attrs.Add("operator", "Contains");
+
             return BuildHtmlField(fieldName, labelText, new List<MvcHtmlString> {
                             htmlHelper.Hidden(string.Format("{0}Id",fieldName)),                           
                             htmlHelper.TextBox(string.Format("{0}.Name",fieldName),"",new Dictionary<string,object>(){{"class","search-text"}}),                            
                             htmlHelper.SiLink("","", new Dictionary<string,object>(){{"class","si-btn search"}})},
-                            htmlAttributes);
+                            attrs);
         }
         #endregion
 
@@ -956,7 +972,10 @@ namespace OnlineOrder.Mvc
             TagBuilder container = new TagBuilder("div");
             if (htmlAttributes != null)
             {
-                container.MergeAttributes(new RouteValueDictionary(htmlAttributes));
+                if (htmlAttributes is IDictionary<string, object>)
+                    container.MergeAttributes((IDictionary<string, object>)htmlAttributes);
+                else
+                    container.MergeAttributes(new RouteValueDictionary(htmlAttributes));
             }
 
             container.AddCssClass("field");

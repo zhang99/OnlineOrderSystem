@@ -259,6 +259,9 @@ body > .wrapper {
 }
 #content .left {
 	float:left;
+	z-index: 3;
+	background: #fff;
+	position: relative;
 	/*margin-left: 10px;*/
 	
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using OnlineOrder.Mvc.Grid;
 
 namespace OnlineOrder.Mvc.Pagination
 {
@@ -19,12 +20,13 @@ namespace OnlineOrder.Mvc.Pagination
 		/// <param name="pageNumber">The current page number</param>
 		/// <param name="pageSize">The number of items per page</param>
 		/// <param name="totalItems">The total number of items in the overall datasource</param>
-        public CustomPagination(IEnumerable<T> dataSource, int pageNumber, int pageSize, int totalItems, IDictionary<string, decimal> dicSum)
+        public CustomPagination(IEnumerable<T> dataSource, int pageNumber, int pageSize, int totalItems, GridSortOptions sortOptions, IDictionary<string, decimal> dicSum)
 		{
 			_dataSource = dataSource.ToList();
 			PageNumber = pageNumber;
 			PageSize = pageSize;
 			TotalItems = totalItems;
+            SortOptions = sortOptions;
             DicSum = dicSum;
 		}
 
@@ -73,6 +75,12 @@ namespace OnlineOrder.Mvc.Pagination
         public IDictionary<string, decimal> DicSum 
         { 
             get; 
+            set;
+        }
+
+        public GridSortOptions SortOptions
+        {
+            get;
             set;
         }
 	}

@@ -7,13 +7,13 @@ date:2013-6-6
 (function($){
 	$.fn.tree = function(options){
 		var defaults = {
-			name : '',
-			title : '' ,
-			listForEdit : false,
-			isCheckHide : false
-		} ;
-		var opts = $.extend({},defaults,options);
-		var _this = this;
+				name : '',
+				title : '' ,
+				memoryCheck : false,   	//翻页时选中记录是否记录，默认不记录
+				hideCheckbox : false	//列表中checkbox是否隐藏，默认显示
+			},
+			opts = $.extend({},defaults,options),
+			_this = this;
 
 		this._init = function(elem){
 			var $obj = $(elem);
@@ -22,39 +22,41 @@ date:2013-6-6
 			}
 			
 			// opened 收缩
-			$('li button.opened', $obj).live('click', function(){   
+			$obj.delegate('li button.opened', 'click', function(){   
 		    	$(this).attr('class', 'open')
-		    	$(this).siblings('ul').hide();
+		    		.siblings('ul').hide();
 			})
 			
-			$('li button.open', $obj).live('click', function(){ 
+			$obj.delegate('li button.open', 'click', function(){ 
 				var _this = this;
-				if(!$(_this).attr('unajaxable')){
+				if(! $(_this).attr('unajaxable')){
 					$.ajax({
 						type : 'post',
 						url : "/{0}".format($obj.attr('controller')),
 						data : {parentId : $(this).parent().attr('id')},
 						success : function(data){
-							if(data.status == 'success'){
-								if(data.data.length > 0){
-									_createTree($(_this).parent(), data.data);
-									$(_this).attr('class', 'opened');
-									$(_this).attr('unajaxable', 'true');
-								}
+							if(data.status == 'success' && data.data.length > 0){
+								_createTree($(_this).parent(), data.data);
+								$(_this).attr('class', 'opened');
+								$(_this).attr('unajaxable', 'true');
 							}
 						}
 					})
 				}else{
 					$(_this).attr('class', 'opened')
-					$(_this).siblings('ul').show();
+						.siblings('ul').show();
 				}
 			})
 			//链接点击发送请求刷新gird
-			$('li a', $obj).live('click',function(){ 
-				$('li a',$obj).removeClass('current');
-				$(this).addClass('current');
-				var grid = $('.si-grid:visible[Controller="'+ $obj.attr('relationship') +'"]').grid({listForEdit : opts.listForEdit});
-				grid.doAction( 'refresh' , {data : {parentCode: $(this).html().getBracketInner(), isCheckHide : opts.isCheckHide}});
+			$obj.delegate('li a', 'click',function(){ 
+				if($(this).attr('class') && $(this).attr('class').indexOf('current') != -1){
+					return false;
+				}else{
+					$('li a', $obj).removeClass('current');
+					$(this).addClass('current');
+					var grid = $('.si-grid:visible[Controller="'+ $obj.attr('relationship') +'"]').grid({memoryCheck : opts.memoryCheck});
+					grid.doAction( 'refresh' , {data : {parentCode: $(this).html().getBracketInner(), hideCheckbox : opts.hideCheckbox, type : $(elem).attr('controller')}});
+				}
 
 			})
 
@@ -62,13 +64,14 @@ date:2013-6-6
 		}
 
 		function _createTree(target, nodes){			 //创建树
-		    	var $ul = $('ul', target).length > 0 ? $('ul', target) : $('<ul></ul>');
-			    for(var i = 0, ilen = nodes.length; i < ilen; i++ ){
-			    	var isOpen = nodes[i].hasChild ? 'open' : 'unopen';
-			    	$('<li id ="' + nodes[i].Id + '"><button class="' + isOpen + '"></button>' + '<a>' + '[' + nodes[i].Code + ']' + nodes[i].Name + '</a></li>').appendTo($ul)
-			    }
-			    $ul.css('display','block');
-				$(target).append($ul);
+	    	var $ul = $('ul', target).length > 0 ? $('ul', target) : $('<ul></ul>'),
+	    		isOpen;
+		    for(var i = 0, ilen = nodes.length; i < ilen; i++ ){
+		    	isOpen = nodes[i].hasChild ? 'open' : 'unopen';
+		    	$('<li id ="' + nodes[i].Id + '"><button class="' + isOpen + '"></button>' + '<a>' + '[' + nodes[i].Code + ']' + nodes[i].Name + '</a></li>').appendTo($ul)
+		    }
+		    $ul.css('display','block');
+			$(target).append($ul);
 		}
 
 		this.getCode = function(){   // 选中节点Code 
@@ -101,18 +104,39 @@ date:2013-6-6
 		}	
 
 		this.deleteNode = function(Ids){    //删除节点
-			for(var i = 0, ilen =$('li a', _this).length; i< ilen; i++ ){
-				for(var j = 0, jlen = Ids.length; j < jlen; j++)
-                if( $('li', _this).eq(i).attr('id') == Ids[j] ){
-                    if( $('li', _this).eq(i).parent().children('li').length == 1){
-                        $('li', _this).eq(i).parent().parent().children('button').removeClass().addClass('unopen');
-                        $('li', _this).eq(i).parent().remove();
-                    }else{
-                        $('li', _this).eq(i).remove();
-                    }
-                }
-            }
+			$('li', _this).each(function(){
+				for(var i = 0, ilen = Ids.length; i < ilen; i++){
+					if($(this).attr('id') == Ids[i]){
+						if($(this).siblings().length == 0){
+							$(this).parent().siblings('button').removeClass().addClass('unopen');
+							$(this).parent().remove();
+						}else{
+							$(this).remove();
+						}
+					}
+				}
+			})
 		}
+
+		this.createTree = function(controller, name){
+			var _this = this;
+			$.ajax({
+				type : 'post',
+				url : "/{0}".format(controller),
+				data : {parentId : '', pageSize :(Math.pow(2,31)-1)},
+				success : function(data){
+					if(data.status == 'success'){
+						$(_this).attr('controller', controller);
+						$('> li > a', _this).html('所有' + name);
+						$('> li > ul', _this).remove();
+						if(data.data.length > 0){
+							_createTree($('li', _this), data.data);
+						}
+					}
+				}
+			})
+		}
+
 		return this.each(function(){
 			_this._init(this);
 		})

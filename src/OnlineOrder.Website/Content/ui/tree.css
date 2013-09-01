@@ -1,4 +1,7 @@
 /*tree*/
+.si-tree-wrp{
+	overflow:auto; 
+}
 .si-tree ul{
 	padding-left:14px;
 	display: none;
@@ -37,7 +40,7 @@
 	padding:2px 0;
 }
 .si-tree-wrp{
-	padding-top:10px;
+	padding-top:5px;
 }
 .si-tree{
 	padding-left:5px;
@@ -46,4 +49,14 @@
 }
 .si-wind .select-left{
 	height:370px;
+}
+.left .si-tree-top{
+	height:30px;
+	line-height:30px;
+	border-bottom:1px solid #ccc;
+	padding-left:15px;
+}
+.left .si-tree-top select{
+	width:170px;
+
 }

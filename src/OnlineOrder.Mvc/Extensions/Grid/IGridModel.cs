@@ -14,6 +14,8 @@ namespace OnlineOrder.Mvc.Grid
         int EmptyRows { get; set; }
         bool ShowFooter { get; set; }
         bool AutoScroll { get; set; }
+        bool ShowRowNumber { get; set; }
+        bool ShowCheckBox { get; set; }
 		IDictionary<string, object> Attributes { get; set; }
 		GridSortOptions SortOptions { get; set; }
 		string SortPrefix { get; set; }

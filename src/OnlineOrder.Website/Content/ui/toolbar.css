@@ -230,25 +230,25 @@
 }
 */
 button.si-btn{
-	padding:0 6px 2px;
-	height:25px;
+	padding:0 12px 2px;
+	height:26px;
 	line-height:21px;	
-	padding:0 8px 2px\0;
-	height:25px\0;
-	line-height:23px\0;	
+	padding:0 14px 2px\0;
+	height:27px\0;
+	line-height:25px\0;	
 	*position:relative;
 	*top:4px;
 	*padding: 0 9px 2px;
 	*margin-left:5px;
 }
 :root button.si-btn{
-	padding:0 8px\9;
-	line-height:25px\9;	
-	height:25px\9;
+	padding:0 13px 2px\9;
+	line-height:26px\9;	
+	height:26px\9;
 } 
 @media screen and (-webkit-min-device-pixel-ratio:0){ button.si-btn{
-	line-height:23px;
-	padding:0 9px 2px ;
+	line-height:24px;
+	padding:0 15px 2px ;
 }}
 
 /*edit grid 工具栏按钮*/

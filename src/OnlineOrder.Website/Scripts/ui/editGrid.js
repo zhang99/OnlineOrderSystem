@@ -77,6 +77,8 @@ date:2013-6-18
 									return false;
 								}
 							}
+							$(this).blur();
+							$(document.body).data('lastFocusElem', this);
 							_this.searchQuery({
 								grid: elem,
 								searchText: this,
@@ -96,7 +98,7 @@ date:2013-6-18
 				$('tbody tr' , $editGrid).removeClass('current');
 				$(this).parents('tr').addClass('current');
 			})
-			$('tbody :input',$editGrid).eq(0).trigger('focus');
+			$('tbody :input:not([disabled])',$editGrid).eq(0).trigger('focus');
 
 			$('.si-wind .wind-title span').live('click',function(){
 				$(document.body).unbind('keydown');
@@ -109,7 +111,8 @@ date:2013-6-18
 				var $amtTd = $('tbody tr',$editGrid).eq(rowCurrent).children('td[field=Amt]');
 				if($(this).parent().attr('field') == 'LargeQty'|| $(this).parent().attr('field') ==  'Qty'){
 					if($(this).val() != ''){
-						var value = parseFloat($(this).val()).toFixed(defaults.toFixed);
+						var value = parseFloat($(this).val())?parseFloat($(this).val()).toFixed(defaults.toFixed)
+										: new Number("0").toFixed(defaults.toFixed);
 						$('tbody tr',$editGrid).eq(rowCurrent).children('td[field=LargeQty] , td[field=Qty]').children(':input').val(value);
 						var validPrice = $(this).parent().parent().children('td[field=ValidPrice]').children(':input').val();
 						$amtTd.text(!(value * parseFloat(validPrice))?'0.0000':(value * parseFloat(validPrice.replace(/,/,''))).toFixed(defaults.toFixed));
@@ -117,10 +120,9 @@ date:2013-6-18
 					}
 				}else if($(this).parent().attr('field') == 'ValidPrice'){
 					if($(this).val() != ''){
-						value = parseFloat($(this).val().replace(/,/,''));
-						if(value != value){
-							value = 0;
-						}
+						var value = parseFloat($(this).val().replace(/,/,''))?parseFloat($(this).val().replace(/,/,'')).toFixed(defaults.toFixed)
+										: new Number("0").toFixed(defaults.toFixed);
+						$('tbody tr',$editGrid).eq(rowCurrent).children('td[field=ValidPrice]').children(':input').val(value);
 						var qty = $('tbody tr',$editGrid).eq(rowCurrent).children('td[field=LargeQty]').children(':input').val();
 						$amtTd.text((value * qty).toFixed(defaults.toFixed));
 						_this._total();
@@ -139,12 +141,16 @@ date:2013-6-18
 			})
 			
 			//可搜索td域
-			$('td .search', $editGrid).live('click',function(){
+			$('td .search', $editGrid).live('click',function searchClick(){
 				_this.searchQuery( {
 					grid: elem,
 					searchText: $(this).siblings('.search-text'),
 					searchBtn: this
 				});
+				$('td .search', $editGrid).die('click')
+				setTimeout(function(){
+					$('td .search', $editGrid).live('click', searchClick);
+				},1000);
 			})
 			// 可回车查询的域 保存原始值
 			$('td[selectable] input', $editGrid).each(function(){
@@ -219,14 +225,22 @@ date:2013-6-18
 			$(target).data('onQuery', true);
 			$.ajax({
 				type : 'put' ,
-				url : '/Products/Query?isCheckHide=true' ,
+				url : '/Products/Query?hideCheckbox=true' ,
 				data : { queryFields : 'Code', query :  $(target).val() } ,
 				global : false,
 				success : function(data){
 					$.window({
 						'title':'选择商品',
 						hasTree : true,
-						fillText: data
+						fillText: data,
+						callback: function(data){
+							return _this._dataInherits({
+								target: target,
+								data: data,
+								trHtml: $(grid).data('trHtml'),
+								bind:[document.body, 'keydown.searchQuery', searchQuery]
+							});
+						}
 					})
 					var t = setInterval(function(){
 						if($('#si-mask').css('display')=='block'){
@@ -240,28 +254,19 @@ date:2013-6-18
 					gridTr.eq(0).addClass('selected');
 					var data = $('.si-grid[controller=Products]').grid().getData(true);
 					if($(':checkbox', gridTr).length == 1 && !options.searchBtn){  // 仅有一条数据，直接赋值 不弹出窗口
-						_this._dataInherits({
-							target: target,
-							data: data,
-							trHtml: $(grid).data('trHtml')
-						});
+						$.window('close', gridTr, data)
 						_this.focusNext(target);
 						return false;
 					}
-					gridTr.die('click.editGrid').live('click.editGrid', function searchQueryClick(){
+					gridTr.die('click.editGrid').live('click.editGrid', function(){
 						data = $('.si-grid[controller=Products]').grid().getData(true);
-						_this._dataInherits({
-							target: target,
-							data: data,
-							trHtml: $(grid).data('trHtml'),
-							bind:[gridTr, 'click', searchQueryClick]
-						});
-						gridTr.die('.editGrid', searchQueryClick);
+						$.window('close', gridTr, data);
+						gridTr.die('click.editGrid');
 						target = undefined;
 						return false;
 					})  
 					var trindex = 0;  
-					$(document.body).off('keydown.searchQuery').on('keydown.searchQuery',function searchQuery(event){  
+					function searchQuery(event){  
 						var gridTr = $('.si-wind .si-grid[controller=Products] tbody tr');
 						if($('.selected', '.si-wind .si-grid[controller=Products]').length == 0){
 							trindex = -1;
@@ -286,21 +291,17 @@ date:2013-6-18
 								break;
 							case 13 :  //enter		
 								var data = $('.si-grid[controller=Products]').grid().getData(true);
-								_this._dataInherits({
-									target: target,
-									data: data,
-									trHtml: $(grid).data('trHtml'),
-									bind:[document.body, 'keydown', searchQuery]
-
-								});
+								$(document.body).data('lastFocusElem', gridTr);
+								$.window('close', gridTr, data);
 								break;
 							case 27:   // Esc
-								$.window('close');
+								$.window('close', gridTr);
 								break;
 							default:
 								break;
 						}									
-					})
+					}
+					$(document.body).off('keydown.searchQuery').on('keydown.searchQuery', searchQuery)
 				}
 			})
 		}
@@ -398,7 +399,7 @@ date:2013-6-18
 			if(options.target ){
 				if(sameVar.length == 1 && arrData.length == 1){
 					$.message({type:'info', msg:'编码重复，请重新选择！', bind:options.bind||[]})
-					return;
+					return false;
 				}
 			}else{
 				for( var j = 0 , jlen = sameVar.length ; j < jlen ; j++){
@@ -472,8 +473,7 @@ date:2013-6-18
 				$('tbody tr:eq({0}) :text:first'.format(inheritData.length+editData.length), _this).focus().addClass('focus'); //获得焦点
 			}
 			_this.refreshRownum();
-			$('tbody tr',_this).off('.editGrid');
-			$.window('close');
+			options.bind && $(options.bind[0]).die(options.bind[1],options.bind[2]);
 		}
 
 /************ wangpf 20130722 end line ******************/
@@ -563,17 +563,19 @@ date:2013-6-18
 				type : 'put' ,
 				url : '/Products/Query' ,
 				data : opts.data ,
-				success : opts.success
+				success : opts.success,
+				callback: function(data){
+					return _this._dataInherits({
+						data: data
+					});
+				}
 			})
 		}
 
 		/*商品确认选择*/
 		this.confirm = function(){
-			var data = $('.si-grid[controller=Products]').grid().getData(true, {listForEdit : true});
-			this._dataInherits({
-				data : data,
-				trHtml : $(_this).data('trHtml')
-			});
+			var data = $('.si-grid[controller=Products]').grid().getData(true, {memoryCheck : true});
+			$.window('close', $('.si-grid[controller=Products]'), data)
 		}
 
 		/*取消选择*/

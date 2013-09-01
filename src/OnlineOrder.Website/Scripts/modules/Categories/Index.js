@@ -3,12 +3,11 @@
 	js for Categories.Index;
 */
 jQuery(document).ready(function ($) {
-    var grid = $('.si-grid').grid(),
-        tree = $('#tree').tree({title : '@ViewBag.ModelName'});
+    var grid = $('.si-grid').grid({actionOfWindow : true}),
+        tree = $('#tree').tree({title : ''});
     $('.left').css('height',$('.main').height()+'px');
 
     $('.create ', '.si-tbar').die('click').live('click', function () {   //新增
-        log('1234')
         grid.doAction('create',{
             success : function(data){
                 $.window({'fillText':data});
@@ -28,21 +27,14 @@ jQuery(document).ready(function ($) {
             }
         });
     })
-    function  modify(){   //修改
-        grid.doAction('modify' ,{
-            success : function(data){
-                $.window({'fillText':data});
-            }
-        }) ;
-        return false;
-    }
-    $('.query, .refresh', '.si-tbar').live('click', function () {
+    $('.query, .refresh, .modify ', '.si-tbar').die('click').live('click', function () {
         var action = $(this).attr('class').replace('si-btn ', '');  //james
         grid.doAction(action);
     })
     $('tbody a', '.si-grid').live('click',function(){
         $(this).parents('tr').trigger('dblclick');
     })
-    $('.modify ' , '.si-tbar').die('click').live('click', modify);
-    $('tbody tr','.si-grid').die('dblclick').live('dblclick',modify);
+    $('tbody tr','.si-grid').die('dblclick').live('dblclick', function(){
+        grid.doAction('modify');
+    });
 });

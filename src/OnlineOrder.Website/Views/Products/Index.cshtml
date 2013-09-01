@@ -1,6 +1,21 @@
 ﻿@using System.Collections
 @using OnlineOrder.Mvc
 
+@section left{
+<div class="left">
+    <div class="si-tree-top">
+        <select>
+            <option value="Categories">类别</option>
+            <option value="Brands">品牌</option>           
+        </select>
+    </div>
+    <div class="si-tree-wrp">
+        <ul id="tree" class="si-tree" controller="Categories" relationship = "@ViewBag.ControllerName">
+            @Html.Partial("_Left") 
+        </ul>
+    </div>
+</div>
+}
 @Html.Toolbar(new List<ToolbarItem>() { 
     new ToolbarItem("新增", new Hashtable(){{"class","create"}}),
     new ToolbarItem("修改", new Hashtable(){{"class","modify"}}),
@@ -18,13 +33,20 @@
 
 <script type="text/javascript">
     jQuery(document).ready(function ($) {
-        var grid = $('.si-grid').grid({title : '@ViewBag.ModelName'});
+        var grid = $('.si-grid').grid({title : '@ViewBag.ModelName'}),
+            tree = $('#tree').tree({title : '@ViewBag.ModelName'});
+        $('.left').css('height', $('.main').height()+'px');
+        $('.si-tree-wrp').css('height', $('.left').height() - 40 );
+
         $('tbody tr', '.si-grid').live('dblclick', function () {
             grid.doAction('modify');
         })
         $('.si-btn', '.si-tbar').live('click', function () {
             var action = $(this).attr('class').replace('si-btn ', '');  //james
             grid.doAction(action);
+        })
+        $('select', '.si-tree-top').on('change', function(){
+            tree.createTree($(this).val(), $('option:checked', this).text());
         })
     });
 </script> 

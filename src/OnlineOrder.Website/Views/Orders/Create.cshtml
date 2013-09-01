@@ -1,0 +1,52 @@
+﻿@using System.Collections
+@using OnlineOrder.Mvc
+@using OnlineOrder.Mvc.Grid
+@using OnlineOrder.Mvc.Pagination
+@using OnlineOrder.Website.Models
+@model Order
+    
+@Html.Toolbar(new List<ToolbarItem>() { 
+    new ToolbarItem("新增", new Hashtable(){{"class", "create"}}),
+    new ToolbarItem("保存", new Hashtable(){{"class", (Model != null && Model.ApproveFlag=="1" ? "disabled save" : "save")}}),
+    new ToolbarItem("审核", new Hashtable(){{"class", (ViewBag.ActionName == "Create" || (Model != null && Model.ApproveFlag=="1") ?  "disabled approve" : "approve")}}),
+    new ToolbarItem("选择商品", new Hashtable(){{"class", (Model != null && Model.ApproveFlag=="1" ? "disabled query" : "query")}}),
+    //new ToolbarItem("扫描", new Hashtable(){{"class", (Model != null && Model.ApproveFlag=="1" ? "disabled" : "")}}),
+    new ToolbarItem("删单", new Hashtable(){{"class", (ViewBag.ActionName == "Create" || (Model != null && Model.ApproveFlag=="1") ? "disabled del" : "del")}}),
+    //new ToolbarItem("打印", new Hashtable(){{"class","disabled"}}),
+    //new ToolbarItem("设置", new Hashtable(){{"class",""}}),
+    //new ToolbarItem("导入", new Hashtable(){{"class",""}}),
+    //new ToolbarItem("导出", new Hashtable(){{"class",""}}),
+    new ToolbarItem("返回", new Hashtable(){{"class", "cancel"}}),
+}, false)
+
+@Html.SiSheetBegin()
+    @Html.SiSheetMaster(
+                        Html.SiHiddenFor(m => m.Id),               
+                        Html.SiTextBoxFor(m => m.Code, new { @readonly = "readonly" }, new { @class = "sheet-capital" }),   
+                        Html.SiUControlFor(m => m.Customer),
+                        Html.SiTextBoxFor(m => m.PayDate, new { type = "datebox" }),                      
+                        Html.SiIdNameTextBoxFor(m => m.Oper, new { disabled = "disabled" }),
+                        Html.SiTextBoxFor(m => m.OperDate, new { disabled = "disabled" }),
+                        Html.SiIdNameTextBoxFor(m => m.Approver, new { approved = (Model != null && Model.ApproveFlag=="1"?"true":"false"), disabled = "disabled"}),
+                        Html.SiTextBoxFor(m => m.ApproveDate, new { disabled = "disabled" }))                             
+    @Html.SiSheetDetailBegin()
+        @Html.Grid(Model==null ? null : Model.OrderDetails).Columns(c =>{
+                        c.For(x => x.LineNum).Width(30).Align(Alignment.Center);
+                        c.For(x => x.Id).Hide(true);
+                        c.For(x => x.ParentId).Hide(true);
+                        c.For(x => x.ProductId).Hide(true).Reliable(true);
+                        c.For(x => x.Product.Code).Editable(true).Selectable(true).Width(150).Align(Alignment.Left);                        
+                        c.For(x => x.Product.Name).Width(180).Align(Alignment.Left);
+                        c.For(x => x.Product.UnitId).Width(80);
+                        c.For(x => x.SalePrice).Editable(true).Width(80).Align(Alignment.Right);                   
+                        c.For(x => x.Qty).Editable(true).IsSum(true).Width(80).Align(Alignment.Right);                     
+                        c.For(x => x.Amount).IsSum(true).Width(80).Align(Alignment.Right);                       
+                    }).AddEmptyRows(ViewBag.ActionName == "Create" ? 8 : 1).ShowFooter(true).AutoScroll(true)     
+    @Html.SiSheetDetailEnd() 
+@Html.SiSheetEnd()
+
+<script type="text/javascript">
+    $(function () {
+        $('.si-sheet').sheetForm();
+    });
+</script>

@@ -22,19 +22,73 @@ $.fn.autoComplete = function( options ){
 
 		$.data(target, "oldValue", $(target).val());
 		var panel = _this._createPanel( target );
-		$(target).on("keyup", function(){
+
+		/*
+		* 频率控制 返回函数连续调用时，action 执行频率限定为 次 / delay
+		* @param delay  {number}    延迟时间，单位毫秒
+		* @param action {function}  请求关联函数，实际应用需要调用的函数
+		* @param tail?  {bool}      是否在尾部用定时器补齐调用
+		* @return {function}	返回客户调用函数
+		*/
+		var throttle = function(delay, action, tail, debounce) {
+		    var last_call = 0, last_exec = 0, timer = null, 
+		    curr, diff,ctx, args, exec = function() {
+		            last_exec = Date.parse (new Date());
+		            action.apply(ctx,args);
+		        };
+
+		    return function() {
+		        ctx = this, args = arguments;
+		        curr = Date.parse (new Date()); diff = curr - (debounce?last_call:last_exec) - delay;
+		        
+		        clearTimeout(timer);
+		        if(debounce){
+		            if(tail){
+		                timer = setTimeout(exec,delay); 
+		            }else if(diff>=0){
+		                exec();
+		            }
+		        }else{
+		            if(diff>=0){
+		                exec();
+		            }else if(tail){
+		                timer = setTimeout(exec,-diff);
+		            }
+		        }
+		        last_call = curr;
+		    }
+		}
+		/*
+		* 空闲控制 返回函数连续调用时，空闲时间必须大于或等于 idle，action 才会执行
+		* @param idle   {number}    空闲时间，单位毫秒
+		* @param action {function}  请求关联函数，实际应用需要调用的函数
+		* @param tail?  {bool}      是否在尾部执行
+		* @return {function}	返回客户调用函数
+		*/
+		var debounce = function(idle,action,tail) {
+		    return throttle(idle, action, tail, true);
+		}
+
+		$(target).on("keyup", debounce(300, function(){
 			if($.data(target, "oldValue") != this.value){
 				$.data(target, "oldValue" , this.value);
 				/* Ajax submit, return Json */
+				if($(target).data("ajaxAutoComplete")){
+					$(target).data("ajaxAutoComplete").abort();
+				}
 				$.fn.autoComplete.methods["ajaxSubmit"](target, panel, options);
 			}
-		});
-		$(document.body).on('click',function(){
+		}, true));
+		$(document.body).off('click.autoComplete').on('click.autoComplete', function(){
 			if( panel.css('display')=='block' ){
 				$("#{0}Id".format($(target).parents('.field').attr('controller').replace(/ies$/i,'y').replace(/s$/i,''))).val('');
 			}
-           	panel.hide();
+           	$('.auto-complete', document.body).hide();
+           	if($(target).data("ajaxAutoComplete")){
+				$(target).data("ajaxAutoComplete").abort();
+			}
         });
+   
 
         $.data( target, "autoComplete", this );
         
@@ -67,14 +121,16 @@ $.fn.autoComplete.methods = {
 	ajaxSubmit: function( original, target, options ){
 		var _this = this,
 		options = $.extend( {}, $.fn.autoComplete.defaults, options );
-
-		$.ajax({
+		var xhr = $.ajax({
 			type: options.type,
 			dataType: 'json',
 			data: {"query": $(original).val()},
 			// url: options.url,
-			url: "/{0}/Query?isCheckHide=false".format( $(original).parents(".field").attr("controller") ),
+			url: "/{0}/Query".format( $(original).parents(".field").attr("controller") ),
 			global:false,
+			complete: function(){
+				$(original).data("ajaxAutoComplete", false);
+			},
 			success: function(resp){
 				if(resp.status == 'error'){
 					//---------------
@@ -95,9 +151,11 @@ $.fn.autoComplete.methods = {
 
 			},
 			error: function(err){
+				if(err.readyState==0) return false;
 				$.message({ msg: "{0} {1}".format(err.status, err.statusText)});
 			}
 		});
+		$(original).data("ajaxAutoComplete", xhr);
 	},
 	_setGrid: function( original, target, data ){
 		var _this = this;
@@ -106,26 +164,29 @@ $.fn.autoComplete.methods = {
 		}
 
 		/* Construction of Grid Table */
-		var thead = target.find('thead').empty(),
-		tbody = target.find('tbody').empty(),
-		tr = $('<tr></tr>').appendTo(thead);
-		tr.append('<th field="rownum">序号</th>')
-		  .append('<th field="Id" class="hide"></th>')
-		  .append('<th field="Code">编码</th>')
-		  .append('<th field="Name">名称</th>')
+		var thead = $('thead', target),
+			tbody = $('tbody', target).empty(),
+			tr;
+		if($('tr', thead).length == 0){
+			tr = $('<tr></tr>')
+			tr.append('<th field="rownum">序号</th><th field="Id" class="hide"></th><th field="Code">编码</th><th field="Name">名称</th>');
+			tr.appendTo(thead); 
+		}
 		target.show();
 		if(data.length==0){
 			var tr = $('<tr><td colspan="3">没有任何数据.</td></tr>').appendTo(tbody);
 		}
 		for(var i = 0, len = data.length; i < len; i ++){
-			var tr = $('<tr></tr>').appendTo(tbody);
-			if(i==0){
-				tr.addClass("selected")
+			var tbodyTr = $('<tr></tr>');
+			if(i == 0){
+				tbodyTr.addClass('selected');
 			}
-			$('<td field="rownum"></td>').appendTo(tr).html(i+1);
-			$('<td field="Id" class="hide">').appendTo(tr).html(data[i].Id);
-			$('<td field="Code"></td>').appendTo(tr).html(data[i].Code);
-			$('<td field="Name"></td>').appendTo(tr).html(data[i].Name);
+			tbodyTr.append('<td field = "rownum">'+ (i + 1) +'</td>' +
+				'<td field="Id" class="hide">' + data[i].Id + '</td>' +
+				'<td field="Code">' + data[i].Code + '</td>' +
+				'<td field="Name">' + data[i].Name + '</td>'
+			)
+			tbodyTr.appendTo(tbody);
 		}
 		$("tbody tr", target[0]).on("click",function(){
 			window.setTimeout(function(){
@@ -150,7 +211,7 @@ $.fn.autoComplete.methods = {
 	},
 	_keyEventHandler : function( original , target){
 		var _this = this;
-        $(original).off(".keyEventHandler").on("keypress.keyEventHandler", function(e){
+        $(original).off("keydown").on("keydown", function(e){
         	switch(e.keyCode){
         		case 40: 	// ↓ 向下方向键
         			var selectedTr = $("tbody tr.selected", target);

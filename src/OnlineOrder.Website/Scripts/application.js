@@ -15,12 +15,12 @@ $(function () {
         $(document.body).waitting(false);
     });
 
-    $('#adv-search').live('click', function () {
-        $('#adv-search-panel').toggle();
-        $('#adv-search').toggleClass('adved');
+    $('#adv-search').live('click',function(){
+        $('#adv-search-panel').slideToggle(500, function(){
+            $('#adv-search').toggleClass('adved');
+        });
         return false;
-    });
-    
+    })
 });
 
 

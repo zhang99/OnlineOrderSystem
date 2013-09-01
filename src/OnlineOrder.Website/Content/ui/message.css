@@ -46,7 +46,7 @@
 	text-align: center;
 	clear: both;
 }
-.si-message-box .message-main p {
+.si-message-box .message-main p.user-message {
 	text-align: center;
 	color: #333;
 	font-size: 14px;
@@ -54,6 +54,9 @@
 	font-weight: bold;
 	vertical-align: middle;
 	line-height: 20px;
+}
+.si-message-box .message-main p{
+	padding-bottom:5px;
 }
 .si-message-box .message-main a {
 	color: #333333;

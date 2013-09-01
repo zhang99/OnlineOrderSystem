@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using OnlineOrder.Mvc.Grid;
 
 namespace OnlineOrder.Mvc.Pagination
 {
@@ -44,8 +45,11 @@ namespace OnlineOrder.Mvc.Pagination
         /// The Aggregation of items.
         /// </summary>
         IDictionary<string, decimal> DicSum { get; set; }
+        /// <summary>
+        /// Sortable Options
+        /// </summary>
+        GridSortOptions SortOptions { get; set; }
 	}
-
 
 	/// <summary>
 	/// Generic form of <see cref="IPagination"/>
@@ -53,6 +57,5 @@ namespace OnlineOrder.Mvc.Pagination
 	/// <typeparam name="T">Type of object being paged</typeparam>
 	public interface IPagination<T> : IPagination, IEnumerable<T>
 	{
-
 	}
 }

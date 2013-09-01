@@ -5,17 +5,8 @@ using OnlineOrder.Mvc.Pagination;
 
 namespace OnlineOrder.Mvc.Grid
 {
-    /// <summary>
-    /// Alignment -- add by zhangh 2013/06/17
-    /// </summary>
-    public enum Alignment
-    {
-        Left,
-        Center,
-        Right
-    }
 
-	/// <summary>
+    /// <summary>
 	/// Grid Column fluent interface
 	/// </summary>
 	public interface IGridColumn<T>

@@ -16,29 +16,9 @@ namespace OnlineOrder.Website.Controllers
     /// <typeparam name="T"></typeparam>
     public abstract class BaseSheetController<T> : BaseDataController<T> where T : IEntity
     {
-        private readonly Hashtable HASHTABLE_SHEET_TYPES = new Hashtable(){
-                {"采购订单","PO"},
-                {"采购收货","PI"}, //TODO: 其他待加
-            };
-
         public BaseSheetController(ISheetModel<T> model)
             : base(model)          
         {
-            string title = GetCustomAttribute(this.GetType(), typeof(TitleAttribute), "Title");
-            if (HASHTABLE_SHEET_TYPES.ContainsKey(title)) 
-                TransNo = HASHTABLE_SHEET_TYPES[title].ToString();
-
-            if (string.IsNullOrWhiteSpace(TransNo))
-                throw new ArgumentNullException("TransNo不能为空.");
-        }
-       
-        /// <summary>
-        /// 单据类型TransNo
-        /// </summary>
-        protected string TransNo
-        {
-            get;
-            set;
         }
 
         /// <summary>
@@ -49,14 +29,7 @@ namespace OnlineOrder.Website.Controllers
         public virtual ActionResult Approve(int Id)
         {
             var mod = model as ISheetModel<T>;
-
-            T entity = mod.GetById(Id);
-            Type type = entity.GetType();
-            type.GetProperty("ApproveFlag").SetValue(entity, "1", null);
-            type.GetProperty("ApproverId").SetValue(entity, CurrUserInfo.Id, null);
-            type.GetProperty("ApproveDate").SetValue(entity, System.DateTime.Now, null);
-
-            mod.Approve(entity);
+            T entity = mod.Approve(Id, CurrUserInfo.Id);
             mod.Commit();
 
             return Json(new SuccessActionResult("审核成功.", entity));
@@ -88,17 +61,19 @@ namespace OnlineOrder.Website.Controllers
         /// <param name="entity"></param>
         protected override void UpdateEntity<TModel>(TModel entity)
         {
-            Type type = entity.GetType();
-            PropertyInfo[] properties = type.GetProperties();
-            for (int j = 0; j < properties.Length; j++)
-            {
-                PropertyInfo propertyInfo = properties[j];
-                if (propertyInfo.Name.Equals("TransNo") && "Create".Equals(ViewBag.ActionName))
-                    propertyInfo.SetValue(entity, TransNo, null);
+            #region Obsolete
+            //Type type = entity.GetType();
+            //PropertyInfo[] properties = type.GetProperties();
+            //for (int j = 0; j < properties.Length; j++)
+            //{
+            //    PropertyInfo propertyInfo = properties[j];
+            //    if (propertyInfo.Name.Equals("TransNo") && "Create".Equals(ViewBag.ActionName))
+            //        propertyInfo.SetValue(entity, TransNo, null);
 
-                if (propertyInfo.Name.Equals("Code") && "Create".Equals(ViewBag.ActionName))
-                    propertyInfo.SetValue(entity, (model as ISheetModel<T>).GenerateSheetNo(TransNo), null);
-            }
+            //    if (propertyInfo.Name.Equals("Code") && "Create".Equals(ViewBag.ActionName))
+            //        propertyInfo.SetValue(entity, (model as ISheetModel<T>).GenerateSheetNo(TransNo), null);
+            //}
+            #endregion
 
             base.UpdateEntity(entity);
         }

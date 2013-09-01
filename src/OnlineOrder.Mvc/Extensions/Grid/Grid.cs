@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Web.Mvc;
 using OnlineOrder.Mvc.Grid.Syntax;
 using OnlineOrder.Mvc.Pagination;
+using OnlineOrder.Mvc;
 
 namespace OnlineOrder.Mvc.Grid
-{
+{  
 	/// <summary>
 	/// Defines a grid to be rendered.
 	/// </summary>
 	/// <typeparam name="T">Type of datasource for the grid</typeparam>
-	public class Grid<T> : IGrid<T> where T : class
+    public class Grid<T> : IGrid<T> where T : class
 	{
 		private readonly ViewContext _context;
 		private IGridModel<T> _gridModel = new GridModel<T>();
@@ -31,15 +34,19 @@ namespace OnlineOrder.Mvc.Grid
 		/// <param name="dataSource">The datasource for the grid</param>
 		/// <param name="context"></param>
         public Grid(IPagination<T> dataSource, ViewContext context)
-		{
-			this._context = context;
-			DataSource = dataSource;
-		}
+        {
+            this._context = context;
+            DataSource = dataSource;
+            if (dataSource != null)
+                _gridModel.SortOptions = dataSource.SortOptions;
+        }
 
         public Grid(IPagination<dynamic> dataSource, ViewContext context)
         {
             this._context = context;
             DataSourceDynamic = dataSource;
+            if (dataSource != null)
+                _gridModel.SortOptions = dataSource.SortOptions;
         }
 
 		/// <summary>
@@ -58,10 +65,29 @@ namespace OnlineOrder.Mvc.Grid
 		public IGridWithOptions<T> Columns(Action<ColumnBuilder<T>> columnBuilder)
 		{
 			var builder = new ColumnBuilder<T>();
-			columnBuilder(builder);
 
+            var html = new HtmlHelper(_context, new ViewPage());
+            //显示Checkbox
+            if (Model.ShowCheckBox)
+                builder.For(f => html.SiCheckBox(typeof(T).Name, ""),"Id")
+                    .Header(x => html.SiCheckBox(typeof(T).Name, ""))
+                    .Sortable(false)
+                    .Align(Alignment.Center)
+                    .Width(30)
+                    .Queryable(false);
+                   
+
+            //显示行号
+            if (Model.ShowRowNumber)
+                builder.For(x => "").IsRowNumberColumn(true).Align(Alignment.Center).Width(40).Queryable(false);
+
+			columnBuilder(builder);
+            
 			foreach (var column in builder)
 			{
+                //列初始化
+                InitColumns(column);
+
 				if (column.Position == null) 
 				{
 					_gridModel.Columns.Add(column);
@@ -71,7 +97,7 @@ namespace OnlineOrder.Mvc.Grid
 					_gridModel.Columns.Insert(column.Position.Value, column);	
 				}
 
-                if (DataSource != null && column.IsSum)
+                if (DataSource != null && column.IsSumColumn)
                 {
                     if( DataSource.DicSum == null)
                         DataSource.DicSum = new Dictionary<string, decimal>();
@@ -82,6 +108,65 @@ namespace OnlineOrder.Mvc.Grid
 
 			return this;
 		}
+
+        /// <summary>
+        /// 列初始化
+        /// </summary>
+        /// <param name="column"></param>
+        public void InitColumns(GridColumn<T> column)
+        {
+            if (column == null || column.FieldName == null)
+                return;
+            
+            PropertyInfo pi = typeof(T).GetProperty(column.FieldName.Split(new char[] { '.' })[0]);
+            if (pi == null) return;
+
+            //宽度
+            Attribute attr = Attribute.GetCustomAttribute(pi, typeof(WidthAttribute), false);
+            if (attr != null)
+                column.Width(((WidthAttribute)attr).Width);
+
+            //对齐方式
+            attr = Attribute.GetCustomAttribute(pi, typeof(AlignAttribute), false);
+            if (attr != null)
+                column.Align(((AlignAttribute)attr).Alignment);
+
+            //可否查询
+            attr = Attribute.GetCustomAttribute(pi, typeof(QueryableAttribute), false);
+            if (attr != null)
+                column.Queryable(((QueryableAttribute)attr).Queryable);
+
+            //可否排序
+            attr = Attribute.GetCustomAttribute(pi, typeof(SortableAttribute), false);
+            if (attr != null)
+                column.Sortable(((SortableAttribute)attr).Sortable);
+
+            //是否显示到页面
+            attr = Attribute.GetCustomAttribute(pi, typeof(VisibleAttribute), false);
+            if (attr != null)
+                column.Visible(((VisibleAttribute)attr).Visible);
+
+            //是否隐藏
+            attr = Attribute.GetCustomAttribute(pi, typeof(HideAttribute), false);
+            if (attr != null)
+                column.Hide(((HideAttribute)attr).IsHidden);
+
+            //可否编辑
+            attr = Attribute.GetCustomAttribute(pi, typeof(EditableColumnAttribute), false);
+            if (attr != null)
+                column.Editable(((EditableColumnAttribute)attr).Editable);
+
+            //默认等于指定列
+            attr = Attribute.GetCustomAttribute(pi, typeof(EqualToAttribute), false);
+            if (attr != null)
+                column.EqualTo(((EqualToAttribute)attr).EqualTo);
+
+            //是否合计列
+            attr = Attribute.GetCustomAttribute(pi, typeof(IsSumAttribute), false);
+            if (attr != null)
+                column.IsSum(((IsSumAttribute)attr).IsSum);
+
+        }
 
         public IGridWithOptions<T> AddEmptyRows(int rows)
         {
@@ -98,6 +183,18 @@ namespace OnlineOrder.Mvc.Grid
         public IGridWithOptions<T> AutoScroll(bool isAutoScroll)
         {
             _gridModel.AutoScroll = isAutoScroll;
+            return this;
+        }
+
+        public IGridWithOptions<T> ShowRowNumber(bool isShowRowNumber)
+        {
+            _gridModel.ShowRowNumber = isShowRowNumber;
+            return this;
+        }
+
+        public IGridWithOptions<T> ShowCheckBox(bool isShowCheckBox)
+        {
+            _gridModel.ShowCheckBox = isShowCheckBox;
             return this;
         }
 

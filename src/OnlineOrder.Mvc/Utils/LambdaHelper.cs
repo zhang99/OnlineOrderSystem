@@ -64,7 +64,7 @@ namespace OnlineOrder.Mvc
         /// <returns></returns>
         public static Expression<Func<T, bool>> BuildLambdasOr<T>(string property, QueryMethods method, string content)
         {
-            if (string.IsNullOrWhiteSpace(property))
+            if (string.IsNullOrWhiteSpace(property) || string.IsNullOrWhiteSpace(content))
                 return null;
 
             string[] props = property.Split(',');
@@ -268,7 +268,10 @@ namespace OnlineOrder.Mvc
             if (arr.Length == 2)
             {
                 hs.Add(Convert.ChangeType(arr[0], type));
-                hs.Add(Convert.ChangeType(arr[1], type));
+                if (type.Name == "DateTime")
+                    hs.Add(DateTime.Parse(arr[1]).AddDays(1).AddMilliseconds(-1));
+                else
+                    hs.Add(Convert.ChangeType(arr[1], type));
             }
         }
 

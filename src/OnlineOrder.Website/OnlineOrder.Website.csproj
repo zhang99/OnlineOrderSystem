@@ -193,7 +193,7 @@
     </Compile>
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
-    <Compile Include="Controllers\PurchaseOrdersController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -384,7 +384,7 @@
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\modules\Brands\Index.js" />
     <Content Include="Scripts\modules\Categories\Index.js" />
-    <Content Include="Scripts\modules\Vendors\Index.js" />
+    <Content Include="Scripts\modules\Customers\Index.js" />
     <Content Include="Scripts\ui\editGrid.js" />
     <Content Include="Scripts\ui\filter.js" />
     <Content Include="Scripts\ui\form\ajaxFileUpload.js" />
@@ -469,9 +469,9 @@
     <Content Include="Views\Products\_Query.cshtml" />
     <Content Include="Views\PurchaseDetailsReport\Index.cshtml" />
     <Content Include="Views\PurchaseDetailsReport\_Index.cshtml" />
-    <Content Include="Views\PurchaseOrders\Create.cshtml" />
-    <Content Include="Views\PurchaseOrders\Index.cshtml" />
-    <Content Include="Views\PurchaseOrders\_Index.cshtml" />
+    <Content Include="Views\Orders\Create.cshtml" />
+    <Content Include="Views\Orders\Index.cshtml" />
+    <Content Include="Views\Orders\_Index.cshtml" />
     <Content Include="Views\Shared\Create.cshtml" />
     <Content Include="Views\Shared\Index.cshtml" />
     <Content Include="Views\Shared\Query.cshtml" />
@@ -487,6 +487,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>OnlineOrderDb.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="Views\Customers\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

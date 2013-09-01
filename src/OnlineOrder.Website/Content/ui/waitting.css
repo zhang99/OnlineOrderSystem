@@ -1,4 +1,13 @@
 /* waitting css */
+.waitting-wrp{
+	position:absolute;
+	left:0;
+	top:0;
+	background:#000;
+	opacity :0.2;
+	z-index : 1000;
+	filter: alpha(opacity:20);
+}
 .waitting{
 	display: block;
 	width:180px;

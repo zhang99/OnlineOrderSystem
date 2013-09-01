@@ -35,7 +35,11 @@ $.fn.form = function (options) {
         barcodes = [],
         delModelBarcodeIds = 'del{0}Ids'.format($('.si-grid[id]', target).attr('field'));
         $(':input[name][name != "Barcodes"][name != "Barcode"][name != "PicFileName"]', target).each(function() {
-            fields[$(this).attr('name')] = $(this).attr('value');
+            if(!$(this).attr('value')){
+                fields[$(this).attr('name')] = "";
+            }else{
+                fields[$(this).attr('name')] = $(this).attr('value');
+            }
         })
 
         if($('.si-grid[id] tbody :checkbox', target).length > 0 || $('#'+delModelBarcodeIds, target).attr('value')){
@@ -63,21 +67,8 @@ $.fn.form = function (options) {
         // 明细数据 grid
         $('.si-edit-grid[field]', target).each(function(){
             var gridDetails = $(this).editGrid().getAllData();
-            if(gridDetails.length == 0){
-                $.message( { msg:"明细数据不能为空，请重新输入！", type:'warning' } )
-                fields = null;
-                return false;
-            }
-            var delDetailsIds = [];
-            if($('[id^=del][id$=Ids]', target).attr('value')){
-                var arr = $('[id^=del][id$=Ids]', target).attr('value').split(',');
-                for(var i = 0, ilen = arr.length; i < ilen; i++){
-                    delDetailsIds.push({Id : arr[i]});
-                }
-            }
             // 由当前grid 上 field 确定保存的明细数据 模型名
-            fields[$(this).attr('field')] = delDetailsIds.concat(gridDetails);
-
+            fields[$(this).attr('field')] = gridDetails;
         })
         return fields;
     }
@@ -157,14 +148,26 @@ $.fn.form = function (options) {
 
             // 弹出搜索窗口查询
             $(".search", searchField).live('click', function(){
-                var hasTree = false;
+                var hasTree = false,
+                _self = this;
                 if($(this).parents(".field").attr("controller") == 'Products'){
                     hasTree = true;
                 }
                 _this._popWindow({
-                    url   :  "/{0}/Query?isCheckHide=true".format( $(this).parents(".field").attr("controller") ),
+                    url   :  "/{0}/Query?hideCheckbox=true".format( $(this).parents(".field").attr("controller") ),
                     query :  $(this).siblings(".search-text").val(),
-                    hasTree : hasTree
+                    hasTree : hasTree,
+                    callback: function(data){
+                        if(data){
+                            for (var arg in data) {
+                                $("input", $(_self).parents('.field')).each(function () {
+                                    if (new RegExp(arg).test(this.id)) {
+                                        this.value = data[arg];
+                                    }
+                                })
+                            }    
+                        }
+                    }
                 });
             });
         },
@@ -243,7 +246,7 @@ $.fn.form = function (options) {
                 $(":input:visible", elem).not(".readonly, :disabled, textarea").each(function(i){
                     var _this = this;
                     $(this).live("keypress.eventHandler", function eventHandler(e){
-                        if($('#si-message-box').css('display')=='block'){
+                        if($('#si-message-box').css('display')=='block' && $('#mask').css('display')=='block'){
                             return false;
                         }
                         var index = $(":input:visible", elem).not(".readonly, :disabled, textarea").index(this);
@@ -273,7 +276,8 @@ $.fn.form = function (options) {
                             queryFields : opts.queryFields,
                             query : opts.query
                         },
-            success :   opts.success
+            success :   opts.success,
+            callback:   opts.callback
         })
     }
     this._previewImage = function( file ){
@@ -347,6 +351,7 @@ $.fn.form = function (options) {
             defaults = {
                 data : {},
                 beforeSend: function(){},
+                global : false,
                 success : function(){},
                 complete : function(){},
                 createAfterSave : false
@@ -355,10 +360,12 @@ $.fn.form = function (options) {
             defaults.data = $.extend(true, formdata, _this.settings.data);
             defaults.beforeSend = function(){
                 // 用户自定义ajax调用前函数
+                $(document.body).waitting({bool : true, msg : '保存中...'});
                 return _this.settings.beforeSend && _this.settings.beforeSend();
             };
             defaults.complete = function(){
                 // 用户自定义ajax调用前函数
+                $(document.body).waitting(false);
                 return _this.settings.complete && _this.settings.complete();
             };
             defaults.success = function(data){
@@ -371,7 +378,7 @@ $.fn.form = function (options) {
                 if(data.status=='success'){
                     if($(target).attr('action').toLowerCase() == 'create'){
                         if(opts.createAfterSave){
-                            _this.clean(target);
+                            window.location.href="/{0}/Create".format($(target).attr('controller')); 
                         }else{
                             $('#Id', target).attr('value',data.data.Id);
                             $(target).attr('action', 'Edit');
@@ -423,6 +430,7 @@ $.fn.form = function (options) {
                     secureuri: false,
                     fileElementId: 'PicFileName',
                     data: opts.data,
+                    global : opts.global,
                     // contentType : 'application/json',
                     dataType : 'text',
                     processData: false,
@@ -437,6 +445,7 @@ $.fn.form = function (options) {
                     type : 'post',
                     url : url,
                     data : JSON.stringify(opts.data),
+                    global : opts.global,
                     contentType : 'application/json',
                     beforeSend : opts.beforeSend,
                     success : opts.success,

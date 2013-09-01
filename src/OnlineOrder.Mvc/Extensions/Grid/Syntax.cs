@@ -52,6 +52,20 @@ namespace OnlineOrder.Mvc.Grid.Syntax
         IGridWithOptions<T> ShowFooter(bool isShowFooter);
 
         /// <summary>
+        /// Show row number for the grid.
+        /// </summary>
+        /// <param name="isShowRowNumber"></param>
+        /// <returns></returns>
+        IGridWithOptions<T> ShowRowNumber(bool isShowRowNumber);
+
+        /// <summary>
+        /// Show check box for the grid.
+        /// </summary>
+        /// <param name="isShowCheckBox"></param>
+        /// <returns></returns>
+        IGridWithOptions<T> ShowCheckBox(bool isShowCheckBox);
+
+        /// <summary>
         /// AutoScroll
         /// </summary>
         /// <param name="isAutoScroll"></param>

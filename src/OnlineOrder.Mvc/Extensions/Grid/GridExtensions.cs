@@ -51,7 +51,7 @@ namespace OnlineOrder.Mvc.Grid
             IPagination<T> data = null;
             if (dataSource != null)
             {
-                data = dataSource.AsPagination<T>(1, int.MaxValue);
+                data = dataSource.AsPagination<T>(1, int.MaxValue, null);
             }
 
             return new Grid<T>(data, helper.ViewContext);

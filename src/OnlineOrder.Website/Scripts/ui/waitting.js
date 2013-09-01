@@ -13,13 +13,13 @@ example $('.area').waitting(true)
 (function($){
 	$.fn.waitting = function( options){
 		var defaults = {
-			bool : true,
-			msg : '加载中...'
-		},
+				bool : true,
+				msg : '加载中...'
+			},
 			_this = this,
 			options;
 		if(typeof options == 'object'){
-			options = $.extend({}, defaults, options)
+			options = $.extend({}, defaults, options);
 		}else{
 			options = $.extend({}, defaults, {bool : options});
 		}
@@ -39,35 +39,26 @@ example $('.area').waitting(true)
 			if($('.waitting-wrp', _this).length > 0){
 				_this._stop();
 			}
-			$(_this).css(
-				'position','relative'								
-			);
+			$(_this).css('position', 'relative');
 
 			// waitting wrapper
-			$('<div class="waitting-wrp"></div>')
-				.appendTo(_this)
+			$('<div class="waitting-wrp"></div>').appendTo(_this)
 				.css({
 					'width': $(this).outerWidth() ,
-					'height': document.documentElement.scrollHeight ,
-					'position':'absolute',
-					'left':0,
-					'top':0,
-					'background':'#000',
-					'opacity' :　'0.2' ,
-					'z-index' : 1000
+					'height': document.documentElement.scrollHeight
 				});
 
 			// waitting area
-			$('<span class="waitting"><b></b><span></span></span>').appendTo(_this);	
-			this.$loadingArea = this.children(".waitting"); 
-			this.$loadingArea.children('span').html(options.msg); 
-			this.$loadingArea.css({
+			$('<div class="waitting"><b></b><span></span></div>').appendTo(_this);	
+			var $loadingArea = $('.waitting', _this); 
+			$('span', $loadingArea).html(options.msg); 
+			$loadingArea.css({
 				'position':'absolute',
 				'display':'block'
 			});
-			this.$loadingArea.css({
-				'left': ($(_this).outerWidth() - this.$loadingArea.width() )/2 + 'px',
-				'top': ($(_this).outerHeight()  - this.$loadingArea.height() )/2 + document.documentElement.scrollTop + 'px' 
+			$loadingArea.css({
+				'left': ($(_this).outerWidth() - $loadingArea.width() )/2 + 'px',
+				'top': ($(_this).outerHeight()  - $loadingArea.height() )/2 + $(window).scrollTop() + 'px' 
 			});
 			$('.waitting', _this).on('dblclick',function(){
 				_this._stop();
@@ -75,6 +66,7 @@ example $('.area').waitting(true)
 		};
 		this._stop = function(){
 			$('.waitting-wrp, .waitting', _this).remove();
+			// $(_this).css('position', 'static');
 		};
 		
 		return this.each(function(){

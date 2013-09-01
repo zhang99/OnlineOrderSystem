@@ -28,6 +28,60 @@ namespace OnlineOrder.Website.Controllers
         {
         }
 
+        /// <summary>
+        /// 首次加载、列表操作、翻页、排序、刷新、搜索查询、Ajax请求树
+        /// </summary>
+        /// <param name="pagingModel"></param>
+        /// <returns></returns>
+        public override ActionResult Index([ModelBinder(typeof(PagingModelBinder))]PagingModel pagingModel)
+        {
+            var type = Request.Params["type"];
+            Response.Cache.SetOmitVaryStar(true);
+            SelectProductsViewModel pvm = new SelectProductsViewModel();
+            ViewBag.Sort = pagingModel.SortOptions;
+            var parentId = Request.Params["parentId"];
+            var parentCode = Request.Params["parentCode"];
+
+            Category categoryModel = new Category();
+            if (String.IsNullOrWhiteSpace(parentId))
+            {
+                pvm.CategoriesTree = categoryModel.GetList(p => p.ParentId == null);
+            }
+
+            var expr = LambdaHelper.BuildLambdasOr<Product>(pagingModel.QueryFields, QueryMethods.Contains, pagingModel.Query);
+            if (String.IsNullOrWhiteSpace(parentCode))
+            {
+                pvm.ProductsList = model.GetPagedList(pagingModel, expr);
+            }
+            else
+            {
+                var predicate = PredicateBuilder.True<Product>();
+                switch (type)
+                {
+                    case "Brands":
+                        predicate = predicate.And(f => f.Brand.Code.StartsWith(parentCode)).And(expr);
+                        break;
+                    case "Categories":
+                        predicate = predicate.And(f => f.Category.Code.StartsWith(parentCode)).And(expr);
+                        break;                
+                    default:
+                        predicate = predicate.And(f => f.Category.Code.StartsWith(parentCode)).And(expr);
+                        break;
+                }
+                pvm.ProductsList = model.GetPagedList(pagingModel, predicate);
+            }
+
+            if (Request.IsAjaxRequest())
+            {
+                if (Request.HttpMethod == "GET")
+                    return PartialView("_Index", pvm);
+                else
+                    return Json(new SuccessActionResult("Ok", pvm.CategoriesTree));
+            }
+
+            return View("Index", pvm);
+        }
+
         #region 商品选择
         /// <summary>
         /// 商品选择

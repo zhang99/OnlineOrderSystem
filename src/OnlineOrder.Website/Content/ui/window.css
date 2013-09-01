@@ -6,45 +6,37 @@
 	top:0;
 	z-index:100;
 	background:#000;
-	filter:alpha(opacity:10);
-	opacity:0.1;
+	filter:alpha(opacity:20);
+	opacity:0.2;
 	display: block;
 }
 .si-wind {
 	background: none repeat scroll 0 0 #FFFFFF;
     border: 1px solid #CCCCCC;
-    position: absolute;
     width: 500px;
-    /*height: auto;*/
-    /*top: 50%;*/
-    left: 50%;
-    margin-left: -250px;
+    left:50%;
+    margin-left:-250px;
+    display: none;
     z-index: 100;
     overflow: hidden;
-	-webkit-box-shadow:3px 4px 4px #777777;
-	-moz-box-shadow:3px 4px 4px #777777;
-	box-shadow:3px 4px 4px #777777;
+	-webkit-box-shadow:4px 6px 4px 1px #888;
+	-moz-box-shadow:4px 6px 4px 1px #888;
+	box-shadow:4px 6px 4px 1px #888;
 	-webkit-border-radius:7px 7px 5px 5px;
 	-moz-border-radius:7px 7px 5px 5px;
 	border-radius:7px 7px 5px 5px;
+	position: absolute;
 }
 .si-wind.wind-list {
 	height: 450px;
-	width: 500px;
-	margin-left: -250px;
 	margin-top:30px;
 }
 .si-wind.wind-tree-list {
 	height: 460px;
 	width: 700px;
-	margin-left: -350px;
+ 	margin-left:-350px;
 }
-.si-wind.wind-list.wind-tree-list{
-	height: 460px;
-	width: 700px;
-	margin-left: -350px;
-	margin-top:20px;
-}
+
 .si-wind .wind-title {
 	background:url(../../Images/window/msgTop.gif) repeat-x;
 	height:26px;

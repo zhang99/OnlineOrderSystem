@@ -4,6 +4,16 @@ using OnlineOrder.Mvc.Pagination;
 
 namespace OnlineOrder.Mvc
 {
+    /// <summary>
+    /// Alignment -- add by zhangh 2013/06/17
+    /// </summary>
+    public enum Alignment
+    {
+        Left,
+        Center,
+        Right
+    }
+
 	/// <summary>
 	/// Extension methods for the pager.
 	/// </summary>

@@ -1,0 +1,42 @@
+﻿@using System.Collections
+@using OnlineOrder
+@using OnlineOrder.Mvc
+@using OnlineOrder.Mvc.Grid
+@using OnlineOrder.Mvc.Pagination
+@using OnlineOrder.Website.Models
+@model Customer
+
+@Html.Toolbar(new List<ToolbarItem>() { 
+    new ToolbarItem("保存", new Hashtable(){{"class","save"}}),
+    new ToolbarItem("保存并新增", new Hashtable(){{"class","saveIcreate"}}),
+    new ToolbarItem("取消", new Hashtable(){{"class","cancel"}})
+}, false)
+
+<!--form start--> 
+<div class="container">
+    <!-- 新增 get Products/Create -->
+    <!-- 保存新增数据 post Products/Create -->
+    <!-- 编辑 get Products/Edit/1 -->
+    <!-- 保存编辑后的数据 post Products/Edit/1 -->
+	@using (Html.SiForm())
+ {                     
+        @Html.Partial("_Create");
+    }
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        var form = $('.si-form').form({
+            success: function () {
+                if ($('.si-form').attr("action") == 'Edit') {
+                    $('#barcodesLi', '.si-form').show();
+                } else if ($('.si-form').attr("action") == 'Create') {
+                    $('#barcodesLi', '.si-form').hide();
+                }
+            }
+        });
+        $('.si-btn:not(".disabled, [id]")', '.si-tbar').on('click', function () {
+            form.doAction($(this).attr("class").split(' ').pop());
+        });
+    });
+</script>

@@ -24,119 +24,118 @@
 
 $.window = function(options){
 	if( arguments[0] == 'close' ){
-		$.window.methods['close'](arguments[1]);
+		close(arguments[1], arguments[2]);
 		return;
 	}
 
 	/*------------------- attributes -------------------------*/
-	this.settings = $.extend( {}, $.window.defaults, options );	
+	settings = $.extend( {}, $.window.defaults, options );	
 
 	/*-------------------private function----------------------*/
-	this._init = function(){
+	function init (){
 		if($(document.body).data('onPopwind')){
 			return;
 		}
 
 		// create a window box 
-		this._create();
-	}
-	this._create = function(){
+		create();
 
-		$(document.body).data('onPopwind', true);
+		function create(){
+			$(document.body).data('onPopwind', true);
 
-		// mask for window box
-		if($('#si-mask').length == 0){
-			$('<div id="si-mask"></div>').appendTo('body');
-		}else{
-			$('#si-mask').css("z-index", parseInt($('#si-mask').css("z-index")) + 1);
-		}
-		
-		var $windowbox = $('<div class="si-wind"></div>').appendTo('body').hide();
-		var $windowTitle = $('<div class="wind-title"><h3></h3><span></span></div>').appendTo($windowbox);
-		$windowTitle.find("h3").html( this.settings.title );
-		var $windowBody = $('<div class="wind-main onload clearfix"></div>').appendTo($windowbox)
-
-		// drag and drop
-		$('.si-wind').easydrag({handler:'.wind-title'});
-
-		/* if exists ajax to load */
-		if(this.settings.async == true){
-			this._ajaxLoad( $windowBody );
-		}else{
-			this._fill( $windowBody , this.settings.fillText );
-		}
-		
-		$windowbox.css("top", ($(window).height() - $windowbox.height())/2 + $(window).scrollTop());
-		$windowbox.css("z-index", parseInt($windowbox.css("z-index")) + $('.si-wind').length -1);
-		
-		// click to close the window
-		$('.wind-title span', $windowbox).click(function(){
-			$.window.methods["close"]( this );
-
-		});
-	}
-	this._fill = function( target, html ){
-		var $target = $(target),
-		$windowbox = $target.parents(".si-wind");
-		$target.removeClass("onload");
-		$target.html(html);
-		if($(".wind-title h3", $windowbox).html()==""){
-			$(".wind-title h3", $windowbox).html( $target.children("h3").html() );
-			$target.children("h3").remove();
-		}
-		if( this.settings.query || /Query/i.test(this.settings.url) ){
-			$windowbox.addClass('wind-list');
-		}
-		if(this.settings.hasTree){
-			$windowbox.addClass('wind-tree-list');
-		}
-
-		$windowbox.show();
-		setTimeout(function(){
-			$(document.body).data('onPopwind', false);
-		},500)
-
-		$(document.body).off('.wind').on("keydown.wind", function(event){
-			switch(event.which){
-				case 27: // Esc
-					$.window('close', $('.si-wind:last'));
-					break;
-				default:
-					break;
+			// mask for window box
+			if($('#si-mask').length == 0){
+				$('<div id="si-mask"></div>').appendTo('body');
+			}else{
+				$('#si-mask').css("z-index", parseInt($('#si-mask').css("z-index")) + 1);
 			}
-		});
-	}
+			
+			var $windowbox = $('<div class="si-wind"></div>').appendTo('body').hide();
+			var $windowTitle = $('<div class="wind-title"><h3></h3><span></span></div>').appendTo($windowbox);
+			$("h3", $windowTitle).html( settings.title );
+			var $windowBody = $('<div class="wind-main onload clearfix"></div>').appendTo($windowbox)
 
-	this._ajaxLoad = function( target ){
-		var _this = this,
-		$target = $(target);
-		$.ajax({
-			type: this.settings.type,
-			url: this.settings.url,
-			global: false,
-			data: this.settings.data,
-			// dataType: this.settings.dataType,
-			complete: this.settings.complete,
-			success:  function (data) {
-				if(typeof data == 'object'){
-					$('#si-mask').remove();
-					$.message(data.message);
-					return false;
+			// drag and drop
+			$('.si-wind').easydrag({handler:'.wind-title'});
+
+			/* if exists ajax to load */
+			if(settings.async == true){
+				ajaxLoad( $windowBody );
+			}else{
+				fill( $windowBody , settings.fillText );
+			}
+			$windowbox.css({
+				'top' : ($(window).height() - $windowbox.height())/2 + $(window).scrollTop(),
+				'z-index' : parseInt($windowbox.css("z-index")) + $('.si-wind').length -1
+			})
+			
+			// click to close the window
+			$('.wind-title span', $windowbox).click(function(){
+				close( this );
+
+			});
+		}
+		function fill( target, html ){
+			var $target = $(target),
+			$windowbox = $target.parents(".si-wind");
+			$target.removeClass("onload");
+			$target.html(html);
+			if($(".wind-title h3", $windowbox).html()==""){
+				$(".wind-title h3", $windowbox).html( $target.children("h3").html() );
+				$target.children("h3").remove();
+			}
+			if( settings.query || /Query/i.test(settings.url) ){
+				$windowbox.addClass('wind-list');
+			}
+			if(settings.hasTree){
+				$windowbox.addClass('wind-tree-list');
+			}
+
+			$windowbox.show();
+			setTimeout(function(){
+				$(document.body).data('onPopwind', false);
+			},500)
+
+			$(document.body).off('.wind').on("keydown.wind", function(event){
+				switch(event.which){
+					case 27: // Esc
+						$.window('close', $('.si-wind:last'));
+						break;
+					default:
+						break;
 				}
-	            _this._fill(target, data);
-	            if(_this.settings.success){
-	            	_this.settings.success(data);
-	            }
-	        },
-			error:  this.settings.errorHandler
-		});
+			});
+		}
+		function ajaxLoad( target ){
+			var $target = $(target);
+			$.ajax({
+				type: settings.type,
+				url: settings.url,
+				global: false,
+				data: settings.data,
+				// dataType: settings.dataType,
+				complete: settings.complete,
+				success:  function (data) {
+					if(typeof data == 'object'){
+						$('#si-mask').remove();
+						$.message(data.message);
+						return false;
+					}
+		            fill(target, data);
+		            if(settings.success){
+		            	settings.success(data);
+		            }
+		        },
+				error:  settings.errorHandler
+			});
+		}
 	}
-
-	return this._init();
-}
-
-$.window.methods = {
-	close: function( target ){
+	function close (target, data){
+		if(data){
+			if(settings.callback && settings.callback(data)===false){
+				return false;
+			}
+		}
 		if(!target){
 			$('.si-wind').remove();
 			$('#si-mask').remove();
@@ -152,7 +151,10 @@ $.window.methods = {
 			$('#si-mask').remove();
 		}
 	}
+
+	return init();
 }
+
 $.window.defaults = {
 	async: false,
 	type: "POST",

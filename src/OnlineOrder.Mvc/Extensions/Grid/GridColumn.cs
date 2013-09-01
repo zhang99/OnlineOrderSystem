@@ -58,7 +58,7 @@ namespace OnlineOrder.Mvc.Grid
         /// <summary>
         /// Sortable
         /// </summary>
-		public bool Sortable
+		public bool IsSortable
 		{
 			get { return _sortable; }
 		}
@@ -82,7 +82,7 @@ namespace OnlineOrder.Mvc.Grid
         /// <summary>
         /// IsSum
         /// </summary>
-        public bool IsSum
+        public bool IsSumColumn
         {
             get { return _isSum; }
         }
@@ -90,7 +90,7 @@ namespace OnlineOrder.Mvc.Grid
         /// <summary>
         /// Queryable
         /// </summary>
-        public bool Queryable
+        public bool IsQueryable
         {
             get { return _queryable; }
         }
@@ -106,7 +106,7 @@ namespace OnlineOrder.Mvc.Grid
         /// <summary>
         /// Editable
         /// </summary>
-        public bool Editable
+        public bool IsEditable
         {
             get { return _editable; }
         }
@@ -114,7 +114,7 @@ namespace OnlineOrder.Mvc.Grid
         /// <summary>
         /// Visible
         /// </summary>
-		public bool Visible
+		public bool IsVisible
 		{
 			get { return _visible; }
 		}
@@ -122,7 +122,7 @@ namespace OnlineOrder.Mvc.Grid
         /// <summary>
         /// EqualTo
         /// </summary>
-        public string EqualTo
+        public string ColumnEqualTo
         {
             get { return _equalTo; }
         }
@@ -215,7 +215,7 @@ namespace OnlineOrder.Mvc.Grid
 			return this;
 		}
 
-		IGridColumn<T> IGridColumn<T>.Sortable(bool isColumnSortable)
+		public IGridColumn<T> Sortable(bool isColumnSortable)
 		{
 			_sortable = isColumnSortable;
 			return this;
@@ -226,7 +226,7 @@ namespace OnlineOrder.Mvc.Grid
         /// </summary>
         /// <param name="isColumnQueryable"></param>
         /// <returns></returns>
-        IGridColumn<T> IGridColumn<T>.Queryable(bool isColumnQueryable)
+        public IGridColumn<T> Queryable(bool isColumnQueryable)
         {
             _queryable = isColumnQueryable;
             return this;
@@ -248,7 +248,7 @@ namespace OnlineOrder.Mvc.Grid
         /// </summary>
         /// <param name="equalTo"></param>
         /// <returns></returns>
-        IGridColumn<T> IGridColumn<T>.EqualTo(string equalTo)
+        public IGridColumn<T> EqualTo(string equalTo)
         {
             _equalTo = equalTo;
             return this;
@@ -259,7 +259,7 @@ namespace OnlineOrder.Mvc.Grid
         /// </summary>
         /// <param name="isEditable"></param>
         /// <returns></returns>
-        IGridColumn<T> IGridColumn<T>.Editable(bool isEditable)
+        public IGridColumn<T> Editable(bool isEditable)
         {
             _editable = isEditable;
             return this;
@@ -271,7 +271,7 @@ namespace OnlineOrder.Mvc.Grid
             return this;
         }
 
-        IGridColumn<T> IGridColumn<T>.IsSum(bool isSum)
+        public IGridColumn<T> IsSum(bool isSum)
         {
             _isSum = isSum;
             return this;
@@ -412,7 +412,7 @@ namespace OnlineOrder.Mvc.Grid
 			return this;
 		}
 
-		IGridColumn<T> IGridColumn<T>.Visible(bool isVisible)
+		public IGridColumn<T> Visible(bool isVisible)
 		{
 			_visible = isVisible;
 			return this;

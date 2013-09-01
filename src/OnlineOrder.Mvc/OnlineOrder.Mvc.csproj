@@ -39,6 +39,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Linq.Dynamic">
+      <HintPath>..\packages\Lib\System.Linq.Dynamic.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Optimization">
@@ -95,11 +98,31 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\ToolbarHelperExtensions.cs" />
     <Compile Include="Extensions\Toolbar\Toolbar.cs" />
-    <Compile Include="Filters\MultipleResponseFormatsAttribute.cs" />
-    <Compile Include="Filters\RelationAttribute.cs" />
-    <Compile Include="Filters\TitleAttribute.cs" />
-    <Compile Include="Filters\ValidateModelAttribute.cs" />
-    <Compile Include="Filters\ValuesAttribute.cs" />
+    <Compile Include="Filters\AlignAttribute.cs" />
+    <Compile Include="Filters\EditableColumnAttribute.cs" />
+    <Compile Include="Filters\EqualToAttribute.cs" />
+    <Compile Include="Filters\HideAttribute.cs" />
+    <Compile Include="Filters\IsLinkAttribute.cs" />
+    <Compile Include="Filters\IsSumAttribute.cs" />
+    <Compile Include="Filters\MultipleResponseFormatsAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\QueryableAttribute.cs" />
+    <Compile Include="Filters\RelationAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\SortableAttribute.cs" />
+    <Compile Include="Filters\TitleAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\ValidateModelAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\ValuesAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filters\VisibleAttribute.cs" />
+    <Compile Include="Filters\WidthAttribute.cs" />
     <Compile Include="ModelBinders\ArrayModelBinder.cs" />
     <Compile Include="ModelBinders\JsonModelBinder.cs" />
     <Compile Include="ModelBinders\PagingModelBinder.cs" />

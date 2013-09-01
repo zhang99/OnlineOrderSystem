@@ -1,0 +1,23 @@
+﻿@using OnlineOrder
+@using OnlineOrder.Mvc
+@using OnlineOrder.Mvc.Grid
+@using OnlineOrder.Mvc.Pagination
+@using OnlineOrder.Website.Models
+@model IPagination<Order>
+
+@Html.Grid(Model).Sort(ViewBag.Sort as GridSortOptions).Columns(c =>{
+          c.For(x => Html.CheckBox("products", new { value = x.Id.ToString() }),"Id").Header(x => Html.CheckBox("products")).Sortable(false).Width(30).Align(Alignment.Center).Queryable(false);
+          c.For(x => "").IsRowNumberColumn(true).Align(Alignment.Center).Width(40).Queryable(false);
+          c.For(x => Html.ActionLink(x.Code, "Edit", new { id = x.Id }),"Code").Named("单号").Width(120);         
+          c.For(x => x.TransNo);        
+          c.For(x => x.Customer.Name).Width(200).Sortable(false);
+          c.For(x => x.PayDate).Named("付款日期").Width(125);
+          c.For(x => x.Amount).Named("单据金额").Align(Alignment.Right);
+          c.For(x => x.ApproveFlag == "0" ? "未审核" :  x.ApproveFlag == "1" ? "已审核" : "","ApproveFlag").Named("审核标识").Width(70);
+          c.For(x => x.Approver.Name, "Approver.Name").Named("审核人").Sortable(false);
+          c.For(x => x.ApproveDate).Named("审核日期").Width(120);
+          c.For(x => x.Oper.Name, "Oper.Name").Named("制单人").Sortable(false);
+          c.For(x => x.OperDate).Named("制单日期").Width(120);       
+ }).AutoScroll(true)
+
+@Html.Pager(Model)  

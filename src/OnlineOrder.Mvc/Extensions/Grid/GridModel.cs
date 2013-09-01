@@ -14,6 +14,8 @@ namespace OnlineOrder.Mvc.Grid
 		private string _emptyText;
         private int _emptyRows = 0;
         private bool _showFooter = false;
+        private bool _showRowNumber = false;
+        private bool _showCheckBox = false;
         private bool _autoScroll = false;
         private IDictionary<string, object> _attributes = new Dictionary<string, object>();
 		private GridSortOptions _sortOptions;
@@ -46,6 +48,18 @@ namespace OnlineOrder.Mvc.Grid
         {
             get { return _showFooter; }
             set { _showFooter = value; } 
+        }
+
+        bool IGridModel<T>.ShowRowNumber
+        {
+            get { return _showRowNumber; }
+            set { _showRowNumber = value; }
+        }
+
+        bool IGridModel<T>.ShowCheckBox
+        {
+            get { return _showCheckBox; }
+            set { _showCheckBox = value; }
         }
 
         bool IGridModel<T>.AutoScroll

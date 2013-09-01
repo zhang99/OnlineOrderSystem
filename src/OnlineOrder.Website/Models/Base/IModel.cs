@@ -18,6 +18,6 @@ namespace OnlineOrder.Website.Models
         T Get(Expression<Func<T, bool>> where);
         IEnumerable<T> GetList();
         IEnumerable<T> GetList(Expression<Func<T, bool>> where);
-        IPagination<T> GetPagedList(PagingModel pagingModel,Expression<Func<T, bool>> where);
+        IPagination<T> GetPagedList(PagingModel pagingModel,Expression<Func<T, bool>> where);       
     }
 }

@@ -55,32 +55,36 @@ namespace OnlineOrder.Mvc.Grid
 		/// </summary>
 		/// <param name="propertySpecifier">Lambda that specifies the property for which a column should be constructed</param>
 		public IGridColumn<T> For(Expression<Func<T, object>> propertySpecifier)
-		{
-			var memberExpression = GetMemberExpression(propertySpecifier);
-			var propertyType = GetTypeFromMemberExpression(memberExpression);
-			var declaringType = memberExpression == null ? null : memberExpression.Expression.Type;
-			var inferredName = memberExpression == null ? null : memberExpression.Member.Name;
-			var column = new GridColumn<T>(propertySpecifier.Compile(), inferredName, propertyType);
-            column.FieldName = column.Name;
+        {
+            #region removed by zhangh 2013/08/23
+            //var memberExpression = GetMemberExpression(propertySpecifier);
+            //var propertyType = GetTypeFromMemberExpression(memberExpression);
+            //var declaringType = memberExpression == null ? null : memberExpression.Expression.Type;
+            //var inferredName = memberExpression == null ? null : memberExpression.Member.Name;
+            //var column = new GridColumn<T>(propertySpecifier.Compile(), inferredName, propertyType);
+            //column.FieldName = column.Name;
 
-			if(declaringType != null)
-			{
-				var metadata = _metadataProvider.GetMetadataForProperty(null, declaringType, inferredName);
+            //if(declaringType != null)
+            //{
+            //    var metadata = _metadataProvider.GetMetadataForProperty(null, declaringType, inferredName);
 				
-				if (!string.IsNullOrEmpty(metadata.DisplayName))
-				{
-					column.Named(metadata.DisplayName);
-				}
+            //    if (!string.IsNullOrEmpty(metadata.DisplayName))
+            //    {
+            //        column.Named(metadata.DisplayName);
+            //    }
 
-				if (!string.IsNullOrEmpty(metadata.DisplayFormatString)) 
-				{
-					column.Format(metadata.DisplayFormatString);
-				}
-			}
+            //    if (!string.IsNullOrEmpty(metadata.DisplayFormatString)) 
+            //    {
+            //        column.Format(metadata.DisplayFormatString);
+            //    }
+            //}
 
-			Add(column);
+            //Add(column);
 
-			return column;
+            //return column;
+            #endregion
+
+            return For(propertySpecifier, null);
 		}
 
         /// <summary>
@@ -94,24 +98,59 @@ namespace OnlineOrder.Mvc.Grid
         {
             var memberExpression = GetMemberExpression(propertySpecifier);
             var propertyType = GetTypeFromMemberExpression(memberExpression);
-            var declaringType = memberExpression == null ? typeof(T) : memberExpression.Expression.Type;
+            var declaringType = memberExpression == null ? string.IsNullOrEmpty(fieldName) ? null : typeof(T) : memberExpression.Expression.Type;
             var inferredName = memberExpression == null ? fieldName : memberExpression.Member.Name;
             var column = new GridColumn<T>(propertySpecifier.Compile(), inferredName, propertyType);
-            column.FieldName = fieldName;
-
-            if (declaringType != null)
+            if (!string.IsNullOrEmpty(fieldName))
+                column.FieldName = fieldName;
+            else
             {
-                var metadata = _metadataProvider.GetMetadataForProperty(null, declaringType, inferredName);
+                string tmpName = ExpressionHelper.GetExpressionText(propertySpecifier);
+                if (string.IsNullOrEmpty(tmpName) && memberExpression != null)
+                    tmpName = memberExpression.ToString().Substring(memberExpression.ToString().IndexOf(".") + 1);
 
-                if (!string.IsNullOrEmpty(metadata.DisplayName))
+                column.FieldName = tmpName;
+            }
+
+            if (!string.IsNullOrEmpty(column.FieldName))
+            {
+                string[] props = column.FieldName.Split('.');
+                Type type = typeof(T);
+                PropertyInfo property = null;
+                string displayName = string.Empty;
+                ModelMetadata metadata;
+                foreach (string prop in props)
                 {
-                    column.Named(metadata.DisplayName);
+                    property = type.GetProperty(prop);
+                    if (property == null)
+                        continue;
+
+                    metadata = _metadataProvider.GetMetadataForProperty(null, type, property.Name);
+                    if (!string.IsNullOrEmpty(metadata.DisplayName))
+                    {
+                        displayName += metadata.DisplayName;
+                        column.Named(displayName);
+                    }
+                    type = property.PropertyType;
                 }
 
-                if (!string.IsNullOrEmpty(metadata.DisplayFormatString))
-                {
-                    column.Format(metadata.DisplayFormatString);
-                }
+                #region TODO: 格式化等其他信息 zhangh 2013/06/03
+                //if (declaringType != null)
+                //{
+                //    metadata = _metadataProvider.GetMetadataForProperty(null, declaringType, inferredName);
+
+                //    //if (!string.IsNullOrEmpty(metadata.DisplayName))
+                //    //{
+                //    //    displayName += metadata.DisplayName;
+                //    //    column.Named(displayName);
+                //    //}
+
+                //    if (!string.IsNullOrEmpty(metadata.DisplayFormatString))
+                //    {
+                //        column.Format(metadata.DisplayFormatString);
+                //    }
+                //}
+                #endregion
             }
 
             Add(column);

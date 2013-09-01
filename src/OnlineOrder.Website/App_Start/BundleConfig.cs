@@ -49,7 +49,7 @@ namespace OnlineOrder.Website
                         "~/Scripts/ui/form/ajaxFileUpload.js",
                         "~/Scripts/ui/tree.js",
                         "~/Scripts/ui/editGrid.js",
-                        "~/Scripts/ui/filter.js"
+                        "~/Scripts/ui/filters.js"
                         ));
             // js for xrd 第三方控件
             bundles.Add(new ScriptBundle("~/bundles/xrd").Include(

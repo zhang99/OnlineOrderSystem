@@ -10,11 +10,16 @@ namespace OnlineOrder.Website.Models
     /// 选择商品ViewModel
     /// </summary>
     public class SelectProductsViewModel
-    {     
+    {
         /// <summary>
         /// 类别树
         /// </summary>
-        public IEnumerable<Category> CategoriesTree { get; set; }
+        public IEnumerable<Category> CategoriesTree { get; set; }       
+
+        /// <summary>
+        /// 品牌树
+        /// </summary>
+        public IEnumerable<Brand> BrandsTree { get; set; }
 
         /// <summary>
         /// 商品分页数据
