@@ -223,11 +223,19 @@ namespace OnlineOrder.Website.Controllers
                     {
                         Type childType;
                         MethodInfo methodInfo;
+                        PropertyInfo[] propers;
                         foreach (var item in tempList)
                         {
                             if (item == null) continue;
-
                             childType = item.GetType();
+                            propers = childType.GetProperties();
+                            for (int k = 0; k < propers.Length; k++)
+                            {
+                                if (propers[k].PropertyType.GetProperty("Id") != null)
+                                    propers[k].SetValue(item, null, null);
+                            }
+                            if (item == null) continue;
+
                             int id = (int)childType.GetProperty("Id").GetValue(item, null);
                             if (id == 0)
                             {

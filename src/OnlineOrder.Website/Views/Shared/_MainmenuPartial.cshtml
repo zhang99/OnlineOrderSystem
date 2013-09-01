@@ -47,6 +47,51 @@
                     {'Text':'网易','Url':'http://www.163.com'}
                   ]}
                 ]
+            },{'Text':'发货/退货管理','Controller':'SendOrders',
+              'Menus':[
+                {'Text':'发货管理',
+                 'Menus':[
+                    {'Text':'查看发货单','Controller':'SendOrders'},
+                    {'Text':'创建发货单','Controller':'SendOrders','Action': 'Create'}
+                    ]
+                },{'Text':'退货管理',
+                 'Menus':[
+                    {'Text':'查看退货单','Controller':'SendOrders'},
+                    {'Text':'创建退货单','Controller':'SendOrders','Action': 'Create'}
+                    ]
+                }]
+            },{'Text':'库存管理','Controller':'Stock',
+              'Menus':[
+                {'Text':'库存管理',
+                 'Menus':[
+                    {'Text':'查看库存调整单','Controller':'Stock'},
+                    {'Text':'创建库存调整单','Controller':'Stock','Action': 'Create'}
+                    ]
+                }]
+            },{'Text':'统计分析','Controller':'Count',
+              'Menus':[
+                {'Text':'库存管理',
+                 'Menus':[
+                    {'Text':'查看库存调整单','Controller':'Count'},
+                    {'Text':'创建库存调整单','Controller':'Count','Action': 'Create'}
+                    ]
+                }]
+            },{'Text':'财务管理','Controller':'Finace',
+              'Menus':[
+                {'Text':'库存管理',
+                 'Menus':[
+                    {'Text':'查看库存调整单','Controller':'Finace'},
+                    {'Text':'创建库存调整单','Controller':'Finace','Action': 'Create'}
+                    ]
+                }]
+            },{'Text':'系统管理','Controller':'System',
+              'Menus':[
+                {'Text':'系统管理',
+                 'Menus':[
+                    {'Text':'查看库存调整单','Controller':'System'},
+                    {'Text':'创建库存调整单','Controller':'System','Action': 'Create'}
+                    ]
+                }]
             }]";    
  
     

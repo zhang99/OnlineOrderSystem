@@ -82,7 +82,7 @@ namespace OnlineOrder.Website.Models
                 throw new ArgumentException("entity不能为空!");
 
             BeforeAddOrUpdate(entity);
-            entity = dbset.Add(entity);
+            entity = dbset.Add(entity);            
             return entity;
         }
         #endregion

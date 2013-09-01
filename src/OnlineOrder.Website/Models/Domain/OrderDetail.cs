@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace OnlineOrder.Website.Models
 {
@@ -27,10 +28,11 @@ namespace OnlineOrder.Website.Models
         public Nullable<decimal> Amount { get; set; }
         [Display(Name = "уш©ш")]
         public Nullable<decimal> Discount { get; set; }
-    
+        [JsonIgnore]
         public virtual Order Order { get; set; }
+        [JsonIgnore]
         public virtual Product Product { get; set; }
-        public virtual User User { get; set; }
+       
     }
     
 }

@@ -8,7 +8,7 @@
     var hideCheckbox = Convert.ToBoolean(Request.Params["hideCheckbox"]);
 }
 @Html.Grid(Model.ProductsList).ShowCheckBox(! @hideCheckbox).ShowRowNumber(true).AutoScroll(true).Columns(c =>{
-          c.For(x => x.Id, "Product.Id").Hide(true);
+          c.For(x => x.Id, "ProductId").Hide(true);
           c.For(x => x.Code, "Product.Code");
           c.For(x => x.Name, "Product.Name");
           c.For(x => x.UnitId, "Product.UnitId");         

@@ -8,38 +8,75 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace OnlineOrder.Website.Models
 {
-    public partial class SendOrder : ModelBase<SendOrder>, IModel<SendOrder>
+    public partial class SendOrder : SheetModelBase<SendOrder>, ISheetModel<SendOrder>
     {
         public SendOrder()
         {
+            this.TransNo = "SO";
             this.SendOrderDetails = new HashSet<SendOrderDetail>();
         }
-        [Display(Name = "编码")]
-        public string Code { get; set; }
+        
         public Nullable<int> OrderId { get; set; }
         public Nullable<int> LogisticId { get; set; }
         [Display(Name = "运费")]
         public Nullable<decimal> ShippingFee { get; set; }
         [Display(Name = "数量")]
-        public Nullable<decimal> Amount { get; set; }
-        [Display(Name = "审核标志")]
-        public string ApproveFlag { get; set; }
+        public Nullable<decimal> Amount { get; set; }       
         [Display(Name = "状态")]
-        public string Status { get; set; }
-        [Display(Name = "审核日期")]
-        public Nullable<System.DateTime> ApproveDate { get; set; }
-        public Nullable<int> ApproverId { get; set; }
-        public Nullable<int> OperId { get; set; }
-        [Display(Name = "制单日期")]
-        public Nullable<System.DateTime> OperDate { get; set; }
+        public string Status { get; set; }       
     
         public virtual Logistic Logistic { get; set; }
         public virtual ICollection<SendOrderDetail> SendOrderDetails { get; set; }
+        [Display(Name = "订货单")]
+        public virtual Order Order { get; set; }
+
+        #region 方法
+        /// <summary>
+        /// 添加、修改前业务处理
+        /// </summary>
+        /// <param name="entity"></param>
+        public override void BeforeAddOrUpdate(SendOrder entity)
+        {
+            if (entity.SendOrderDetails.Count() < 1)
+                throw new Exception("单据明细不能为空!");
+
+            if (entity.Id == 0) //新增
+                entity.Code = GenerateSheetNo(this.TransNo);
+
+            entity.Amount = entity.SendOrderDetails.Sum(x => x.Amount);
+        }
+
+        /// <summary>
+        /// 删除前逻辑处理
+        /// </summary>
+        /// <param name="entity"></param>
+        public override void BeforeDelete(SendOrder entity)
+        {
+            //检查是否审核，已审核的不能删除.
+            if (entity.ApproveFlag == "1")
+                throw new Exception(string.Format("该单据[{0}]已审核，不允许删除!", entity.Code));
+
+            //删除关联表数据
+            var ids = entity.SendOrderDetails.Select(p => p.Id).ToArray();
+            SendOrderDetail pod = new SendOrderDetail();
+            pod.Delete(ids);
+        }
+
+        /// <summary>
+        /// 单据审核前逻辑处理
+        /// </summary>
+        /// <param name="entity"></param>
+        public override void BeforeApprove(SendOrder entity)
+        {
+            base.BeforeApprove(entity);
+        }
+        #endregion
     }
     
 }

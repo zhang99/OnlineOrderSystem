@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace OnlineOrder.Website.Models
 {
@@ -28,11 +29,12 @@ namespace OnlineOrder.Website.Models
         public string Password { get; set; }
         [Display(Name ="ÓÊ¼þ")]
         public string Email { get; set; }
-        public Nullable<int> CustomerId { get; set; }
-    
-        public virtual OrderDetail OrderDetail { get; set; }
-        public virtual Order Order { get; set; }
+        public Nullable<int> CustomerId { get; set; }       
+        [JsonIgnore]
+        public virtual ICollection<Order> Orders { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Product> Products { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Product> Products1 { get; set; }
     }
     

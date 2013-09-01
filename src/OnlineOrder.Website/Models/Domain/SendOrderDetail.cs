@@ -14,7 +14,9 @@ using System.ComponentModel.DataAnnotations;
 namespace OnlineOrder.Website.Models
 {
     public partial class SendOrderDetail : ModelBase<SendOrderDetail>, IModel<SendOrderDetail>
-    {     
+    {
+        [Display(Name = "ÐÐºÅ")]
+        public int LineNum { get; set; }
         public Nullable<int> ParentId { get; set; }
         public Nullable<int> ProductId { get; set; }
         [Display(Name = "ÊýÁ¿")]

@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -17,6 +18,7 @@ namespace OnlineOrder.Website.Models
     {
         public Order()
         {
+            this.TransNo = "PO";
             this.OrderDetails = new HashSet<OrderDetail>();
         }
         public Nullable<int> CustomerId { get; set; }
@@ -33,7 +35,49 @@ namespace OnlineOrder.Website.Models
         public virtual Customer Customer { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         public virtual Receipt Receipt { get; set; }
-        public virtual User User { get; set; }
+        public virtual ICollection<SendOrder> SendOrders { get; set; }
+
+        #region 方法
+        /// <summary>
+        /// 添加、修改前业务处理
+        /// </summary>
+        /// <param name="entity"></param>
+        public override void BeforeAddOrUpdate(Order entity)
+        {
+            if (entity.OrderDetails.Count() < 1)
+                throw new Exception("单据明细不能为空!");
+
+            if (entity.Id == 0) //新增
+                entity.Code = GenerateSheetNo(this.TransNo);
+          
+            entity.Amount = entity.OrderDetails.Sum(x => x.Amount);
+        }
+
+        /// <summary>
+        /// 删除前逻辑处理
+        /// </summary>
+        /// <param name="entity"></param>
+        public override void BeforeDelete(Order entity)
+        {
+            //检查是否审核，已审核的不能删除.
+            if (entity.ApproveFlag == "1")
+                throw new Exception(string.Format("该单据[{0}]已审核，不允许删除!", entity.Code));
+
+            //删除关联表数据
+            var ids = entity.OrderDetails.Select(p => p.Id).ToArray();
+            OrderDetail pod = new OrderDetail();
+            pod.Delete(ids);
+        }
+
+        /// <summary>
+        /// 单据审核前逻辑处理
+        /// </summary>
+        /// <param name="entity"></param>
+        public override void BeforeApprove(Order entity)
+        {
+            base.BeforeApprove(entity);
+        }
+        #endregion
     }
     
 }
