@@ -2,6 +2,7 @@
 @using OnlineOrder.Mvc
 @using OnlineOrder.Mvc.Grid
 @using OnlineOrder.Mvc.Pagination
+@using OnlineOrder.Website.Models
 @model IPagination<Brand>
 
 @Html.Grid(Model).Sort(ViewBag.Sort as GridSortOptions).Columns(c =>{

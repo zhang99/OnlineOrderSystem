@@ -3,6 +3,7 @@
 @using OnlineOrder.Mvc
 @using OnlineOrder.Mvc.Grid
 @using OnlineOrder.Mvc.Pagination
+@using OnlineOrder.Website.Models
 @model Product
 
 @Html.Toolbar(new List<ToolbarItem>() { 
@@ -18,7 +19,7 @@
     <!-- 编辑 get Products/Edit/1 -->
     <!-- 保存编辑后的数据 post Products/Edit/1 -->
 	@using (Html.SiForm())
-    {                     
+ {                     
         @Html.Partial("_Create");
     }
 </div>

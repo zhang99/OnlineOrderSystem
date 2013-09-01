@@ -1,14 +1,14 @@
 ﻿@using OnlineOrder.Mvc
 @using OnlineOrder.Mvc.Grid
 @using OnlineOrder.Mvc.Pagination
+@using OnlineOrder.Website.Models
 @model CategoriesViewModel
 
 @Html.Grid(Model.CategoriesList).Sort(ViewBag.Sort as GridSortOptions).Columns(c =>{
           c.For(x => Html.CheckBox("products", new { value = x.Id.ToString() }),"Id").Header(x => Html.CheckBox("products")).Sortable(false).Align(Alignment.Center).Width(40).Queryable(false);
           c.For(x => "").IsRowNumberColumn(true).Align(Alignment.Center).Width(40).Queryable(false);
           c.For(x => Html.SiLink(x.Code, "javascript:;", null), "Code").Named("编码");
-          c.For(x => x.Name).Named("名称");
-          c.For(x => x.ProfitRate).Named("毛利率").Align(Alignment.Right);
+          c.For(x => x.Name).Named("名称");          
  }).AutoScroll(true)
 
 @Html.Pager(Model.CategoriesList)  

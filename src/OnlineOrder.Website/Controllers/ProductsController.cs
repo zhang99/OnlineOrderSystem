@@ -22,8 +22,8 @@ namespace OnlineOrder.Website.Controllers
     /// </summary>
     [Title("商品档案")]
     public class ProductsController : BaseDataController<Product>
-    {     
-        public ProductsController(IProductModel model)
+    {
+        public ProductsController(Product model)
             : base(model)
         {
         }

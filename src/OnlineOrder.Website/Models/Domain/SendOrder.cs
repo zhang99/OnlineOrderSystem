@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace OnlineOrder.Website.Models
 {
@@ -18,18 +19,23 @@ namespace OnlineOrder.Website.Models
         {
             this.SendOrderDetails = new HashSet<SendOrderDetail>();
         }
-    
-        public int Id { get; set; }
+        [Display(Name = "编码")]
         public string Code { get; set; }
         public Nullable<int> OrderId { get; set; }
         public Nullable<int> LogisticId { get; set; }
+        [Display(Name = "运费")]
         public Nullable<decimal> ShippingFee { get; set; }
+        [Display(Name = "数量")]
         public Nullable<decimal> Amount { get; set; }
+        [Display(Name = "审核标志")]
         public string ApproveFlag { get; set; }
+        [Display(Name = "状态")]
         public string Status { get; set; }
+        [Display(Name = "审核日期")]
         public Nullable<System.DateTime> ApproveDate { get; set; }
         public Nullable<int> ApproverId { get; set; }
         public Nullable<int> OperId { get; set; }
+        [Display(Name = "制单日期")]
         public Nullable<System.DateTime> OperDate { get; set; }
     
         public virtual Logistic Logistic { get; set; }

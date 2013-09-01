@@ -1,24 +1,18 @@
 ﻿@using OnlineOrder.Mvc
 @using OnlineOrder.Mvc.Grid
 @using OnlineOrder.Mvc.Pagination
+@using OnlineOrder.Website.Models
 @model IPagination<Product>
-
-@* TODO: 请去掉.Named的声明 james *@
 
 @Html.Grid(Model).Sort(ViewBag.Sort as GridSortOptions).Columns(c =>{
           c.For(x => Html.CheckBox("products", new { value = x.Id.ToString() }),"Id").Header(x => Html.CheckBox("products")).Sortable(false).Align(Alignment.Center).Width(30).Queryable(false);
           c.For(x => "").IsRowNumberColumn(true).Align(Alignment.Center).Width(40).Queryable(false);
-          c.For(x => Html.ActionLink(x.Code, "Edit", new { id = x.Id }), "Code");
-          c.For(x => x.SubNo);
+          c.For(x => Html.ActionLink(x.Code, "Edit", new { id = x.Id }), "Code");         
           c.For(x => x.Name).Width(200);
-          c.For(x => x.Unit.Name, "Unit.Name").Named("单位").Sortable(false).Queryable(false);
+          c.For(x => x.UnitId).Named("单位").Sortable(false).Queryable(false);
           c.For(x => x.Category.Name, "Category.Name").Named("类别").Sortable(false);
-          c.For(x => x.Brand.Name, "Brand.Name").Named("品牌").Sortable(false);
-          c.For(x => x.Vendor.Name, "Vendor.Name").Named("供应商").Width(200).Sortable(false);
-          c.For(x => x.InPrice).Align(Alignment.Right);
-          c.For(x => x.SalePrice).Align(Alignment.Right);
-          c.For(x => x.BasePrice).Align(Alignment.Right);
-          c.For(x => x.PurchaseSpec);
+          c.For(x => x.Brand.Name, "Brand.Name").Named("品牌").Sortable(false);      
+          c.For(x => x.SalePrice).Align(Alignment.Right);         
           c.For(x => x.Status == "0" ? "正常" : x.Status == "1" ? "停售" : x.Status == "2" ? "淘汰" : "").Named("状态").Queryable(false);//TODO:枚举类型处理，EntityFramework已经支持?
           c.For(x => x.Memo).Sortable(false);
           c.For(x => x.Oper.Name, "Oper.Name").Named("创建者").Sortable(false);

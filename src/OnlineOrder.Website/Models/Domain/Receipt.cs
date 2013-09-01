@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace OnlineOrder.Website.Models
 {
@@ -17,13 +18,16 @@ namespace OnlineOrder.Website.Models
         public Receipt()
         {
             this.Orders = new HashSet<Order>();
-        }
-    
-        public int Id { get; set; }
+        }   
+   
         public Nullable<int> CustomerId { get; set; }
+        [Display(Name = "联系人")]
         public string Linkman { get; set; }
+        [Display(Name = "电话")]
         public string Tel { get; set; }
+        [Display(Name = "地址")]
         public string Address { get; set; }
+        [Display(Name = "备注")]
         public string Memo { get; set; }
     
         public virtual Customer Customer { get; set; }

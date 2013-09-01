@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="OnlineOrderModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="OnlineOrderModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="OnlineOrderModelStoreContainer">
           <EntitySet Name="BaseCodes" EntityType="OnlineOrderModel.Store.BaseCodes" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Brands" EntityType="OnlineOrderModel.Store.Brands" store:Type="Tables" Schema="dbo" />
@@ -92,7 +92,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Code" Type="varchar" MaxLength="20" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
           <Property Name="CodeType" Type="char" MaxLength="2" />
@@ -102,7 +102,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Code" Type="varchar" MaxLength="20" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
         </EntityType>
@@ -110,7 +110,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Code" Type="varchar" MaxLength="20" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
           <Property Name="ParentId" Type="int" />
@@ -119,7 +119,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Code" Type="varchar" MaxLength="20" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
           <Property Name="Discount" Type="decimal" Precision="6" Scale="2" />
@@ -129,7 +129,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
           <Property Name="Linkman" Type="varchar" MaxLength="50" />
           <Property Name="Tel" Type="varchar" MaxLength="50" />
@@ -141,7 +141,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ParentId" Type="int" />
           <Property Name="ProductId" Type="int" />
           <Property Name="Qty" Type="decimal" Precision="16" Scale="4" />
@@ -153,7 +153,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Code" Type="varchar" MaxLength="20" />
           <Property Name="CustomerId" Type="int" />
           <Property Name="DeliveryId" Type="int" />
@@ -172,15 +172,14 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Code" Type="varchar" MaxLength="20" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
           <Property Name="UnitId" Type="int" />
           <Property Name="CategoryId" Type="int" />
           <Property Name="BrandId" Type="int" />
-          <Property Name="InPrice" Type="decimal" Precision="16" Scale="4" />
+          <Property Name="CostPrice" Type="decimal" Precision="16" Scale="4" />
           <Property Name="SalePrice" Type="decimal" Precision="16" Scale="4" />
-          <Property Name="BasePrice" Type="decimal" Precision="16" Scale="4" />
           <Property Name="StockQty" Type="decimal" Precision="16" Scale="4" />
           <Property Name="Description" Type="varchar" MaxLength="200" />
           <Property Name="Status" Type="char" MaxLength="1" />
@@ -194,7 +193,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="CustomerId" Type="int" />
           <Property Name="Linkman" Type="varchar" MaxLength="50" />
           <Property Name="Tel" Type="varchar" MaxLength="50" />
@@ -205,7 +204,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ParentId" Type="int" />
           <Property Name="ProductId" Type="int" />
           <Property Name="Qty" Type="decimal" Precision="16" Scale="4" />
@@ -217,7 +216,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Code" Type="varchar" MaxLength="20" />
           <Property Name="OrderId" Type="int" />
           <Property Name="LogisticId" Type="int" />
@@ -234,7 +233,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ProductId" Type="int" />
           <Property Name="Qty" Type="decimal" Precision="16" Scale="4" />
           <Property Name="Price" Type="decimal" Precision="16" Scale="4" />
@@ -245,7 +244,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Code" Type="varchar" MaxLength="20" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
           <Property Name="Password" Type="varchar" MaxLength="50" />
@@ -456,8 +455,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="OnlineOrderModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
@@ -548,7 +546,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Code" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="CodeType" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
@@ -559,7 +557,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Code" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Products" Relationship="OnlineOrderModel.FK_PRODUCTS_PRODUCT_R_BRANDS" FromRole="Brands" ToRole="Products" />
@@ -568,19 +566,19 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Code" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="ParentId" Type="Int32" />
-          <NavigationProperty Name="Categories1" Relationship="OnlineOrderModel.FK_CATEGORI_CATEGORY__CATEGORI" FromRole="Categories" ToRole="Categories1" />
-          <NavigationProperty Name="Category1" Relationship="OnlineOrderModel.FK_CATEGORI_CATEGORY__CATEGORI" FromRole="Categories1" ToRole="Categories" />
+          <NavigationProperty Name="Children" Relationship="OnlineOrderModel.FK_CATEGORI_CATEGORY__CATEGORI" FromRole="Categories" ToRole="Categories1" />
+          <NavigationProperty Name="Parent" Relationship="OnlineOrderModel.FK_CATEGORI_CATEGORY__CATEGORI" FromRole="Categories1" ToRole="Categories" />
           <NavigationProperty Name="Products" Relationship="OnlineOrderModel.FK_PRODUCTS_PRODUCT_R_CATEGORI" FromRole="Categories" ToRole="Products" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Code" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="Discount" Type="Decimal" Precision="6" Scale="2" />
@@ -592,7 +590,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="Linkman" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="Tel" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
@@ -605,7 +603,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ParentId" Type="Int32" />
           <Property Name="ProductId" Type="Int32" />
           <Property Name="Qty" Type="Decimal" Precision="16" Scale="4" />
@@ -620,7 +618,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Code" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="CustomerId" Type="Int32" />
           <Property Name="DeliveryId" Type="Int32" />
@@ -643,15 +641,14 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Code" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="UnitId" Type="Int32" />
           <Property Name="CategoryId" Type="Int32" />
           <Property Name="BrandId" Type="Int32" />
-          <Property Name="InPrice" Type="Decimal" Precision="16" Scale="4" />
+          <Property Name="CostPrice" Type="Decimal" Precision="16" Scale="4" />
           <Property Name="SalePrice" Type="Decimal" Precision="16" Scale="4" />
-          <Property Name="BasePrice" Type="Decimal" Precision="16" Scale="4" />
           <Property Name="StockQty" Type="Decimal" Precision="16" Scale="4" />
           <Property Name="Description" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
           <Property Name="Status" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
@@ -664,8 +661,8 @@
           <NavigationProperty Name="Brand" Relationship="OnlineOrderModel.FK_PRODUCTS_PRODUCT_R_BRANDS" FromRole="Products" ToRole="Brands" />
           <NavigationProperty Name="Category" Relationship="OnlineOrderModel.FK_PRODUCTS_PRODUCT_R_CATEGORI" FromRole="Products" ToRole="Categories" />
           <NavigationProperty Name="OrderDetails" Relationship="OnlineOrderModel.FK_ORDERDET_PURCHASEO_PRODUCTS" FromRole="Products" ToRole="OrderDetails" />
-          <NavigationProperty Name="User" Relationship="OnlineOrderModel.FK_PRODUCTS_REFERENCE_USERS" FromRole="Products" ToRole="Users" />
-          <NavigationProperty Name="User1" Relationship="OnlineOrderModel.FK_PRODUCTS_REFERENCE_USERS1" FromRole="Products" ToRole="Users" />
+          <NavigationProperty Name="Oper" Relationship="OnlineOrderModel.FK_PRODUCTS_REFERENCE_USERS" FromRole="Products" ToRole="Users" />
+          <NavigationProperty Name="Modify" Relationship="OnlineOrderModel.FK_PRODUCTS_REFERENCE_USERS1" FromRole="Products" ToRole="Users" />
           <NavigationProperty Name="SendOrderDetails" Relationship="OnlineOrderModel.FK_SENDORDE_REFERENCE_PRODUCTS" FromRole="Products" ToRole="SendOrderDetails" />
           <NavigationProperty Name="ShoppingCarts" Relationship="OnlineOrderModel.FK_SHOPPING_REFERENCE_PRODUCTS" FromRole="Products" ToRole="ShoppingCart" />
         </EntityType>
@@ -673,7 +670,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CustomerId" Type="Int32" />
           <Property Name="Linkman" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="Tel" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
@@ -686,7 +683,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ParentId" Type="Int32" />
           <Property Name="ProductId" Type="Int32" />
           <Property Name="Qty" Type="Decimal" Precision="16" Scale="4" />
@@ -700,7 +697,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Code" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="OrderId" Type="Int32" />
           <Property Name="LogisticId" Type="Int32" />
@@ -719,7 +716,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProductId" Type="Int32" />
           <Property Name="Qty" Type="Decimal" Precision="16" Scale="4" />
           <Property Name="Price" Type="Decimal" Precision="16" Scale="4" />
@@ -731,7 +728,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Code" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="Password" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
@@ -1018,9 +1015,8 @@
             <ScalarProperty Name="UnitId" ColumnName="UnitId" />
             <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
             <ScalarProperty Name="BrandId" ColumnName="BrandId" />
-            <ScalarProperty Name="InPrice" ColumnName="InPrice" />
+            <ScalarProperty Name="CostPrice" ColumnName="CostPrice" />
             <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
-            <ScalarProperty Name="BasePrice" ColumnName="BasePrice" />
             <ScalarProperty Name="StockQty" ColumnName="StockQty" />
             <ScalarProperty Name="Description" ColumnName="Description" />
             <ScalarProperty Name="Status" ColumnName="Status" />
@@ -1099,7 +1095,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="OnlineOrderDb" ZoomLevel="96">
+      <Diagram Name="OnlineOrderDb" ZoomLevel="99">
         <EntityTypeShape EntityType="OnlineOrderModel.BaseCode" Width="1.5" PointX="0.75" PointY="5" Height="2.1610522460937496" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineOrderModel.Brand" Width="1.5" PointX="0.75" PointY="13" Height="1.7790128580729174" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineOrderModel.Category" Width="1.5" PointX="0.75" PointY="15.5" Height="2.3520719401041674" IsExpanded="true" />
@@ -1107,25 +1103,23 @@
         <EntityTypeShape EntityType="OnlineOrderModel.Logistic" Width="1.5" PointX="0.75" PointY="20.125" Height="2.5430916341145817" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineOrderModel.OrderDetail" Width="1.5" PointX="3" PointY="8.625" Height="2.9251310221354174" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineOrderModel.Order" Width="1.5" PointX="6" PointY="7.875" Height="4.4532885742187531" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineOrderModel.Product" Width="1.5" PointX="3" PointY="1.25" Height="5.7904264322916674" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineOrderModel.Product" Width="1.5" PointX="3" PointY="2.375" Height="5.59940673828125" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineOrderModel.Receipt" Width="1.5" PointX="3.75" PointY="24.375" Height="2.5430916341145817" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineOrderModel.SendOrderDetail" Width="1.5" PointX="5.25" PointY="0.75" Height="2.7341113281249996" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineOrderModel.SendOrder" Width="1.5" PointX="3" PointY="19.5" Height="3.6892097981770817" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineOrderModel.ShoppingCart" Width="1.5" PointX="5.25" PointY="4.375" Height="2.3520719401041745" IsExpanded="true" />
         <EntityTypeShape EntityType="OnlineOrderModel.User" Width="1.5" PointX="0.75" PointY="8.625" Height="2.9251310221354174" IsExpanded="true" />
         <AssociationConnector Association="OnlineOrderModel.FK_PRODUCTS_REFERENCE_BASECODE" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="6.0202132161458337" />
-          <ConnectorPoint PointX="2.5416666666666665" PointY="6.0202132161458319" />
-          <ConnectorPoint PointX="2.9583333333333335" PointY="6.0202132161458337" />
-          <ConnectorPoint PointX="3" PointY="6.0202132161458337" />
+          <ConnectorPoint PointX="2.25" PointY="6.0805261230468748" />
+          <ConnectorPoint PointX="2.5416666666666665" PointY="6.0805261230468739" />
+          <ConnectorPoint PointX="2.7083333333333335" PointY="6.0805261230468748" />
+          <ConnectorPoint PointX="3" PointY="6.0805261230468748" />
         </AssociationConnector>
         <AssociationConnector Association="OnlineOrderModel.FK_PRODUCTS_PRODUCT_R_BRANDS" ManuallyRouted="false">
           <ConnectorPoint PointX="2.25" PointY="13.001152846153847" />
           <ConnectorPoint PointX="2.625" PointY="12.626152846153847" />
-          <ConnectorPoint PointX="2.625" PointY="3.6038546080729228" />
-          <ConnectorPoint PointX="2.6354166666666665" PointY="3.6038546080729215" />
-          <ConnectorPoint PointX="2.9583333333333335" PointY="3.6038546080729228" />
-          <ConnectorPoint PointX="3" PointY="3.6038546080729228" />
+          <ConnectorPoint PointX="2.625" PointY="4.1965110615234433" />
+          <ConnectorPoint PointX="3" PointY="4.1965110615234433" />
         </AssociationConnector>
         <AssociationConnector Association="OnlineOrderModel.FK_CATEGORI_CATEGORY__CATEGORI" ManuallyRouted="false">
           <ConnectorPoint PointX="1.2819230769230767" PointY="17.852071940104167" />
@@ -1136,8 +1130,8 @@
         <AssociationConnector Association="OnlineOrderModel.FK_PRODUCTS_PRODUCT_R_CATEGORI" ManuallyRouted="false">
           <ConnectorPoint PointX="2.25" PointY="15.563460538461539" />
           <ConnectorPoint PointX="2.8125" PointY="15.000960538461541" />
-          <ConnectorPoint PointX="2.8125" PointY="4.8120339121093778" />
-          <ConnectorPoint PointX="3" PointY="4.8120339121093778" />
+          <ConnectorPoint PointX="2.8125" PointY="7.0587184306640562" />
+          <ConnectorPoint PointX="3" PointY="7.0587184306640562" />
         </AssociationConnector>
         <AssociationConnector Association="OnlineOrderModel.FK_ORDERS_PURCHASEO_CUSTOMER" ManuallyRouted="false">
           <ConnectorPoint PointX="4.90625" PointY="13.25" />
@@ -1161,7 +1155,7 @@
           <ConnectorPoint PointX="4.5" PointY="10.087565511067709" />
         </AssociationConnector>
         <AssociationConnector Association="OnlineOrderModel.FK_ORDERDET_PURCHASEO_PRODUCTS" ManuallyRouted="false">
-          <ConnectorPoint PointX="3.75" PointY="7.0404264322916674" />
+          <ConnectorPoint PointX="3.75" PointY="7.97440673828125" />
           <ConnectorPoint PointX="3.75" PointY="8.625" />
         </AssociationConnector>
         <AssociationConnector Association="OnlineOrderModel.FK_PURCHASE_PURCHASEDETAIL1_USER" ManuallyRouted="false">
@@ -1196,23 +1190,25 @@
           <ConnectorPoint PointX="2.6839255650988791" PointY="8.2176118964395837" />
           <ConnectorPoint PointX="2.7535744349011204" PointY="8.14796302663734" />
           <ConnectorPoint PointX="2.8714255650988791" PointY="8.0301118964395837" />
-          <ConnectorPoint PointX="2.875" PointY="8.0265374615384619" />
-          <ConnectorPoint PointX="2.875" PointY="2.3956753040364678" />
-          <ConnectorPoint PointX="3" PointY="2.3956753040364678" />
+          <ConnectorPoint PointX="2.9375" PointY="7.9640374615384619" />
+          <ConnectorPoint PointX="2.9375" PointY="8.0622903536658654" />
+          <ConnectorPoint PointX="3.0253836153846159" PointY="7.97440673828125" />
         </AssociationConnector>
         <AssociationConnector Association="OnlineOrderModel.FK_PRODUCTS_REFERENCE_USERS1" ManuallyRouted="false">
           <ConnectorPoint PointX="2.25" PointY="8.633075923076925" />
-          <ConnectorPoint PointX="2.5660744349011204" PointY="8.3170014881758032" />
-          <ConnectorPoint PointX="2.6839255650988791" PointY="8.1991503579780467" />
-          <ConnectorPoint PointX="2.71875" PointY="8.164325923076925" />
-          <ConnectorPoint PointX="2.71875" PointY="2.3956753040364678" />
-          <ConnectorPoint PointX="3" PointY="2.3956753040364678" />
+          <ConnectorPoint PointX="2.40625" PointY="8.25" />
+          <ConnectorPoint PointX="2.40625" PointY="8.54392596905048" />
+          <ConnectorPoint PointX="2.5660744349011204" PointY="8.3841015341493588" />
+          <ConnectorPoint PointX="2.6839255650988791" PointY="8.2662504039516023" />
+          <ConnectorPoint PointX="2.7535744349011204" PointY="8.1966015341493588" />
+          <ConnectorPoint PointX="2.8714255650988791" PointY="8.0787504039516023" />
+          <ConnectorPoint PointX="3" PointY="7.9501759690504805" />
         </AssociationConnector>
         <AssociationConnector Association="OnlineOrderModel.FK_SENDORDE_REFERENCE_PRODUCTS" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="2.3670556640625" />
-          <ConnectorPoint PointX="4.666666666666667" PointY="2.3670556640624993" />
-          <ConnectorPoint PointX="4.833333333333333" PointY="2.3670556640625" />
-          <ConnectorPoint PointX="5.25" PointY="2.3670556640625" />
+          <ConnectorPoint PointX="4.5" PointY="2.9295556640625" />
+          <ConnectorPoint PointX="4.666666666666667" PointY="2.9295556640624993" />
+          <ConnectorPoint PointX="4.833333333333333" PointY="2.9295556640625" />
+          <ConnectorPoint PointX="5.25" PointY="2.9295556640625" />
         </AssociationConnector>
         <AssociationConnector Association="OnlineOrderModel.FK_SHOPPING_REFERENCE_PRODUCTS" ManuallyRouted="false">
           <ConnectorPoint PointX="4.5" PointY="5.5510359700520873" />
@@ -1226,10 +1222,10 @@
           <ConnectorPoint PointX="4.822916666666667" PointY="15.852071940104164" />
           <ConnectorPoint PointX="4.989583333333333" PointY="15.852071940104164" />
           <ConnectorPoint PointX="5.5" PointY="15.852071940104164" />
-          <ConnectorPoint PointX="5.5" PointY="7.2904264322916674" />
-          <ConnectorPoint PointX="4.75" PointY="7.2904264322916674" />
-          <ConnectorPoint PointX="4.75" PointY="1.5272758320312492" />
-          <ConnectorPoint PointX="5.25" PointY="1.5272758320312492" />
+          <ConnectorPoint PointX="5.5" PointY="8.22440673828125" />
+          <ConnectorPoint PointX="4.75" PointY="8.22440673828125" />
+          <ConnectorPoint PointX="4.75" PointY="1.8085258320312492" />
+          <ConnectorPoint PointX="5.25" PointY="1.8085258320312492" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

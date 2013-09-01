@@ -143,20 +143,29 @@ namespace OnlineOrder.Website.Controllers
         /// <param name="filterContext"></param>
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            ViewBag.ControllerName = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
-            ViewBag.ActionName = filterContext.ActionDescriptor.ActionName;
-
-            var attrs = filterContext.ActionDescriptor
-                .ControllerDescriptor
-                .GetCustomAttributes(typeof(TitleAttribute), false);
-
-            if (attrs.Length > 0)
+            if (!Request.IsAuthenticated)
             {
-                ViewBag.ModelName = ((TitleAttribute)attrs[0]).Title;
-                ViewBag.Title = string.Format("{0} -- {1}", ((TitleAttribute)attrs[0]).Title,
-                    HASHTABLE_ACTION_PAIRS.ContainsKey(ViewBag.ActionName) ?
-                    HASHTABLE_ACTION_PAIRS[ViewBag.ActionName] : "");
-            }           
+                filterContext.Result = RedirectToAction("Index", "Login");
+                return;
+            }
+            else
+            {
+
+                ViewBag.ControllerName = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
+                ViewBag.ActionName = filterContext.ActionDescriptor.ActionName;
+
+                var attrs = filterContext.ActionDescriptor
+                    .ControllerDescriptor
+                    .GetCustomAttributes(typeof(TitleAttribute), false);
+
+                if (attrs.Length > 0)
+                {
+                    ViewBag.ModelName = ((TitleAttribute)attrs[0]).Title;
+                    ViewBag.Title = string.Format("{0} -- {1}", ((TitleAttribute)attrs[0]).Title,
+                        HASHTABLE_ACTION_PAIRS.ContainsKey(ViewBag.ActionName) ?
+                        HASHTABLE_ACTION_PAIRS[ViewBag.ActionName] : "");
+                }
+            }
 
         }
         #endregion

@@ -8,14 +8,17 @@
                             {'Text':'创建用户','Url':'http://qq.com'}]";
                                                       
         @Html.SiDropDownMenu("快捷操作", jsonMenus, false) 
-}*@
+}
 
     <li class="top">
-        <a href="javascript:void(0);">我的消息<strong>(32)</strong><b></b></a>
+        <a href="javascript:void(0);">我的消息<strong>(0)</strong><b></b></a>
         <div>
-            <a href="javascript:void(0);">订单审核<strong>(12)</strong></a>
-            <a href="javascript:void(0);" class="last">通知信息<strong>(20)</strong></a>                        
+            <a href="javascript:void(0);">订单审核<strong>(0)</strong></a>
+            <a href="javascript:void(0);" class="last">通知信息<strong>(0)</strong></a>                        
         </div>
-    </li>
-    <li class="quit">欢迎您,<span>Admin</span><a href="javascrip:void;">安全退出</a></li>
+    </li>*@
+    @if (Request.IsAuthenticated)
+    {
+    <li class="quit">欢迎您,<span>@User.Identity.Name</span>@Html.ActionLink("安全退出", "Index", "Login")</li>
+    }
 </ul> 

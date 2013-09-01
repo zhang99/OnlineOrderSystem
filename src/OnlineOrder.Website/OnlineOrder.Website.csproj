@@ -180,7 +180,6 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\Base\BaseController.cs" />
     <Compile Include="Controllers\Base\BaseDataController.cs" />
     <Compile Include="Controllers\Base\BaseListController.cs" />
@@ -188,9 +187,11 @@
     <Compile Include="Controllers\Base\BaseSheetController.cs" />
     <Compile Include="Controllers\BrandsController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\PurchaseOrdersController.cs" />
     <Compile Include="Global.asax.cs">
@@ -233,6 +234,7 @@
       <DependentUpon>OnlineOrderDb.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModel\CategoriesViewModel.cs" />
+    <Compile Include="Models\ViewModel\LoginViewModel.cs" />
     <Compile Include="Models\ViewModel\QueryViewModel.cs" />
     <Compile Include="Models\ViewModel\SelectProductsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -417,15 +419,6 @@
     <Content Include="Scripts\xrd\mustache.js" />
     <Content Include="Scripts\xrd\_references.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Manage.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\_RemoveExternalLoginsPartial.cshtml" />
-    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -487,8 +480,9 @@
     <Content Include="Views\Shared\_MainmenuPartial.cshtml" />
     <Content Include="Views\Shared\_Query.cshtml" />
     <Content Include="Views\Shared\_SubmenuPartial.cshtml" />
-    <Content Include="Views\Vendors\_Create.cshtml" />
-    <Content Include="Views\Vendors\_Index.cshtml" />
+    <Content Include="Views\Customers\_Create.cshtml" />
+    <Content Include="Views\Customers\_Index.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
     <EntityDeploy Include="Models\OnlineOrderDb.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>OnlineOrderDb.Designer.cs</LastGenOutput>

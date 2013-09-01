@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace OnlineOrder.Website.Models
 {
@@ -19,11 +20,13 @@ namespace OnlineOrder.Website.Models
             this.Orders = new HashSet<Order>();
             this.Receipts = new HashSet<Receipt>();
         }
-    
-        public int Id { get; set; }
+        [Display(Name = "±àÂë")]
         public string Code { get; set; }
+        [Display(Name = "Ãû³Æ")]
         public string Name { get; set; }
+        [Display(Name = "ÕÛ¿Û")]
         public Nullable<decimal> Discount { get; set; }
+        [Display(Name = "±¸×¢")]
         public string Memo { get; set; }
     
         public virtual ICollection<Order> Orders { get; set; }
